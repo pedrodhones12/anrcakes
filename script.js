@@ -6,3 +6,33 @@ document.addEventListener("DOMContentLoaded", () => {
   update();
   window.addEventListener("scroll", update, {passive:true});
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dropdown = document.querySelector('.dropdown');
+  const dropdownToggle = document.querySelector('.dropdown-toggle');
+  const mobileToggle = document.querySelector('.mobile-menu-toggle');
+  const mainNav = document.querySelector('.main-nav');
+
+  if (dropdownToggle && dropdown) {
+    dropdownToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen = dropdown.classList.toggle('open');
+      dropdownToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove('open');
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  if (mobileToggle && mainNav) {
+    mobileToggle.addEventListener('click', () => {
+      const isOpen = mainNav.classList.toggle('open');
+      mobileToggle.setAttribute('aria-expanded', isOpen);
+      mobileToggle.textContent = isOpen ? '×' : '☰';
+    });
+  }
+});
