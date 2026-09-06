@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileToggle = document.querySelector('.mobile-menu-toggle');
   const mainNav = document.querySelector('.main-nav');
 
+  // Substitui a seta pelo ícone padrão de menu, mantendo o dropdown funcionando.
+  if (dropdownToggle) {
+    dropdownToggle.textContent = '☰ Evento 2026';
+  }
+
   if (dropdownToggle && dropdown) {
     dropdownToggle.addEventListener('click', (event) => {
       event.stopPropagation();
