@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileToggle = document.querySelector('.mobile-menu-toggle');
   const mainNav = document.querySelector('.main-nav');
 
-  // Menu principal da página inicial: três opções visíveis + menu lateral.
+  // Menu principal: somente três opções ficam visíveis.
+  // As demais páginas ficam dentro do botão ☰.
   const hero = document.querySelector('.hero');
   if (hero && mainNav) {
     const oldLinks = mainNav.querySelectorAll(':scope > a:not(.menu-primary-link)');
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const menu = document.createElement('div');
     menu.className = 'dropdown event-menu';
     menu.innerHTML = `
-      <button class="dropdown-toggle" type="button" aria-expanded="false">☰ Menu</button>
+      <button class="dropdown-toggle" type="button" aria-expanded="false" aria-label="Abrir menu">☰</button>
       <div class="dropdown-menu">
         <a href="parceiros.html">🤝 Parceiros</a>
         <a href="equipe.html">👥 Equipe</a>
