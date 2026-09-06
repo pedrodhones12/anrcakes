@@ -13,14 +13,79 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileToggle = document.querySelector('.mobile-menu-toggle');
   const mainNav = document.querySelector('.main-nav');
 
-  if (dropdownToggle) dropdownToggle.textContent = '☰ Evento 2026';
+  // Menu principal da página inicial: três opções visíveis + menu lateral.
+  const hero = document.querySelector('.hero');
+  if (hero && mainNav) {
+    const oldLinks = mainNav.querySelectorAll(':scope > a:not(.menu-primary-link)');
+    oldLinks.forEach(link => link.remove());
+
+    const oldDropdown = mainNav.querySelector('.dropdown');
+    if (oldDropdown) oldDropdown.remove();
+
+    const navItems = [
+      { text: 'Edição 2026', href: '#evento' },
+      { text: 'Embaixadora', href: 'embaixadora.html' },
+      { text: 'Caravanas', href: 'caravanas.html' }
+    ];
+
+    navItems.forEach(item => {
+      const link = document.createElement('a');
+      link.className = 'menu-primary-link';
+      link.href = item.href;
+      link.textContent = item.text;
+      mainNav.appendChild(link);
+    });
+
+    const menu = document.createElement('div');
+    menu.className = 'dropdown event-menu';
+    menu.innerHTML = `
+      <button class="dropdown-toggle" type="button" aria-expanded="false">☰ Menu</button>
+      <div class="dropdown-menu">
+        <a href="parceiros.html">🤝 Parceiros</a>
+        <a href="equipe.html">👥 Equipe</a>
+        <a href="expositores.html">🏪 Expositores</a>
+        <a href="batalha-doce.html">🍰 Batalha Doce</a>
+        <a href="roteiro.html">🗓️ Roteiro do Evento</a>
+      </div>
+    `;
+    mainNav.appendChild(menu);
+  }
+
+  // Remove o botão Quero Apoiar do topo.
+  const navCta = document.querySelector('.nav-cta');
+  if (navCta) navCta.remove();
+
+  // Rodapé sempre visível e organizado também no celular.
+  const footer = document.querySelector('.site-footer');
+  if (footer) {
+    const footerStyle = document.createElement('style');
+    footerStyle.textContent = `
+      .site-footer{display:block!important;width:100%;visibility:visible!important;opacity:1!important}
+      .footer-links{display:grid!important;visibility:visible!important;opacity:1!important}
+      .footer-item{display:flex!important;visibility:visible!important;opacity:1!important}
+      @media(max-width:750px){
+        .site-footer{padding:30px 16px 20px!important}
+        .footer-links{grid-template-columns:1fr 1fr!important;width:100%!important}
+        .footer-item{min-height:108px!important;padding:16px 10px!important;align-items:flex-start!important}
+        .footer-item strong,.footer-item small{display:block!important;visibility:visible!important}
+        .footer-bottom{display:flex!important;visibility:visible!important}
+      }
+      @media(max-width:430px){
+        .footer-links{grid-template-columns:1fr 1fr!important}
+        .footer-item{min-height:112px!important;padding:15px 8px!important}
+        .footer-item strong{font-size:10px!important}
+        .footer-item small{font-size:8px!important;line-height:1.4!important}
+        .footer-icon{font-size:18px!important}
+      }
+    `;
+    document.head.appendChild(footerStyle);
+  }
 
   // Remove somente o antigo depoimento da página inicial, mantendo todo o restante.
   const quoteStrip = document.querySelector('.quote-strip');
   if (quoteStrip) quoteStrip.remove();
 
   // Cronômetro profissional e responsivo da página inicial
-  const hero = document.querySelector('.hero');
   if (hero && !document.querySelector('.event-countdown')) {
     const countdown = document.createElement('section');
     countdown.className = 'event-countdown';
@@ -42,14 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    // Estilos próprios do cronômetro para evitar que regras do mobile da página o quebrem.
     const style = document.createElement('style');
     style.textContent = `
       .event-countdown{display:block;width:100%;background:var(--brown);color:#fff;padding:34px 8vw;box-sizing:border-box}
       .countdown-inner{width:100%;max-width:1200px;margin:0 auto;text-align:center}
       .countdown-heading{margin:0 0 18px}
       .countdown-kicker{display:inline-block;color:#f3d99f;font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
-      .countdown-grid{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;}
+      .countdown-grid{display:flex;align-items:center;justify-content:center;gap:12px;width:100%}
       .countdown-unit{min-width:100px;display:flex;flex-direction:column;align-items:center;justify-content:center}
       .countdown-unit strong{font-family:"Cormorant Garamond",serif;font-size:54px;line-height:.9;color:#fff;font-weight:600;font-variant-numeric:tabular-nums}
       .countdown-unit span{margin-top:9px;font-size:9px;letter-spacing:.16em;color:#e8d7ca;font-weight:700}
@@ -97,16 +161,19 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateCountdown, 1000);
   }
 
-  if (dropdownToggle && dropdown) {
-    dropdownToggle.addEventListener('click', (event) => {
+  const activeDropdown = document.querySelector('.event-menu');
+  const activeToggle = activeDropdown ? activeDropdown.querySelector('.dropdown-toggle') : null;
+
+  if (activeToggle && activeDropdown) {
+    activeToggle.addEventListener('click', (event) => {
       event.stopPropagation();
-      const isOpen = dropdown.classList.toggle('open');
-      dropdownToggle.setAttribute('aria-expanded', isOpen);
+      const isOpen = activeDropdown.classList.toggle('open');
+      activeToggle.setAttribute('aria-expanded', isOpen);
     });
     document.addEventListener('click', (event) => {
-      if (!dropdown.contains(event.target)) {
-        dropdown.classList.remove('open');
-        dropdownToggle.setAttribute('aria-expanded', 'false');
+      if (!activeDropdown.contains(event.target)) {
+        activeDropdown.classList.remove('open');
+        activeToggle.setAttribute('aria-expanded', 'false');
       }
     });
   }
