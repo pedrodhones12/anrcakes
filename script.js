@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const nav = document.querySelector(".nav");
   const update = () => {
-    nav.style.boxShadow = window.scrollY > 20 ? "0 8px 30px rgba(61,32,20,.08)" : "none";
+    if (nav) nav.style.boxShadow = window.scrollY > 20 ? "0 8px 30px rgba(61,32,20,.08)" : "none";
   };
   update();
   window.addEventListener("scroll", update, {passive:true});
@@ -13,27 +13,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileToggle = document.querySelector('.mobile-menu-toggle');
   const mainNav = document.querySelector('.main-nav');
 
-  // Substitui a seta pelo ícone padrão de menu, mantendo o dropdown funcionando.
-  if (dropdownToggle) {
-    dropdownToggle.textContent = '☰ Evento 2026';
-  }
+  if (dropdownToggle) dropdownToggle.textContent = '☰ Evento 2026';
 
-  // Cronômetro para a 5ª edição do Ane Cakes Fair — 30 de novembro de 2026.
+  // Cronômetro profissional da página inicial
   const hero = document.querySelector('.hero');
   if (hero && !document.querySelector('.event-countdown')) {
     const countdown = document.createElement('section');
     countdown.className = 'event-countdown';
-    countdown.setAttribute('aria-label', 'Contagem regressiva para o evento');
+    countdown.setAttribute('aria-label', 'Contagem regressiva para o Ane Cakes Fair 2026');
     countdown.innerHTML = `
       <div class="countdown-inner">
-        <div class="countdown-title">Falta pouco para o <em>Ane Cakes Fair 2026</em></div>
-        <div class="countdown-grid">
-          <div class="countdown-box"><strong id="count-days">00</strong><span>dias</span></div>
-          <div class="countdown-box"><strong id="count-hours">00</strong><span>horas</span></div>
-          <div class="countdown-box"><strong id="count-minutes">00</strong><span>minutos</span></div>
-          <div class="countdown-box"><strong id="count-seconds">00</strong><span>segundos</span></div>
+        <div class="countdown-heading">
+          <span class="countdown-kicker">CONTAGEM REGRESSIVA</span>
+          <h2>O grande dia está <em>chegando</em></h2>
+          <p>Prepare-se para a 5ª edição da Ane Cakes Fair.</p>
         </div>
-        <div class="countdown-date">30 de novembro de 2026 · Ilhéus, Bahia</div>
+        <div class="countdown-grid" role="timer" aria-live="polite">
+          <div class="countdown-unit"><strong id="count-days">00</strong><span>DIAS</span></div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-unit"><strong id="count-hours">00</strong><span>HORAS</span></div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-unit"><strong id="count-minutes">00</strong><span>MINUTOS</span></div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-unit"><strong id="count-seconds">00</strong><span>SEGUNDOS</span></div>
+        </div>
+        <div class="countdown-footer">
+          <span>30 NOVEMBRO 2026</span>
+          <i></i>
+          <span>ILHÉUS · BAHIA</span>
+        </div>
       </div>
     `;
     hero.insertAdjacentElement('afterend', countdown);
@@ -47,10 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateCountdown = () => {
       const remaining = eventDate - Date.now();
       if (remaining <= 0) {
-        days.textContent = '00';
-        hours.textContent = '00';
-        minutes.textContent = '00';
-        seconds.textContent = '00';
+        days.textContent = hours.textContent = minutes.textContent = seconds.textContent = '00';
         return;
       }
       days.textContent = String(Math.floor(remaining / 86400000)).padStart(2, '0');
@@ -69,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const isOpen = dropdown.classList.toggle('open');
       dropdownToggle.setAttribute('aria-expanded', isOpen);
     });
-
     document.addEventListener('click', (event) => {
       if (!dropdown.contains(event.target)) {
         dropdown.classList.remove('open');
