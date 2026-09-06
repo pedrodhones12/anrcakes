@@ -29,8 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="countdown-inner">
         <div class="countdown-heading">
           <span class="countdown-kicker">CONTAGEM REGRESSIVA</span>
-          <h2>O grande dia está <em>chegando</em></h2>
-          <p>Prepare-se para a 5ª edição da Ane Cakes Fair.</p>
         </div>
         <div class="countdown-grid" role="timer" aria-live="polite">
           <div class="countdown-unit"><strong id="count-days">00</strong><span>DIAS</span></div>
@@ -40,11 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="countdown-unit"><strong id="count-minutes">00</strong><span>MINUTOS</span></div>
           <div class="countdown-separator">:</div>
           <div class="countdown-unit"><strong id="count-seconds">00</strong><span>SEGUNDOS</span></div>
-        </div>
-        <div class="countdown-footer">
-          <span>30 NOVEMBRO 2026</span>
-          <i></i>
-          <span>ILHÉUS · BAHIA</span>
         </div>
       </div>
     `;
