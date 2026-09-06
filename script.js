@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const quoteStrip = document.querySelector('.quote-strip');
   if (quoteStrip) quoteStrip.remove();
 
-  // Cronômetro profissional da página inicial
+  // Cronômetro profissional e responsivo da página inicial
   const hero = document.querySelector('.hero');
   if (hero && !document.querySelector('.event-countdown')) {
     const countdown = document.createElement('section');
@@ -41,6 +41,38 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `;
+
+    // Estilos próprios do cronômetro para evitar que regras do mobile da página o quebrem.
+    const style = document.createElement('style');
+    style.textContent = `
+      .event-countdown{display:block;width:100%;background:var(--brown);color:#fff;padding:34px 8vw;box-sizing:border-box}
+      .countdown-inner{width:100%;max-width:1200px;margin:0 auto;text-align:center}
+      .countdown-heading{margin:0 0 18px}
+      .countdown-kicker{display:inline-block;color:#f3d99f;font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
+      .countdown-grid{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;}
+      .countdown-unit{min-width:100px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+      .countdown-unit strong{font-family:"Cormorant Garamond",serif;font-size:54px;line-height:.9;color:#fff;font-weight:600;font-variant-numeric:tabular-nums}
+      .countdown-unit span{margin-top:9px;font-size:9px;letter-spacing:.16em;color:#e8d7ca;font-weight:700}
+      .countdown-separator{font-family:"Cormorant Garamond",serif;font-size:42px;color:#c69a42;line-height:1;margin-top:-12px}
+      @media(max-width:620px){
+        .event-countdown{padding:28px 14px}
+        .countdown-heading{margin-bottom:16px}
+        .countdown-kicker{font-size:9px;letter-spacing:.18em}
+        .countdown-grid{gap:3px;flex-wrap:nowrap}
+        .countdown-unit{min-width:0;flex:1 1 0}
+        .countdown-unit strong{font-size:clamp(31px,9.5vw,43px)}
+        .countdown-unit span{font-size:7px;letter-spacing:.08em;margin-top:8px;white-space:nowrap}
+        .countdown-separator{font-size:27px;margin-top:-10px;flex:0 0 auto}
+      }
+      @media(max-width:360px){
+        .event-countdown{padding-left:8px;padding-right:8px}
+        .countdown-grid{gap:1px}
+        .countdown-unit strong{font-size:29px}
+        .countdown-unit span{font-size:6px;letter-spacing:.04em}
+        .countdown-separator{font-size:23px}
+      }
+    `;
+    document.head.appendChild(style);
     hero.insertAdjacentElement('afterend', countdown);
 
     const eventDate = new Date('2026-11-30T00:00:00-03:00').getTime();
