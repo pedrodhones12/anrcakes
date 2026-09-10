@@ -1,1 +1,141 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="description" content="Batalha Doce | Ane Cakes Fair 2026"><title>Batalha Doce | Ane Cakes Fair</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"></head><body><div class="announcement">5ª EDIÇÃO · ILHÉUS, BAHIA · 30 DE NOVEMBRO DE 2026</div><header class="nav"><a class="brand" href="index.html"><img src="assets/image2.png" alt="Logo Ane Cakes Fair"></a><nav><a href="parceiros.html">Parceiros</a><a href="equipe.html">Equipe</a><a href="caravanas.html">Caravanas</a><a href="expositores.html">Expositores</a><a href="batalha-doce.html">Batalha Doce</a><a href="roteiro.html">Roteiro</a><a href="embaixadora.html">Embaixadora</a></nav><a class="nav-cta" href="index.html">Início</a></header><main><section class="section page-hero"><span class="eyebrow">05 · Batalha Doce</span><h1>Talento, criatividade e muito <em>sabor.</em></h1><p>A Batalha Doce celebra técnicas, criatividade e o talento dos participantes. Em breve serão divulgados regulamento, categorias e inscrições.</p><span class="status-badge">Em breve</span></section></main><footer><span>ANE CAKES FAIR</span><span>Capacitação que vira profissão. · Talento que vira negócio.</span></footer><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Batalha Doce | Ane Cakes Fair — criatividade, confeitaria brasileira e novos sabores.">
+<title>Batalha Doce | Ane Cakes Fair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.battle-hero{background:var(--brown);color:#fff;min-height:70vh;display:flex;align-items:flex-end;padding-bottom:85px}
+.battle-hero .hero-copy{max-width:900px}
+.battle-hero h1{font-family:"Cormorant Garamond",serif;font-size:clamp(58px,9vw,118px);line-height:.86;margin:18px 0 28px;letter-spacing:-.03em}
+.battle-hero p{max-width:690px;color:#eadbd2;font-size:17px;line-height:1.8}
+.battle-label{color:#d7b878!important}
+.battle-intro{display:grid;grid-template-columns:.8fr 1.2fr;gap:8vw;align-items:start}
+.battle-intro h2,.battle-section h2,.battle-cta h2{font-family:"Cormorant Garamond",serif;font-size:clamp(46px,6vw,76px);line-height:.92;margin:14px 0 22px}
+.battle-intro p,.battle-section p{color:#6a574d;font-size:15px;line-height:1.85}
+.battle-note{border-top:1px solid var(--line);padding-top:25px;margin-top:30px}
+.battle-note strong{display:block;font-family:"Cormorant Garamond",serif;font-size:25px;margin-bottom:8px}
+.battle-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:45px}
+.battle-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:32px;min-height:245px}
+.battle-card span{color:var(--gold);font-size:11px;letter-spacing:.16em;font-weight:700}
+.battle-card h3{font-family:"Cormorant Garamond",serif;font-size:31px;margin:14px 0 9px}
+.battle-card p{font-size:13px;margin:0;color:#6a574d}
+.battle-flow{background:var(--cream)}
+.flow-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:45px}
+.flow-item{padding:25px 16px;background:#fff;border:1px solid var(--line);border-radius:15px;text-align:center}
+.flow-item span{display:block;color:var(--gold);font-size:10px;letter-spacing:.12em;margin-bottom:8px}
+.flow-item strong{font-family:"Cormorant Garamond",serif;font-size:23px}
+.battle-section{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center}
+.battle-section.dark{background:var(--brown);color:#fff}
+.battle-section.dark p{color:#eadbd2}
+.battle-list{display:grid;gap:14px;margin-top:28px}
+.battle-list div{padding:18px 20px;border-left:2px solid var(--gold);background:rgba(255,255,255,.04)}
+.battle-list strong{font-size:14px;display:block;margin-bottom:4px}
+.battle-list span{font-size:12px;color:#eadbd2}
+.battle-cta{text-align:center;background:var(--cream)}
+.battle-cta p{max-width:620px;margin:0 auto 30px;color:#6a574d;line-height:1.8}
+@media(max-width:950px){.battle-intro,.battle-section{grid-template-columns:1fr 1fr}.battle-pillars{grid-template-columns:1fr 1fr}.flow-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.battle-hero{min-height:62vh;padding-bottom:55px}.battle-intro,.battle-section,.battle-pillars{grid-template-columns:1fr}.flow-grid{grid-template-columns:1fr 1fr}.battle-hero h1{font-size:62px}}
+</style>
+</head>
+<body>
+<div class="announcement">5ª EDIÇÃO · ILHÉUS, BAHIA · DA ORIGEM AO DESTINO</div>
+<header class="nav">
+<a class="brand" href="index.html"><img src="assets/image2.png" alt="Logo Ane Cakes Fair"></a>
+<nav><a href="parceiros.html">Parceiros</a><a href="equipe.html">Equipe</a><a href="caravanas.html">Caravanas</a><a href="expositores.html">Expositores</a><a href="batalha-doce.html">Batalha Doce</a><a href="roteiro.html">Roteiro</a><a href="embaixadora.html">Embaixadora</a></nav>
+<a class="nav-cta" href="index.html">Início</a>
+</header>
+
+<main>
+<section class="battle-hero">
+<div class="section hero-copy">
+<span class="eyebrow battle-label">BRASIL QUE CRIA · 05</span>
+<h1>Batalha <em>Doce.</em></h1>
+<p>Uma experiência para celebrar a confeitaria brasileira como espaço de técnica, criatividade, identidade e descoberta — conectando ingredientes, saberes e pessoas por meio da criação.</p>
+<span class="status-badge">Inscrições e regulamento em breve</span>
+</div>
+</section>
+
+<section class="section battle-intro">
+<div>
+<span class="eyebrow">O sentido da Batalha</span>
+<h2>Não é apenas uma <em>competição.</em></h2>
+</div>
+<div>
+<p>A Batalha Doce faz parte do movimento <strong>Brasil que Cria</strong>. Seu papel é colocar a criatividade em evidência e mostrar o que pode acontecer quando confeiteiros e criadores transformam ingredientes, técnicas e referências brasileiras em novas experiências.</p>
+<p>Ela mantém a essência da confeitaria no centro da feira, mas passa a dialogar com a narrativa maior da 5ª edição: <strong>da origem ao destino</strong>.</p>
+<div class="battle-note"><strong>Ingrediente → técnica → criação → experiência</strong><span>Uma criação pode contar uma história sobre um território, um saber ou um ingrediente.</span></div>
+</div>
+</section>
+
+<section class="section battle-flow">
+<div class="section-heading centered">
+<span class="eyebrow">Dentro da jornada</span>
+<h2>Onde a Batalha Doce se <em>encaixa.</em></h2>
+<p>A competição não fica isolada da programação. Ela ajuda o visitante a acompanhar a passagem do conhecimento para a criação.</p>
+</div>
+<div class="flow-grid">
+<div class="flow-item"><span>01</span><strong>Origem</strong></div>
+<div class="flow-item"><span>02</span><strong>Transformação</strong></div>
+<div class="flow-item"><span>03</span><strong>Criação</strong></div>
+<div class="flow-item"><span>04</span><strong>Conexão</strong></div>
+<div class="flow-item"><span>05</span><strong>Experiência</strong></div>
+<div class="flow-item"><span>06</span><strong>Destino</strong></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-heading">
+<span class="eyebrow">O que queremos provocar</span>
+<h2>Talento que vira <em>repertório.</em></h2>
+<p>A Batalha deverá contribuir para que o público descubra novas possibilidades para ingredientes e referências brasileiras, acompanhe processos de criação e reconheça o conhecimento existente por trás de cada resultado.</p>
+</div>
+<div class="battle-pillars">
+<article class="battle-card"><span>01 · TÉCNICA</span><h3>Conhecimento em prática</h3><p>Valorizar domínio técnico, processos e modos de fazer que tornam a criação possível.</p></article>
+<article class="battle-card"><span>02 · CRIATIVIDADE</span><h3>Novas possibilidades</h3><p>Estimular interpretações, combinações e aplicações que ampliem o repertório da confeitaria.</p></article>
+<article class="battle-card"><span>03 · IDENTIDADE</span><h3>Sabores do Brasil</h3><p>Aproximar criação, ingredientes, memórias e referências territoriais brasileiras.</p></article>
+</div>
+</section>
+
+<section class="section battle-section dark">
+<div>
+<span class="eyebrow battle-label">Descobrir o Cupuaçu</span>
+<h2>Um ingrediente pode abrir uma <em>nova conversa.</em></h2>
+<p>Quando fizer sentido para a curadoria, a Batalha Doce poderá integrar o programa transversal Descobrir o Cupuaçu, levando o ingrediente da descoberta à experimentação e à criação.</p>
+</div>
+<div class="battle-list">
+<div><strong>Conhecer</strong><span>Origem, características e contexto do ingrediente.</span></div>
+<div><strong>Experimentar</strong><span>Técnicas, combinações e possibilidades de aplicação.</span></div>
+<div><strong>Criar</strong><span>Novas interpretações em diálogo com a confeitaria brasileira.</span></div>
+<div><strong>Registrar</strong><span>Descobertas que possam alimentar o legado da edição.</span></div>
+</div>
+</section>
+
+<section class="section battle-intro">
+<div>
+<span class="eyebrow">Experiência do visitante</span>
+<h2>Quem assiste também <em>descobre.</em></h2>
+</div>
+<div>
+<p>O público não precisa apenas ver o resultado final. A experiência pode revelar ingredientes, técnicas, decisões e caminhos de criação, aproximando quem visita daquilo que normalmente acontece nos bastidores.</p>
+<p>Assim, a Batalha Doce se conecta à proposta maior da feira: <strong>sair sabendo mais do que sabia quando entrou.</strong></p>
+</div>
+</section>
+
+<section class="section battle-cta">
+<span class="eyebrow">Em breve</span>
+<h2>Prepare-se para <em>criar.</em></h2>
+<p>Regulamento, critérios, formato e inscrições serão divulgados quando a curadoria da 5ª edição estiver definida.</p>
+<a class="btn btn-primary" href="index.html">Voltar ao Ane Cakes Fair →</a>
+</section>
+</main>
+
+<footer><span>ANE CAKES FAIR</span><span>Da origem ao destino · Ilhéus, Bahia</span></footer>
+<script src="script.js"></script>
+</body>
+</html>
