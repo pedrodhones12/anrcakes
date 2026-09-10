@@ -100,4 +100,58 @@ document.addEventListener('DOMContentLoaded', () => {
   if (mobileToggle && mainNav) {
     mobileToggle.addEventListener('click',()=>{const isOpen=mainNav.classList.toggle('open');mobileToggle.setAttribute('aria-expanded',isOpen);mobileToggle.textContent=isOpen?'×':'☰';});
   }
+
+  /* Visualização ampliada de qualquer imagem da página */
+  const lightbox = document.createElement('div');
+  lightbox.className = 'image-lightbox';
+  lightbox.setAttribute('role','dialog');
+  lightbox.setAttribute('aria-modal','true');
+  lightbox.setAttribute('aria-label','Imagem ampliada');
+  lightbox.innerHTML = '<button class="image-lightbox-close" type="button" aria-label="Fechar imagem">×</button><img src="" alt=""><div class="image-lightbox-caption"></div>';
+  document.body.appendChild(lightbox);
+
+  const lightboxImage = lightbox.querySelector('img');
+  const lightboxCaption = lightbox.querySelector('.image-lightbox-caption');
+  const closeLightbox = () => {
+    lightbox.classList.remove('is-open');
+    lightboxImage.removeAttribute('src');
+    lightboxImage.alt = '';
+    lightboxCaption.textContent = '';
+    document.body.style.overflow = '';
+  };
+  const openLightbox = (img) => {
+    const source = img.currentSrc || img.src;
+    if (!source) return;
+    lightboxImage.src = source;
+    lightboxImage.alt = img.alt || 'Imagem ampliada';
+    lightboxCaption.textContent = img.alt || '';
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  document.querySelectorAll('img').forEach((img) => {
+    img.dataset.lightbox = 'true';
+    img.setAttribute('tabindex','0');
+    img.setAttribute('role','button');
+    img.setAttribute('aria-label', (img.alt ? 'Ampliar: ' + img.alt : 'Ampliar imagem'));
+    img.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openLightbox(img);
+    });
+    img.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLightbox(img);
+      }
+    });
+  });
+
+  lightbox.querySelector('.image-lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
+  });
 });
