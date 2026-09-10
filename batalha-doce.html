@@ -30,6 +30,12 @@
 .flow-item{padding:25px 16px;background:#fff;border:1px solid var(--line);border-radius:15px;text-align:center}
 .flow-item span{display:block;color:var(--gold);font-size:10px;letter-spacing:.12em;margin-bottom:8px}
 .flow-item strong{font-family:"Cormorant Garamond",serif;font-size:23px}
+.battle-video{background:var(--cream)}
+.battle-video-wrap{max-width:1120px;margin:42px auto 0;position:relative;border-radius:24px;overflow:hidden;background:#17110e;box-shadow:0 24px 70px rgba(47,31,24,.18)}
+.battle-video video{display:block;width:100%;height:auto;max-height:720px;object-fit:contain;background:#17110e}
+.battle-video-caption{display:flex;justify-content:space-between;gap:30px;align-items:center;padding:20px 24px;background:#fff;border:1px solid var(--line);border-top:0}
+.battle-video-caption strong{font-family:"Cormorant Garamond",serif;font-size:25px}
+.battle-video-caption span{font-size:12px;color:#6a574d;line-height:1.5;text-align:right}
 .battle-section{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center}
 .battle-section.dark{background:var(--brown);color:#fff}
 .battle-section.dark p{color:#eadbd2}
@@ -40,7 +46,7 @@
 .battle-cta{text-align:center;background:var(--cream)}
 .battle-cta p{max-width:620px;margin:0 auto 30px;color:#6a574d;line-height:1.8}
 @media(max-width:950px){.battle-intro,.battle-section{grid-template-columns:1fr 1fr}.battle-pillars{grid-template-columns:1fr 1fr}.flow-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:620px){.battle-hero{min-height:62vh;padding-bottom:55px}.battle-intro,.battle-section,.battle-pillars{grid-template-columns:1fr}.flow-grid{grid-template-columns:1fr 1fr}.battle-hero h1{font-size:62px}}
+@media(max-width:620px){.battle-hero{min-height:62vh;padding-bottom:55px}.battle-intro,.battle-section,.battle-pillars{grid-template-columns:1fr}.flow-grid{grid-template-columns:1fr 1fr}.battle-hero h1{font-size:62px}.battle-video-caption{display:block}.battle-video-caption span{display:block;text-align:left;margin-top:8px}}
 </style>
 </head>
 <body>
@@ -70,6 +76,24 @@
 <p>A Batalha Doce faz parte do movimento <strong>Brasil que Cria</strong>. Seu papel é colocar a criatividade em evidência e mostrar o que pode acontecer quando confeiteiros e criadores transformam ingredientes, técnicas e referências brasileiras em novas experiências.</p>
 <p>Ela mantém a essência da confeitaria no centro da feira, mas passa a dialogar com a narrativa maior da 5ª edição: <strong>da origem ao destino</strong>.</p>
 <div class="battle-note"><strong>Ingrediente → técnica → criação → experiência</strong><span>Uma criação pode contar uma história sobre um território, um saber ou um ingrediente.</span></div>
+</div>
+</section>
+
+<section class="section battle-video">
+<div class="section-heading centered">
+<span class="eyebrow">Batalha Doce</span>
+<h2>Onde o talento encontra a <em>criação.</em></h2>
+<p>Um registro audiovisual da experiência, apresentado como parte da narrativa da Batalha Doce e do Brasil que Cria.</p>
+</div>
+<div class="battle-video-wrap">
+<video controls preload="metadata" playsinline>
+<source src="videos/assets/videos/batalha de confeiteiras.mp4" type="video/mp4">
+Seu navegador não suporta a reprodução de vídeo.
+</video>
+<div class="battle-video-caption">
+<strong>Batalha de Confeiteiras</strong>
+<span>Técnica · criatividade · identidade · confeitaria brasileira</span>
+</div>
 </div>
 </section>
 
