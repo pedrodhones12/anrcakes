@@ -1,179 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Ane Cakes Fair | Visit the Origin — Ilhéus, Costa do Cacau, sabores brasileiros, território, produtores, cultura e experiências.">
-  <title>Ane Cakes Fair | Visit the Origin</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="portal.css">
-  <style>
-    .origin-video{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:48px;align-items:center}
-    .origin-video-media{background:#111;border-radius:24px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.16)}
-    .origin-video-media video{display:block;width:100%;aspect-ratio:9/16;max-height:680px;object-fit:cover;background:#000}
-    .origin-video-copy .eyebrow{display:inline-block;margin-bottom:14px}
-    .origin-video-copy h2{font-size:clamp(2rem,4vw,3.6rem);line-height:1.05;margin:0 0 20px}
-    .origin-video-copy h2 em{font-weight:400}
-    .origin-video-copy p{max-width:620px;font-size:1.08rem;line-height:1.8}
-    .origin-video-note{margin-top:22px;padding:18px 20px;border-left:2px solid currentColor;opacity:.82}
-    .program-intro{max-width:820px;margin-bottom:38px}
-    .program-intro h2{font-size:clamp(2rem,4vw,3.4rem);line-height:1.08;margin:8px 0 16px}
-    .program-intro h2 em{font-weight:400}
-    .program-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-    .program-card{padding:30px;border:1px solid rgba(0,0,0,.12);border-radius:20px;background:rgba(255,255,255,.5)}
-    .program-card span{font-size:.75rem;letter-spacing:.16em;font-weight:700;opacity:.62}
-    .program-card h3{margin:10px 0 8px;font-size:1.35rem}
-    .program-card p{margin:0;line-height:1.7}
-    .journey{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:34px}
-    .journey div{padding:18px 12px;text-align:center;border-top:1px solid currentColor;font-size:.82rem;letter-spacing:.05em}
-    .territory-highlight{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-    .territory-highlight .territory-card{min-height:230px}
-    .quote-large{font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.2;max-width:900px}
-    .legacy-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
-    .legacy-list div{padding:20px;border:1px solid rgba(255,255,255,.18);border-radius:16px}
-    .legacy-list strong{display:block;margin-bottom:5px}
-    @media(max-width:800px){.origin-video,.territory-highlight{grid-template-columns:1fr}.program-grid{grid-template-columns:1fr}.journey{grid-template-columns:repeat(2,1fr)}.legacy-list{grid-template-columns:1fr 1fr}.origin-video-media video{max-height:620px}}
-    @media(max-width:520px){.legacy-list{grid-template-columns:1fr}.journey{grid-template-columns:1fr 1fr}}
-  </style>
-</head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Ane Cakes Fair | Visit the Origin — Ilhéus, Costa do Cacau, sabores brasileiros, território, produtores, cultura e experiências."><title>Ane Cakes Fair | Visit the Origin</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="portal.css">
+<style>
+.origin-video{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:48px;align-items:center}.origin-video-media{background:#111;border-radius:24px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.16)}.origin-video-media video{display:block;width:100%;aspect-ratio:9/16;max-height:680px;object-fit:cover;background:#000}.origin-video-copy .eyebrow{display:inline-block;margin-bottom:14px}.origin-video-copy h2{font-size:clamp(2rem,4vw,3.6rem);line-height:1.05;margin:0 0 20px}.origin-video-copy h2 em{font-weight:400}.origin-video-copy p{max-width:620px;font-size:1.08rem;line-height:1.8}.origin-video-note{margin-top:22px;padding:18px 20px;border-left:2px solid currentColor;opacity:.82}.program-intro{max-width:820px;margin-bottom:38px}.program-intro h2{font-size:clamp(2rem,4vw,3.4rem);line-height:1.08;margin:8px 0 16px}.program-intro h2 em{font-weight:400}.program-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.program-card{padding:30px;border:1px solid rgba(0,0,0,.12);border-radius:20px;background:rgba(255,255,255,.5)}.program-card span{font-size:.75rem;letter-spacing:.16em;font-weight:700;opacity:.62}.program-card h3{margin:10px 0 8px;font-size:1.35rem}.program-card p{margin:0;line-height:1.7}.journey{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:34px}.journey div{padding:18px 12px;text-align:center;border-top:1px solid currentColor;font-size:.82rem;letter-spacing:.05em}.territory-highlight{display:grid;grid-template-columns:1fr 1fr;gap:20px}.territory-highlight .territory-card{min-height:230px}.quote-large{font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.2;max-width:900px}.legacy-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}.legacy-list div{padding:20px;border:1px solid rgba(255,255,255,.18);border-radius:16px}.legacy-list strong{display:block;margin-bottom:5px}@media(max-width:800px){.origin-video,.territory-highlight{grid-template-columns:1fr}.program-grid{grid-template-columns:1fr}.journey{grid-template-columns:repeat(2,1fr)}.legacy-list{grid-template-columns:1fr 1fr}.origin-video-media video{max-height:620px}}@media(max-width:520px){.legacy-list{grid-template-columns:1fr}.journey{grid-template-columns:1fr 1fr}}
+</style></head>
 <body>
-  <div class="announcement">VISIT THE ORIGIN · ILHÉUS · COSTA DO CACAU</div>
-
-  <header class="nav">
-    <a class="brand" href="index.html"><img src="assets/image2.png" alt="Ane Cakes Fair"></a>
-    <nav class="page-nav">
-      <a href="index.html">Início</a>
-      <a href="historia.html">Nossa história</a>
-      <a href="mulheres.html">Mulheres</a>
-      <a href="origem.html">Origem</a>
-      <a href="territorio.html">Território</a>
-      <a href="historias.html">Histórias</a>
-    </nav>
-    <a class="nav-cta" href="index.html#evento">5ª edição</a>
-  </header>
-
-  <main>
-    <section class="page-hero section">
-      <span class="eyebrow">Visit the Origin</span>
-      <h1>Você experimentou o Brasil. <em>Agora descubra onde essa história começa.</em></h1>
-      <p>O Ane Cakes Fair parte da confeitaria para revelar uma cadeia muito maior: ingredientes, produtores, pesquisadores, criadores, cultura, turismo, negócios e territórios que transformam sabores brasileiros em experiências.</p>
-    </section>
-
-    <section class="section origin-video">
-      <div class="origin-video-media">
-        <video controls playsinline preload="metadata" poster="assets/image7.jpg">
-          <source src="videos/assets/videos/confratenização.mp4" type="video/mp4">
-          Seu navegador não suporta a reprodução de vídeo.
-        </video>
-      </div>
-      <div class="origin-video-copy">
-        <span class="eyebrow">Uma história em movimento</span>
-        <h2>Antes de conhecer o território, <em>conheça a história.</em></h2>
-        <p>O território não aparece como um cenário separado da feira. Ele nasce das pessoas, dos saberes e das experiências que fazem a confeitaria acontecer.</p>
-        <p>Este vídeo ajuda a apresentar essa trajetória e prepara o visitante para enxergar a 5ª edição como uma jornada: da formação à criação, da criação à origem e da origem à experiência.</p>
-        <div class="origin-video-note"><strong>A feira dura dois dias.</strong><br>Mas a história que ela apresenta pode continuar sendo descoberta muito depois.</div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="program-intro">
-        <span class="eyebrow">Descobrir o Cupuaçu</span>
-        <h2>Um programa que atravessa a feira. <em>Um fruto que abre novas perguntas.</em></h2>
-        <p>O cupuaçu será tratado como ponto de encontro entre território, biodiversidade, conhecimento, criatividade e mercado. A proposta é transformar descoberta em experiência e experiência em conhecimento que continua circulando.</p>
-      </div>
-
-      <div class="program-grid">
-        <article class="program-card"><span>01 · BRASIL DE ORIGEM</span><h3>Território, fruto e biodiversidade</h3><p>Quem produz? Onde nasce? Quais histórias, saberes e características estão por trás do ingrediente?</p></article>
-        <article class="program-card"><span>02 · BRASIL QUE TRANSFORMA</span><h3>Do ingrediente às possibilidades</h3><p>Características, processamento, técnicas e diferentes formas de transformar o cupuaçu em produto e experiência.</p></article>
-        <article class="program-card"><span>03 · BRASIL QUE CRIA</span><h3>Novas receitas e aplicações</h3><p>Chefs, confeiteiros e criadores experimentam combinações e apresentam novas leituras de ingredientes brasileiros.</p></article>
-        <article class="program-card"><span>04 · ARENA DE SABERES</span><h3>Conhecimento encontra público</h3><p>Pesquisadores, produtores, especialistas e criadores compartilham conhecimento e mostram como ele pode gerar novas possibilidades.</p></article>
-        <article class="program-card"><span>05 · DESAFIO CRIATIVO</span><h3>Experimentar para descobrir</h3><p>Criações a partir do cupuaçu em diálogo com outros ingredientes brasileiros, conectando repertórios e territórios.</p></article>
-        <article class="program-card"><span>06 · ARENA KIDS</span><h3>Descobrir desde cedo</h3><p>Sabores, ingredientes, território e cultura alimentar apresentados de forma adequada às crianças, estimulando curiosidade e repertório.</p></article>
-      </div>
-
-      <div class="journey" aria-label="Jornada do conhecimento">
-        <div>CONHECER</div><div>EXPERIMENTAR</div><div>APRENDER</div><div>CRIAR</div><div>REGISTRAR</div><div>COMPARTILHAR</div>
-      </div>
-    </section>
-
-    <section class="section territory-grid">
-      <div class="program-intro">
-        <span class="eyebrow">Encontro de territórios</span>
-        <h2>Caravanas que trazem <em>mais do que uma criação.</em></h2>
-        <p>Cada município ou território participante poderá apresentar ingredientes, memórias, referências e saberes. Em vez de dezenas de espaços desconectados, a exposição Brasil que Cria transforma essas contribuições em uma narrativa coletiva.</p>
-      </div>
-      <div class="territory-highlight">
-        <div class="territory-card large"><img src="assets/image7.jpg" alt="Experiência do Ane Cakes Fair no território"><div><span>01</span><h2>Ilhéus</h2><p>Um território onde cacau, gastronomia, cultura, natureza e hospitalidade podem fazer parte da mesma história.</p></div></div>
-        <div class="territory-card"><span>02</span><h2>Fazendas de cacau</h2><p>Conheça a origem da matéria-prima e as pessoas que fazem essa história começar.</p></div>
-        <div class="territory-card"><span>03</span><h2>Chocolate & gastronomia</h2><p>Descubra como ingredientes, técnicas e criatividade se transformam em experiências.</p></div>
-        <div class="territory-card"><span>04</span><h2>Cultura & natureza</h2><p>Amplie a experiência para além da mesa e descubra a paisagem, a cultura e a biodiversidade da Costa do Cacau.</p></div>
-        <div class="territory-card"><span>05</span><h2>Hospedagem & experiências</h2><p>Conecte visitantes a lugares, pessoas e experiências que permitam viver a história fora da feira.</p></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="program-intro">
-        <span class="eyebrow">Business Arena</span>
-        <h2>A cultura cria valor. <em>O mercado cria negócios.</em></h2>
-        <p>A feira conecta os dois sem confundir suas funções. A dimensão comercial deverá aproximar produtores, indústria, fornecedores, empreendedores, marcas, compradores, profissionais, gastronomia, turismo e parceiros internacionais.</p>
-      </div>
-      <div class="program-grid">
-        <article class="program-card"><span>CONEXÃO</span><h3>Produtor ↔ indústria</h3><p>Origem e capacidade produtiva encontram empresas interessadas em desenvolver relações.</p></article>
-        <article class="program-card"><span>NEGÓCIOS</span><h3>Fornecedor ↔ empreendedor</h3><p>Quem cria e quem fornece se aproximam em um ambiente pensado para conexões intencionais.</p></article>
-        <article class="program-card"><span>MARCA</span><h3>Marca ↔ comprador</h3><p>Produtos e soluções ganham espaço para apresentação, relacionamento e novas oportunidades.</p></article>
-        <article class="program-card"><span>TERRITÓRIO</span><h3>Gastronomia ↔ turismo</h3><p>O sabor experimentado na feira pode se transformar em vontade de conhecer sua origem.</p></article>
-      </div>
-    </section>
-
-    <section class="section dark-message">
-      <span class="eyebrow">Brazil to the World</span>
-      <h2>O sabor brasileiro pode ser <em>uma ponte para o mundo.</em></h2>
-      <p>A internacionalização não será apenas a presença de estrangeiros. Ela será construída por compradores, empresas, chefs, distribuidores, conteúdo, imprensa, reuniões digitais, parceiros e relacionamento institucional, com Estados Unidos e China como mercados prioritários do movimento inicial.</p>
-      <p class="quote-large">Cacau, cupuaçu e a biodiversidade brasileira podem funcionar como portas de entrada para novas conexões.</p>
-    </section>
-
-    <section class="section">
-      <div class="program-intro">
-        <span class="eyebrow">Visit the Origin</span>
-        <h2>Você experimentou o Brasil. <em>Agora descubra onde essa história começa.</em></h2>
-        <p>Depois de provar um chocolate, conhecer um produtor, descobrir o cupuaçu ou compreender uma criação, a pergunta muda: onde posso viver essa história?</p>
-      </div>
-      <div class="program-grid">
-        <article class="program-card"><span>ORIGEM</span><h3>Fazendas de cacau</h3><p>Experiências ligadas à produção, ao território e às pessoas que cultivam a matéria-prima.</p></article>
-        <article class="program-card"><span>SABOR</span><h3>Chocolate & gastronomia</h3><p>Lugares onde ingredientes locais se transformam em produtos, receitas e experiências.</p></article>
-        <article class="program-card"><span>CULTURA</span><h3>Natureza & patrimônio</h3><p>Uma jornada que conecta sabores à paisagem, à cultura e à identidade regional.</p></article>
-        <article class="program-card"><span>DESTINO</span><h3>Hospedagem & experiências</h3><p>Conexões que ajudam o visitante a transformar curiosidade em permanência e descoberta.</p></article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="program-intro">
-        <span class="eyebrow">Acesso, formação e legado</span>
-        <h2>O conhecimento não termina quando <em>as portas se fecham.</em></h2>
-        <p>A nova visão da feira busca democratizar o acesso, ampliar ações formativas, incorporar acessibilidade desde o planejamento e registrar parte do conhecimento desenvolvido durante a edição.</p>
-      </div>
-      <div class="legacy-list">
-        <div><strong>Saberes compartilhados</strong><span>Conhecimento acessível e conectado a diferentes públicos.</span></div>
-        <div><strong>Novas criações</strong><span>Experimentações que podem continuar depois da feira.</span></div>
-        <div><strong>Produtores visíveis</strong><span>Mais reconhecimento para origem, território e cadeia produtiva.</span></div>
-        <div><strong>Conexões</strong><span>Novos negócios, relacionamentos e pontes internacionais.</span></div>
-        <div><strong>Caderno de Saberes e Receitas</strong><span>Registro digital gratuito do eixo Descobrir o Cupuaçu.</span></div>
-        <div><strong>Ilhéus fortalecida</strong><span>Uma imagem de território que conecta gastronomia, cultura, natureza e turismo.</span></div>
-      </div>
-    </section>
-
-    <section class="section dark-message">
-      <span class="eyebrow">Nosso norte</span>
-      <h2>Começamos pela confeitaria. <em>Chegamos ao território.</em></h2>
-      <p class="quote-large">O Ane Cakes Fair existe para tornar visíveis, transmitir e conectar os saberes, pessoas e cadeias que transformam a riqueza de um território em cultura alimentar, criação, negócios, experiência e desenvolvimento.</p>
-      <p>O projeto não é apenas uma feira comercial, uma formatura, um congresso ou uma feira genérica de alimentos. Todos os elementos precisam estar conectados por uma mesma narrativa e ter uma razão clara para existir.</p>
-      <a class="btn btn-light" href="index.html#evento">Conhecer a 5ª edição →</a>
-    </section>
-  </main>
-
-  <footer>
-    <span>ANE CAKES FAIR</span>
-    <span>Ilhéus · Bahia · Costa do Cacau</span>
-  </footer>
-</body>
-</html>
+<div class="announcement">VISIT THE ORIGIN · ILHÉUS · COSTA DO CACAU</div>
+<header class="nav"><a class="brand" href="index.html"><img src="assets/image2.png" alt="Ane Cakes Fair"></a><nav class="page-nav"><a href="index.html">Início</a><a href="historia.html">Nossa história</a><a href="mulheres.html">Mulheres</a><a href="origem.html">Origem</a><a href="territorio.html">Território</a><a href="historias.html">Histórias</a></nav><a class="nav-cta" href="index.html#evento">5ª edição</a></header>
+<main>
+<section class="page-hero section"><span class="eyebrow">Visit the Origin</span><h1>Você experimentou o Brasil. <em>Agora descubra onde essa história começa.</em></h1><p>O Ane Cakes Fair parte da confeitaria para revelar uma cadeia muito maior: ingredientes, produtores, pesquisadores, criadores, cultura, turismo, negócios e territórios que transformam sabores brasileiros em experiências.</p></section>
+<section class="section origin-video"><div class="origin-video-media"><video controls playsinline preload="metadata" poster="assets/image7.jpg"><source src="videos/assets/videos/confratenização.mp4" type="video/mp4">Seu navegador não suporta a reprodução de vídeo.</video></div><div class="origin-video-copy"><span class="eyebrow">Uma história em movimento</span><h2>Antes de conhecer o território, <em>conheça a história.</em></h2><p>O território não aparece como um cenário separado da feira. Ele nasce das pessoas, dos saberes e das experiências que fazem a confeitaria acontecer.</p><p>Este vídeo ajuda a apresentar essa trajetória e prepara o visitante para enxergar a 5ª edição como uma jornada: da formação à criação, da criação à origem e da origem à experiência.</p><div class="origin-video-note"><strong>A feira dura dois dias.</strong><br>Mas a história que ela apresenta pode continuar sendo descoberta muito depois.</div></div></section>
+<section class="section"><div class="program-intro"><span class="eyebrow">Descobrir o Cupuaçu</span><h2>Um programa que atravessa a feira. <em>Um fruto que abre novas perguntas.</em></h2><p>O cupuaçu será tratado como ponto de encontro entre território, biodiversidade, conhecimento, criatividade e mercado. A proposta é transformar descoberta em experiência e experiência em conhecimento que continua circulando.</p></div><div class="program-grid"><article class="program-card"><span>01 · BRASIL DE ORIGEM</span><h3>Território, fruto e biodiversidade</h3><p>Quem produz? Onde nasce? Quais histórias, saberes e características estão por trás do ingrediente?</p></article><article class="program-card"><span>02 · BRASIL QUE TRANSFORMA</span><h3>Do ingrediente às possibilidades</h3><p>Características, processamento, técnicas e diferentes formas de transformar o cupuaçu em produto e experiência.</p></article><article class="program-card"><span>03 · BRASIL QUE CRIA</span><h3>Novas receitas e aplicações</h3><p>Chefs, confeiteiros e criadores experimentam combinações e apresentam novas leituras de ingredientes brasileiros.</p></article><article class="program-card"><span>04 · ARENA DE SABERES</span><h3>Conhecimento encontra público</h3><p>Pesquisadores, produtores, especialistas e criadores compartilham conhecimento e mostram como ele pode gerar novas possibilidades.</p></article><article class="program-card"><span>05 · DESAFIO CRIATIVO</span><h3>Experimentar para descobrir</h3><p>Criações a partir do cupuaçu em diálogo com outros ingredientes brasileiros, conectando repertórios e territórios.</p></article><article class="program-card"><span>06 · ARENA KIDS</span><h3>Descobrir desde cedo</h3><p>Sabores, ingredientes, território e cultura alimentar apresentados de forma adequada às crianças, estimulando curiosidade e repertório.</p></article></div><div class="journey" aria-label="Jornada do conhecimento"><div>CONHECER</div><div>EXPERIMENTAR</div><div>APRENDER</div><div>CRIAR</div><div>REGISTRAR</div><div>COMPARTILHAR</div></div></section>
+<section class="section territory-grid"><div class="program-intro"><span class="eyebrow">Encontro de territórios</span><h2>Caravanas que trazem <em>mais do que uma criação.</em></h2><p>Cada município ou território participante poderá apresentar ingredientes, memórias, referências e saberes. Em vez de dezenas de espaços desconectados, a exposição Brasil que Cria transforma essas contribuições em uma narrativa coletiva.</p></div><div class="territory-highlight"><div class="territory-card large"><img src="assets/image7.jpg" alt="Experiência do Ane Cakes Fair no território"><div><span>01</span><h2>Ilhéus</h2><p>Um território onde cacau, gastronomia, cultura, natureza e hospitalidade podem fazer parte da mesma história.</p></div></div><div class="territory-card"><span>02</span><h2>Fazendas de cacau</h2><p>Conheça a origem da matéria-prima e as pessoas que fazem essa história começar.</p></div><div class="territory-card"><span>03</span><h2>Chocolate & gastronomia</h2><p>Descubra como ingredientes, técnicas e criatividade se transformam em experiências.</p></div><div class="territory-card"><span>04</span><h2>Cultura & natureza</h2><p>Amplie a experiência para além da mesa e descubra a paisagem, a cultura e a biodiversidade da Costa do Cacau.</p></div><div class="territory-card"><span>05</span><h2>Hospedagem & experiências</h2><p>Conecte visitantes a lugares, pessoas e experiências que permitam viver a história fora da feira.</p></div></div></section>
+<section class="section"><div class="program-intro"><span class="eyebrow">Business Arena</span><h2>A cultura cria valor. <em>O mercado cria negócios.</em></h2><p>A feira conecta os dois sem confundir suas funções. A dimensão comercial deverá aproximar produtores, indústria, fornecedores, empreendedores, marcas, compradores, profissionais, gastronomia, turismo e parceiros internacionais.</p></div><div class="program-grid"><article class="program-card"><span>CONEXÃO</span><h3>Produtor ↔ indústria</h3><p>Origem e capacidade produtiva encontram empresas interessadas em desenvolver relações.</p></article><article class="program-card"><span>NEGÓCIOS</span><h3>Fornecedor ↔ empreendedor</h3><p>Quem cria e quem fornece se aproximam em um ambiente pensado para conexões intencionais.</p></article><article class="program-card"><span>MARCA</span><h3>Marca ↔ comprador</h3><p>Produtos e soluções ganham espaço para apresentação, relacionamento e novas oportunidades.</p></article><article class="program-card"><span>TERRITÓRIO</span><h3>Gastronomia ↔ turismo</h3><p>O sabor experimentado na feira pode se transformar em vontade de conhecer sua origem.</p></article></div></section>
+<section class="section dark-message"><span class="eyebrow">Brazil to the World</span><h2>O sabor brasileiro pode ser <em>uma ponte para o mundo.</em></h2><p>A internacionalização não será apenas a presença de estrangeiros. Ela será construída por compradores, empresas, chefs, distribuidores, conteúdo, imprensa, reuniões digitais, parceiros e relacionamento institucional, com Estados Unidos e China como mercados prioritários do movimento inicial.</p><p class="quote-large">Cacau, cupuaçu e a biodiversidade brasileira podem funcionar como portas de entrada para novas conexões.</p></section>
+<section class="section"><div class="program-intro"><span class="eyebrow">Visit the Origin</span><h2>Você experimentou o Brasil. <em>Agora descubra onde essa história começa.</em></h2><p>Depois de provar um chocolate, conhecer um produtor, descobrir o cupuaçu ou compreender uma criação, a pergunta muda: onde posso viver essa história?</p></div><div class="program-grid"><article class="program-card"><span>ORIGEM</span><h3>Fazendas de cacau</h3><p>Experiências ligadas à produção, ao território e às pessoas que cultivam a matéria-prima.</p></article><article class="program-card"><span>SABOR</span><h3>Chocolate & gastronomia</h3><p>Lugares onde ingredientes locais se transformam em produtos, receitas e experiências.</p></article><article class="program-card"><span>CULTURA</span><h3>Natureza & patrimônio</h3><p>Uma jornada que conecta sabores à paisagem, à cultura e à identidade regional.</p></article><article class="program-card"><span>DESTINO</span><h3>Hospedagem & experiências</h3><p>Conexões que ajudam o visitante a transformar curiosidade em permanência e descoberta.</p></article></div></section>
+<section class="section"><div class="program-intro"><span class="eyebrow">Acesso, formação e legado</span><h2>O conhecimento não termina quando <em>as portas se fecham.</em></h2><p>A nova visão da feira busca democratizar o acesso, ampliar ações formativas, incorporar acessibilidade desde o planejamento e registrar parte do conhecimento desenvolvido durante a edição.</p></div><div class="legacy-list"><div><strong>Saberes compartilhados</strong><span>Conhecimento acessível e conectado a diferentes públicos.</span></div><div><strong>Novas criações</strong><span>Experimentações que podem continuar depois da feira.</span></div><div><strong>Produtores visíveis</strong><span>Mais reconhecimento para origem, território e cadeia produtiva.</span></div><div><strong>Conexões</strong><span>Novos negócios, relacionamentos e pontes internacionais.</span></div><div><strong>Caderno de Saberes e Receitas</strong><span>Registro digital gratuito do eixo Descobrir o Cupuaçu.</span></div><div><strong>Ilhéus fortalecida</strong><span>Uma imagem de território que conecta gastronomia, cultura, natureza e turismo.</span></div></div></section>
+<section class="section dark-message"><span class="eyebrow">Nosso norte</span><h2>Começamos pela confeitaria. <em>Chegamos ao território.</em></h2><p class="quote-large">O Ane Cakes Fair existe para tornar visíveis, transmitir e conectar os saberes, pessoas e cadeias que transformam a riqueza de um território em cultura alimentar, criação, negócios, experiência e desenvolvimento.</p><p>O projeto não é apenas uma feira comercial, uma formatura, um congresso ou uma feira genérica de alimentos. Todos os elementos precisam estar conectados por uma mesma narrativa e ter uma razão clara para existir.</p><a class="btn btn-light" href="index.html#evento">Conhecer a 5ª edição →</a></section>
+</main><footer><span>ANE CAKES FAIR</span><span>Ilhéus · Bahia · Costa do Cacau</span></footer><script src="script.js"></script></body></html>
