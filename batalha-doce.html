@@ -25,15 +25,14 @@
 .battle-card span{color:var(--gold);font-size:11px;letter-spacing:.16em;font-weight:700}
 .battle-card h3{font-family:"Cormorant Garamond",serif;font-size:31px;margin:14px 0 9px}
 .battle-card p{font-size:13px;margin:0;color:#6a574d}
-.battle-flow{background:var(--cream)}
 .flow-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:45px}
 .flow-item{padding:25px 16px;background:#fff;border:1px solid var(--line);border-radius:15px;text-align:center}
 .flow-item span{display:block;color:var(--gold);font-size:10px;letter-spacing:.12em;margin-bottom:8px}
 .flow-item strong{font-family:"Cormorant Garamond",serif;font-size:23px}
-.battle-video{background:var(--cream)}
-.battle-video-wrap{max-width:1120px;margin:42px auto 0;position:relative;border-radius:24px;overflow:hidden;background:#17110e;box-shadow:0 24px 70px rgba(47,31,24,.18)}
-.battle-video video{display:block;width:100%;height:auto;max-height:720px;object-fit:contain;background:#17110e}
-.battle-video-caption{display:flex;justify-content:space-between;gap:30px;align-items:center;padding:20px 24px;background:#fff;border:1px solid var(--line);border-top:0}
+.battle-video{background:var(--paper)}
+.battle-video-wrap{max-width:1120px;margin:42px auto 0;position:relative;border-radius:24px;overflow:hidden;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow)}
+.battle-video video{display:block;width:100%;height:auto;max-height:720px;object-fit:contain;background:var(--paper)}
+.battle-video-caption{display:flex;justify-content:space-between;gap:30px;align-items:center;padding:20px 24px;background:var(--paper);border-top:1px solid var(--line)}
 .battle-video-caption strong{font-family:"Cormorant Garamond",serif;font-size:25px}
 .battle-video-caption span{font-size:12px;color:#6a574d;line-height:1.5;text-align:right}
 .battle-section{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:center}
@@ -45,8 +44,8 @@
 .battle-list span{font-size:12px;color:#eadbd2}
 .battle-cta{text-align:center;background:var(--cream)}
 .battle-cta p{max-width:620px;margin:0 auto 30px;color:#6a574d;line-height:1.8}
-@media(max-width:950px){.battle-intro,.battle-section{grid-template-columns:1fr 1fr}.battle-pillars{grid-template-columns:1fr 1fr}.flow-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:620px){.battle-hero{min-height:62vh;padding-bottom:55px}.battle-intro,.battle-section,.battle-pillars{grid-template-columns:1fr}.flow-grid{grid-template-columns:1fr 1fr}.battle-hero h1{font-size:62px}.battle-video-caption{display:block}.battle-video-caption span{display:block;text-align:left;margin-top:8px}}
+@media(max-width:950px){.battle-intro,.battle-section{grid-template-columns:1fr 1fr}.battle-pillars{grid-template-columns:1fr 1fr}.flow-grid{grid-template-columns:repeat(3,1fr)}.battle-video-wrap{border-radius:20px}}
+@media(max-width:620px){.battle-hero{min-height:62vh;padding-bottom:55px}.battle-intro,.battle-section,.battle-pillars{grid-template-columns:1fr}.flow-grid{grid-template-columns:1fr 1fr}.battle-hero h1{font-size:62px}.battle-video-wrap{margin-top:30px;border-radius:16px}.battle-video video{width:100%;height:auto;max-height:68vh;min-height:220px}.battle-video-caption{display:block;padding:17px 18px}.battle-video-caption strong{font-size:23px}.battle-video-caption span{display:block;text-align:left;margin-top:5px;font-size:11px}}
 </style>
 </head>
 <body>
@@ -97,7 +96,7 @@ Seu navegador não suporta a reprodução de vídeo.
 </div>
 </section>
 
-<section class="section battle-flow">
+<section class="section">
 <div class="section-heading centered">
 <span class="eyebrow">Dentro da jornada</span>
 <h2>Onde a Batalha Doce se <em>encaixa.</em></h2>
