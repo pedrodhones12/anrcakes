@@ -11,14 +11,21 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
-      - name: Preparar site com URLs limpas
+      - name: Preparar site
         shell: python
         run: |
           from pathlib import Path
@@ -30,7 +37,6 @@ jobs:
               shutil.rmtree(out)
           out.mkdir()
 
-          # Arquivos e pastas estáticos.
           for item in root.iterdir():
               if item.name in {'.git', '.github', '_site'}:
                   continue
@@ -45,11 +51,9 @@ jobs:
           def clean_page(source: Path, slug: str):
               html = source.read_text(encoding='utf-8')
 
-              # A página passa a morar em /slug/, então a base de recursos é a raiz.
               if '<base href="/">' not in html:
                   html = re.sub(r'(<meta[^>]+viewport[^>]*>)', r'\1\n  <base href="/">', html, count=1, flags=re.I)
 
-              # Links internos antigos -> URLs limpas.
               def replace_link(m):
                   attr, target = m.group(1), m.group(2)
                   if target.startswith(('http://', 'https://', '//', 'mailto:', 'tel:', '#', '/')):
@@ -59,19 +63,19 @@ jobs:
                       return m.group(0)
                   name, frag = match.group(1), match.group(2) or ''
                   if name == 'index':
-                      return f'{attr}="/{frag.lstrip("#") if frag else ""}' + ('#' + frag.lstrip('#') if frag else '') if False else f'{attr}="/{frag}"'
+                      return f'{attr}="/{frag}"' if frag else f'{attr}="/"'
                   if name in pages_set:
                       return f'{attr}="/{name}/{frag}"'
                   return m.group(0)
 
               html = re.sub(r'(href|src)="([^\"]+\.html(?:#[^\"]*)?)"', replace_link, html, flags=re.I)
 
-              # Normaliza recursos para a raiz.
               for old, new in [
                   ('href="styles.css"', 'href="/styles.css"'),
                   ('href="portal.css"', 'href="/portal.css"'),
                   ('src="script.js"', 'src="/script.js"'),
                   ('src="idioma.js"', 'src="/idioma.js"'),
+                  ('src="origem-3d.js"', 'src="/origem-3d.js"'),
                   ('src="assets/', 'src="/assets/'),
                   ('href="assets/', 'href="/assets/'),
                   ('src="videos/', 'src="/videos/'),
@@ -96,7 +100,6 @@ jobs:
               destination.parent.mkdir(parents=True, exist_ok=True)
               destination.write_text(html, encoding='utf-8')
 
-              # Mantém a URL antiga funcional, mas fora do índice.
               redirect = f'''<!doctype html>
 <html lang="pt-BR"><head>
 <meta charset="utf-8"><meta name="robots" content="noindex, follow">
@@ -108,19 +111,16 @@ jobs:
               (out / f'{slug}.html').write_text(redirect, encoding='utf-8')
 
           for slug in pages:
-              # historia.html já possui a versão nova em /historia/; ainda assim o build
-              # garante o redirect para a versão limpa.
               if slug == 'historia':
                   continue
               clean_page(root / f'{slug}.html', slug)
 
-          # Garante que a página de história atual continue como /historia/.
           historia = root / 'historia' / 'index.html'
           if historia.exists():
               shutil.copy2(historia, out / 'historia' / 'index.html')
               (out / 'historia.html').write_text('''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="robots" content="noindex, follow"><meta http-equiv="refresh" content="0;url=/historia/"><link rel="canonical" href="https://anecakefair.com.br/historia/"><title>Redirecionando…</title><script>location.replace('/historia/');</script></head><body><a href="/historia/">Nossa História</a></body></html>''', encoding='utf-8')
 
-          # Sitemap somente com URLs canônicas sem .html.
+          (out / '.nojekyll').write_text('', encoding='utf-8')
           urls = ['https://anecakefair.com.br/'] + [f'https://anecakefair.com.br/{p}/' for p in pages]
           (out / 'sitemap.xml').write_text(
               '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -129,21 +129,14 @@ jobs:
               '</urlset>\n', encoding='utf-8')
           (out / 'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://anecakefair.com.br/sitemap.xml\n', encoding='utf-8')
 
-      - name: Setup Pages
+      - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Enviar artefato
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './_site'
+          path: ./_site
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
+      - name: Publicar no GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
