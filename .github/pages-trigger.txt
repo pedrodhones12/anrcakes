@@ -1,0 +1,1 @@
+Trigger técnico para validar a publicação do GitHub Pages.
