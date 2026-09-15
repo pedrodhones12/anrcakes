@@ -1,4 +1,4 @@
-const IA_ENDPOINT = '/api/story';
+const IA_ENDPOINT = 'https://ane-story-engine.base44.app/functions/storyChat';
 
 const knowledge = {
   1: { title: 'Fruto', text: 'Tudo começa no fruto. O cacau nasce no território e carrega a primeira parte dessa história.' },
@@ -24,6 +24,11 @@ const continueButton = chat.querySelector('.ia-continue');
 let currentStage = 1;
 let busy = false;
 let lastNarrative = '';
+let sessionId = sessionStorage.getItem('aneStorySessionId');
+if (!sessionId) {
+  sessionId = `web-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  sessionStorage.setItem('aneStorySessionId', sessionId);
+}
 
 function getStage() {
   const rect = stage.getBoundingClientRect();
@@ -75,7 +80,7 @@ async function ask(question) {
   busy = true;
   addMessage(clean, 'user');
   input.value = '';
-  status.textContent = 'A IA está conectando esta pergunta à jornada…';
+  status.textContent = 'Conectando esta pergunta ao motor da história…';
   const typing = addMessage('Analisando a história…', 'ai typing');
 
   try {
@@ -83,10 +88,9 @@ async function ask(question) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        question: clean,
-        stage: currentStage,
-        stageName: knowledge[currentStage].title,
-        stageDescription: knowledge[currentStage].text
+        message: clean,
+        stage: knowledge[currentStage].title,
+        sessionId
       })
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -94,12 +98,17 @@ async function ask(question) {
     typing.remove();
     lastNarrative = data.answer || fallback(clean);
     addMessage(lastNarrative, 'ai');
-    status.textContent = 'Narrativa atualizada pela IA.';
+    if (data.sessionId) {
+      sessionId = data.sessionId;
+      sessionStorage.setItem('aneStorySessionId', sessionId);
+    }
+    status.textContent = 'Narrativa atualizada pelo Ane Story Engine.';
   } catch (error) {
+    console.warn('Ane Story Engine indisponível:', error);
     typing.remove();
     lastNarrative = fallback(clean);
     addMessage(lastNarrative, 'ai');
-    status.textContent = 'Modo local ativado. Conecte /api/story para respostas generativas.';
+    status.textContent = 'Motor externo indisponível. Modo local ativado.';
   } finally {
     busy = false;
   }
