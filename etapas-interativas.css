@@ -1,0 +1,48 @@
+/* Etapas Interativas — Ane Cakes Fair */
+.etapas-map{display:flex;flex-wrap:wrap;gap:10px;margin:35px 0 0}
+.etapas-map button{cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:10px 16px;font-family:"DM Sans",sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;transition:all .25s ease}
+.etapas-map button i{font-style:normal;font-size:10px;color:var(--gold);letter-spacing:.05em}
+.etapas-map button:hover{border-color:var(--gold);transform:translateY(-1px)}
+.etapas-map button.active{color:#fff;border-color:transparent}
+.etapas-map button.active i{color:rgba(255,255,255,.75)}
+
+.etapas-progress{display:flex;align-items:center;gap:18px;margin:40px 0 0;max-width:760px}
+.etapas-progress-bar{flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.etapas-progress-bar span{display:block;height:100%;width:12.5%;background:var(--gold);border-radius:3px;transition:width .45s ease,background .45s ease}
+.etapas-progress-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#6a574d;white-space:nowrap}
+
+.etapas-list{margin-top:30px;display:grid;gap:22px}
+.etapas-list.interactive .stage-item{display:none}
+.etapas-list.interactive .stage-item.active{display:block;animation:stageIn .5s ease}
+@keyframes stageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.stage-item{background:#fff;border:1px solid var(--line);border-left:6px solid var(--stage-color,var(--gold));border-radius:14px;padding:42px 44px;box-shadow:var(--shadow)}
+.stage-item .stage-num{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--stage-color,var(--gold))}
+.stage-item .stage-phase{display:inline-block;margin-left:12px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#6a574d;background:var(--cream);border-radius:999px;padding:4px 12px}
+.stage-item h3{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(40px,4.5vw,58px);line-height:1;margin:14px 0 10px;letter-spacing:-.02em}
+.stage-item .stage-summary{font-size:17px;color:var(--stage-color,var(--brown));font-weight:600;max-width:680px}
+.stage-item .stage-content{font-size:16px;color:#59463b;max-width:720px;margin-top:16px}
+.stage-item details{margin-top:26px;max-width:720px;border:1px solid var(--line);border-radius:10px;background:var(--cream);padding:0}
+.stage-item details summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--ink)}
+.stage-item details summary::-webkit-details-marker{display:none}
+.stage-item details summary::after{content:"+";font-size:20px;color:var(--gold);font-weight:400;line-height:1}
+.stage-item details[open] summary::after{content:"–"}
+.stage-item details .stage-answer{padding:0 20px 18px;font-size:14px;color:#59463b;line-height:1.65}
+
+.stage-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:26px;max-width:760px}
+.stage-nav .stage-btn{cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:999px;padding:12px 22px;font-size:13px;font-weight:700;color:var(--ink);display:inline-flex;align-items:center;gap:8px;transition:all .25s ease}
+.stage-nav .stage-btn:hover:not(:disabled){border-color:var(--gold);color:var(--red)}
+.stage-nav .stage-btn:disabled{opacity:.35;cursor:default}
+
+.etapas-final{display:grid;grid-template-columns:1fr 1fr;gap:15px;max-width:760px;margin-top:34px}
+.etapas-final a{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px 26px;display:block;transition:all .25s ease}
+.etapas-final a:hover{transform:translateY(-2px);border-color:var(--gold)}
+.etapas-final b{font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:600;display:block}
+.etapas-final span{font-size:13px;color:#6a574d}
+
+@media(max-width:620px){
+  .stage-item{padding:30px 24px}
+  .stage-item .stage-phase{margin-left:0;margin-top:10px}
+  .etapas-final{grid-template-columns:1fr}
+  .etapas-map button{padding:9px 12px;font-size:11px}
+}
