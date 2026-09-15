@@ -132,6 +132,32 @@ if (canvas && stage && track) {
   window.addEventListener('ane-goto-stage',(e)=>{ setStage(Math.max(0,Math.min(7,e.detail.stage))); });
 
   resize(); setStage(0); window.addEventListener('resize',resize,{passive:true}); window.addEventListener('orientationchange',resize,{passive:true});
-  if(sound && 'speechSynthesis' in window) sound.addEventListener('click',()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(names.map((n,i)=>\`\${n}. \${descriptions[i]}\`).join(' '));u.lang='pt-BR';u.rate=.92;speechSynthesis.speak(u);});
+  if(sound){
+    let audio=null, speaking=false;
+    function resetLabel(){ sound.textContent='▶ Ouvir a narrativa'; }
+    sound.addEventListener('click', async ()=>{
+      if(speaking){ speaking=false; if(audio){audio.pause(); audio.currentTime=0;} if('speechSynthesis' in window) speechSynthesis.cancel(); resetLabel(); return; }
+      sound.textContent='⏳ Gerando áudio…';
+      const text = names.map((n,i)=>\`\${n}. \${descriptions[i]}\`).join(' ');
+      try{
+        const res = await fetch('https://ane-story-engine.base44.app/functions/tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text,language_code:'pt',voice:'honey'})});
+        const data = await res.json();
+        if(!data.success||!data.url) throw new Error('no audio url');
+        audio = new Audio(data.url);
+        speaking=true; sound.textContent='■ Parar narrativa';
+        await audio.play();
+        audio.onended=()=>{ speaking=false; resetLabel(); };
+      }catch(e){
+        console.warn('TTS endpoint failed, falling back to browser speech:', e);
+        if('speechSynthesis' in window){
+          speechSynthesis.cancel();
+          const u=new SpeechSynthesisUtterance(text); u.lang='pt-BR'; u.rate=.92;
+          speaking=true; sound.textContent='■ Parar narrativa';
+          u.onend=()=>{ speaking=false; resetLabel(); };
+          speechSynthesis.speak(u);
+        }else{ resetLabel(); }
+      }
+    });
+  }
   requestAnimationFrame(frame);
 } else { console.error('Elementos da jornada do cacau n\u00e3o encontrados.'); }
