@@ -173,8 +173,15 @@ let targetProgress = 0;
 
 function readProgress() {
   const rect = stage.getBoundingClientRect();
-  const travel = Math.max(stage.offsetHeight - window.innerHeight, 1);
-  targetProgress = THREE.MathUtils.clamp(-rect.top / travel, 0, 1);
+  const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+  const sectionStart = window.scrollY + rect.top;
+  const travel = Math.max(stage.offsetHeight, window.innerHeight * 0.9);
+  targetProgress = THREE.MathUtils.clamp((window.scrollY - sectionStart) / travel, 0, 1);
+  if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+    targetProgress = THREE.MathUtils.clamp(-rect.top / Math.max(stage.offsetHeight, window.innerHeight), 0, 1);
+  }
+  if (!Number.isFinite(targetProgress)) targetProgress = 0;
+  void scrollable;
 }
 
 function updateNarrative(index) {
@@ -217,7 +224,6 @@ function update() {
     if (i === index) g.rotation.y += .004;
   });
 
-  // A rede se reorganiza lentamente conforme o visitante avança.
   networkGroup.rotation.y += .0008 + raw * .00008;
   networkGroup.rotation.x = Math.sin(raw * .45) * .035;
   const pulse = .5 + Math.sin(performance.now() * .0024) * .18;
@@ -231,18 +237,28 @@ function update() {
 }
 
 function resize() {
-  const w = canvas.clientWidth || stage.clientWidth || window.innerWidth;
-  const h = canvas.clientHeight || stage.clientHeight || 600;
+  const w = Math.max(1, Math.floor(stage.clientWidth || window.innerWidth));
+  const h = Math.max(1, Math.floor(stage.clientHeight || 600));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
 }
-window.addEventListener('resize', resize);
+
+window.addEventListener('resize', resize, { passive: true });
+window.addEventListener('orientationchange', resize, { passive: true });
 window.addEventListener('scroll', update, { passive: true });
+if ('ResizeObserver' in window) new ResizeObserver(resize).observe(stage);
 resize();
 update();
 
-function render() { requestAnimationFrame(render); update(); renderer.render(scene, camera); }
+function render() {
+  requestAnimationFrame(render);
+  update();
+  renderer.render(scene, camera);
+}
 render();
 
 const sound = document.querySelector('.journey-sound');
