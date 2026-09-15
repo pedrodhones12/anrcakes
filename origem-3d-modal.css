@@ -1,0 +1,40 @@
+/* Modal da jornada 3D — Ane Cakes Fair */
+.jornada-3d-btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:14px 30px;border:none;border-radius:50px;background:linear-gradient(135deg,#9d1026,#c83a45);color:#fffaf4;font-family:inherit;font-size:15px;font-weight:700;letter-spacing:.04em;cursor:pointer;box-shadow:0 12px 30px rgba(157,16,38,.32);transition:transform .25s ease,box-shadow .25s ease;position:relative;overflow:hidden}
+.jornada-3d-btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(157,16,38,.42)}
+.jornada-3d-btn:active{transform:translateY(0)}
+.jornada-3d-btn svg{width:20px;height:20px;flex-shrink:0}
+.jornada-3d-btn .j3d-pulse{position:absolute;inset:0;border-radius:50px;background:rgba(255,255,255,.25);opacity:0;animation:j3dPulse 2.4s ease-out infinite}
+@keyframes j3dPulse{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(1.15)}}
+
+.jornada-3d-modal{position:fixed;inset:0;z-index:9999;display:none;flex-direction:column;background:radial-gradient(ellipse at center,#1a0f0a 0%,#0a0604 100%);opacity:0;transition:opacity .4s ease}
+.jornada-3d-modal.open{display:flex;opacity:1}
+.jornada-3d-canvas-wrap{position:absolute;inset:0}
+.jornada-3d-canvas-wrap canvas{display:block;width:100%;height:100%}
+.j3d-loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#c69a42;font-size:13px;letter-spacing:.18em;text-transform:uppercase;z-index:2}
+.j3d-loader.hidden{display:none}
+.j3d-spinner{width:42px;height:42px;border:3px solid rgba(198,154,66,.2);border-top-color:#c69a42;border-radius:50%;animation:j3dSpin 1s linear infinite;margin-right:14px}
+@keyframes j3dSpin{to{transform:rotate(360deg)}}
+
+.j3d-ui{position:absolute;inset:0;z-index:3;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:32px 6vw}
+.j3d-top{display:flex;justify-content:space-between;align-items:flex-start}
+.j3d-stage-info{pointer-events:auto;max-width:520px}
+.j3d-kicker{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#c69a42;font-weight:700;margin-bottom:10px;opacity:0;animation:j3dFadeUp .5s ease forwards}
+.j3d-stage-title{font-family:"Cormorant Garamond",serif;font-size:clamp(38px,6vw,72px);line-height:.92;color:#fffaf4;margin:0 0 14px;letter-spacing:-.02em;opacity:0;animation:j3dFadeUp .5s ease .08s forwards}
+.j3d-stage-desc{font-size:15px;line-height:1.65;color:rgba(255,250,244,.72);margin:0;max-width:460px;opacity:0;animation:j3dFadeUp .5s ease .16s forwards}
+@keyframes j3dFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.j3d-close{pointer-events:auto;width:46px;height:46px;border:1px solid rgba(255,250,244,.18);border-radius:50%;background:rgba(255,250,244,.06);color:#fffaf4;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .2s ease;backdrop-filter:blur(8px)}
+.j3d-close:hover{background:rgba(255,250,244,.16);transform:rotate(90deg)}
+
+.j3d-bottom{pointer-events:auto}
+.j3d-progress-row{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:22px}
+.j3d-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,250,244,.22);transition:all .3s ease;cursor:pointer}
+.j3d-dot.active{background:#c69a42;width:30px;border-radius:4px;box-shadow:0 0 12px rgba(198,154,66,.5)}
+.j3d-controls{display:flex;align-items:center;justify-content:center;gap:14px}
+.j3d-nav-btn{pointer-events:auto;width:52px;height:52px;border:1px solid rgba(255,250,244,.18);border-radius:50%;background:rgba(255,250,244,.06);color:#fffaf4;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease,border-color .2s ease;backdrop-filter:blur(8px)}
+.j3d-nav-btn:hover:not(:disabled){background:rgba(198,154,66,.2);border-color:rgba(198,154,66,.4)}
+.j3d-nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.j3d-stage-count{color:rgba(255,250,244,.6);font-size:13px;letter-spacing:.1em;min-width:70px;text-align:center}
+.j3d-narrate{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border:1px solid rgba(198,154,66,.35);border-radius:50px;background:rgba(198,154,66,.12);color:#c69a42;font-size:13px;font-weight:600;letter-spacing:.04em;cursor:pointer;transition:background .2s ease;backdrop-filter:blur(8px)}
+.j3d-narrate:hover{background:rgba(198,154,66,.22)}
+.j3d-narrate.playing{background:rgba(157,16,38,.3);border-color:rgba(157,16,38,.5);color:#fffaf4}
+@media(max-width:600px){.j3d-ui{padding:20px 5vw}.j3d-stage-desc{font-size:14px}.j3d-nav-btn{width:44px;height:44px}}
