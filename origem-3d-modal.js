@@ -15,7 +15,7 @@
   ];
 
   var TTS_URL = "https://ane-story-engine.base44.app/functions/tts";
-  var THREE_URL = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r171/three.min.js";
+  var THREE_URL = "https://unpkg.com/three@0.160.0/build/three.min.js";
 
   function loadThree() {
     return new Promise(function (resolve, reject) {
