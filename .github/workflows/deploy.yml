@@ -1,0 +1,128 @@
+name: Deploy Ane Cakes Fair
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare site
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, shutil
+
+          root = Path('.')
+          out = Path('_site')
+          if out.exists():
+              shutil.rmtree(out)
+          out.mkdir()
+
+          for item in root.iterdir():
+              if item.name in {'.git', '.github', '_site'}:
+                  continue
+              if item.is_dir():
+                  shutil.copytree(item, out / item.name)
+              elif item.suffix.lower() != '.html':
+                  shutil.copy2(item, out / item.name)
+
+          pages = sorted(p.stem for p in root.glob('*.html') if p.stem != 'index')
+          pages_set = set(pages)
+
+          def clean_page(source: Path, slug: str):
+              html = source.read_text(encoding='utf-8')
+              if '<base href="/">' not in html:
+                  html = re.sub(r'(<meta[^>]+viewport[^>]*>)', r'\1\n  <base href="/">', html, count=1, flags=re.I)
+
+              def replace_link(m):
+                  attr, target = m.group(1), m.group(2)
+                  if target.startswith(('http://', 'https://', '//', 'mailto:', 'tel:', '#', '/')):
+                      return m.group(0)
+                  match = re.match(r'^([A-Za-z0-9_-]+)\.html(#[^\"]*)?$', target)
+                  if not match:
+                      return m.group(0)
+                  name, frag = match.group(1), match.group(2) or ''
+                  if name == 'index':
+                      return f'{attr}="/{frag}"' if frag else f'{attr}="/"'
+                  if name in pages_set:
+                      return f'{attr}="/{name}/{frag}"'
+                  return m.group(0)
+
+              html = re.sub(r'(href|src)="([^\"]+\.html(?:#[^\"]*)?)"', replace_link, html, flags=re.I)
+
+              for old, new in [
+                  ('href="styles.css"', 'href="/styles.css"'),
+                  ('href="portal.css"', 'href="/portal.css"'),
+                  ('href="origem-3d.css"', 'href="/origem-3d.css"'),
+                  ('src="script.js"', 'src="/script.js"'),
+                  ('src="idioma.js"', 'src="/idioma.js"'),
+                  ('src="origem-3d.js"', 'src="/origem-3d.js"'),
+                  ('src="assets/', 'src="/assets/'),
+                  ('href="assets/', 'href="/assets/'),
+                  ('src="videos/', 'src="/videos/'),
+                  ('poster="assets/', 'poster="/assets/'),
+              ]:
+                  html = html.replace(old, new)
+
+              canonical = f'https://anecakefair.com.br/{slug}/'
+              canonical_tag = f'<link rel="canonical" href="{canonical}">'
+              if re.search(r'<link[^>]+rel=["\']canonical["\'][^>]*>', html, flags=re.I):
+                  html = re.sub(r'<link[^>]+rel=["\']canonical["\'][^>]*>', canonical_tag, html, count=1, flags=re.I)
+              else:
+                  html = html.replace('</head>', f'  {canonical_tag}\n</head>', 1)
+
+              destination = out / slug / 'index.html'
+              destination.parent.mkdir(parents=True, exist_ok=True)
+              destination.write_text(html, encoding='utf-8')
+
+              redirect = f'''<!doctype html>
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="robots" content="noindex, follow">
+<meta http-equiv="refresh" content="0;url=/{slug}/">
+<link rel="canonical" href="{canonical}">
+<title>Redirecionando…</title>
+<script>location.replace('/{slug}/');</script>
+</head><body><a href="/{slug}/">Continuar</a></body></html>'''
+              (out / f'{slug}.html').write_text(redirect, encoding='utf-8')
+
+          for slug in pages:
+              if slug == 'historia':
+                  continue
+              clean_page(root / f'{slug}.html', slug)
+
+          historia = root / 'historia' / 'index.html'
+          if historia.exists():
+              shutil.copy2(historia, out / 'historia' / 'index.html')
+              (out / 'historia.html').write_text('''<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="robots" content="noindex, follow"><meta http-equiv="refresh" content="0;url=/historia/"><link rel="canonical" href="https://anecakefair.com.br/historia/"><title>Redirecionando…</title><script>location.replace('/historia/');</script></head><body><a href="/historia/">Nossa História</a></body></html>''', encoding='utf-8')
+
+          (out / '.nojekyll').write_text('', encoding='utf-8')
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./_site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
