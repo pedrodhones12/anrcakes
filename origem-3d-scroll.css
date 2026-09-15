@@ -1,0 +1,7 @@
+/* Controle da jornada: uma cena fixa enquanto a página percorre as 8 etapas. */
+.cacao-journey-3d{overflow:visible}
+.journey-stage-track{height:700vh;position:relative}
+.journey-stage{height:100vh;min-height:620px;position:sticky;top:0;overflow:hidden}
+.journey-canvas{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important;z-index:1}
+@media(max-width:950px){.journey-stage{height:100vh;min-height:620px}}
+@media(max-width:620px){.journey-stage{height:100vh;min-height:620px}}
