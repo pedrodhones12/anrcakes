@@ -52,7 +52,7 @@
       <div class="cacao-journey-intro">
         <span class="eyebrow">Fio condutor · experiência imersiva</span>
         <h2>O <em>cacau</em> conta essa história.</h2>
-        <p>Role a página e acompanhe o ingrediente desde o fruto até o território. Nesta versão, uma camada visual inspirada em sistemas de IA transforma cada etapa em uma cena viva, conectada por dados e narrativa.</p>
+        <p>Role a página e acompanhe o ingrediente desde o fruto até o território. Uma camada visual inspirada em sistemas de IA transforma cada etapa em uma cena viva, conectada por dados e narrativa.</p>
       </div>
 
       <div class="journey-stage">
@@ -71,7 +71,7 @@
         <div class="journey-ai-panel" aria-live="polite">
           <span class="ai-label"><span class="ai-live-dot"></span> NARRATIVA INTELIGENTE</span>
           <strong class="ai-insight-title">O sistema encontrou a origem.</strong>
-          <p class="ai-insight">O fruto é o primeiro ponto da cadeia. A partir daqui, território, pessoas e conhecimento começam a se conectar.</p>
+          <p class="ai-insight">O fruto é o primeiro ponto da cadeia. Território, pessoas e conhecimento começam a se conectar.</p>
           <div class="ai-typing"><span></span><span></span><span></span></div>
         </div>
 
@@ -91,10 +91,43 @@
         <p>Em Ilhéus, o território não é apenas o endereço da feira: ele faz parte do conteúdo e da experiência. A jornada termina onde começou — convidando o público a conhecer o lugar, as pessoas e as histórias por trás do sabor.</p>
         <a class="btn btn-light" href="territorio.html">Conhecer o território →</a>
       </div>
+
       <div class="journey-ai-note">
         <span>NARRATIVA INTERATIVA</span>
-        <p>O sistema combina animação 3D, movimento por rolagem, estados narrativos e leitura em voz alta. A arquitetura fica preparada para uma futura API de IA, caso você queira respostas realmente generativas para o visitante.</p>
+        <p>Agora o visitante pode conversar com a narrativa, fazer perguntas e avançar pela cadeia. Quando a API estiver conectada, as respostas serão generativas; enquanto isso, o sistema possui um modo local de continuidade.</p>
         <button class="journey-sound" type="button">▶ Ouvir a narrativa</button>
+      </div>
+    </section>
+
+    <section class="ia-story-section" id="iaNarrativa" aria-labelledby="iaNarrativaTitulo">
+      <div class="ia-story-intro">
+        <span class="eyebrow">IA · Explore a história</span>
+        <h2 id="iaNarrativaTitulo">Pergunte. A cadeia <em>responde.</em></h2>
+        <p>Escolha uma pergunta ou escreva a sua. A conversa acompanha a etapa que você está explorando na jornada 3D.</p>
+      </div>
+
+      <div class="ia-story-card">
+        <div class="ia-story-topline">
+          <span class="ia-status-dot"></span>
+          <span class="ia-status">Sistema pronto para explorar esta etapa.</span>
+          <span class="ia-context">Etapa atual · Fruto</span>
+        </div>
+
+        <div class="ia-messages" aria-live="polite"></div>
+
+        <div class="ia-quick-actions" aria-label="Perguntas rápidas">
+          <button type="button" data-question="Quem produz e qual é o papel dessas pessoas na cadeia?">Quem produz?</button>
+          <button type="button" data-question="Como o cacau vira chocolate?">Como vira chocolate?</button>
+          <button type="button" data-question="Como essa cadeia gera valor e negócios?">Como gera valor?</button>
+          <button type="button" data-question="Por que o território é importante nessa história?">Qual território?</button>
+        </div>
+
+        <div class="ia-input-row">
+          <input class="ia-input" type="text" maxlength="1200" autocomplete="off" placeholder="Escreva sua pergunta sobre a jornada…" aria-label="Pergunte sobre a jornada">
+          <button class="ia-send" type="button">Perguntar</button>
+        </div>
+
+        <button class="ia-continue" type="button">Continuar a história →</button>
       </div>
     </section>
   </main>
@@ -106,5 +139,6 @@
 
   <script src="script.js"></script>
   <script type="module" src="origem-3d.js"></script>
+  <script src="ia-narrativa.js"></script>
 </body>
 </html>
