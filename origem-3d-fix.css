@@ -1,0 +1,8 @@
+/* Correção de compatibilidade para a jornada 3D.
+   Mantém a cena fixa durante a área de rolagem sem depender de position: sticky. */
+.cacao-journey-3d{overflow:visible!important;position:relative}
+.journey-stage-track{height:700vh!important;position:relative!important}
+.journey-stage{position:fixed!important;top:0!important;left:0!important;width:100%!important;height:100vh!important;min-height:0!important;overflow:hidden!important;z-index:10!important;visibility:hidden;opacity:0;transition:opacity .2s ease,visibility .2s ease}
+.journey-stage.is-active{visibility:visible;opacity:1}
+.journey-canvas{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important;z-index:1!important}
+@media(max-width:620px){.journey-stage{height:100svh!important}}
