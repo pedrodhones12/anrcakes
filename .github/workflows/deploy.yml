@@ -45,6 +45,11 @@ jobs:
               elif item.suffix.lower() != '.html':
                   shutil.copy2(item, out / item.name)
 
+          # O index.html é a página inicial do domínio e precisa estar na raiz do artefato.
+          index = root / 'index.html'
+          if index.exists():
+              shutil.copy2(index, out / 'index.html')
+
           pages = sorted(p.stem for p in root.glob('*.html') if p.stem != 'index')
           pages_set = set(pages)
 
