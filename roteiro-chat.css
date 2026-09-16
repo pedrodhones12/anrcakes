@@ -1,10 +1,10 @@
 /* Roteiro Chat — Ane Cakes Fair */
-.roteiro-chat-fab{position:fixed;bottom:24px;right:24px;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#4a2c1a,#6b3e22);box-shadow:0 8px 24px rgba(74,44,26,.35);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9998;border:none;transition:transform .3s ease,box-shadow .3s ease;padding:0;overflow:hidden}
-.roteiro-chat-fab:hover{transform:scale(1.08);box-shadow:0 12px 32px rgba(74,44,26,.45)}
-.roteiro-chat-fab img{width:42px;height:42px;object-fit:contain;border-radius:50%}
-.roteiro-chat-fab-badge{position:absolute;top:-2px;right:-2px;width:20px;height:20px;background:#c9986a;border:2px solid #faf6f0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif}
-.roteiro-chat-fab-pulse{position:absolute;inset:0;border-radius:50%;border:2px solid #c9986a;animation:roteiroPulse 2s ease-out infinite;pointer-events:none}
-@keyframes roteiroPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+.roteiro-chat-fab{position:fixed;bottom:24px;right:24px;display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#6B2328,#8a2c33);color:#fff;padding:12px 20px;border-radius:40px;box-shadow:0 8px 24px rgba(107,35,40,.4);cursor:pointer;z-index:9998;border:none;transition:transform .3s ease,box-shadow .3s ease;font-family:'DM Sans',sans-serif}
+.roteiro-chat-fab:hover{transform:scale(1.05);box-shadow:0 12px 32px rgba(107,35,40,.5)}
+.roteiro-chat-fab-emoji{font-size:24px;line-height:1}
+.roteiro-chat-fab-label{font-size:15px;font-weight:600}
+.roteiro-chat-fab-pulse{position:absolute;inset:0;border-radius:40px;border:2px solid #c9986a;animation:roteiroPulse 2s ease-out infinite;pointer-events:none}
+@keyframes roteiroPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.15);opacity:0}}
 .roteiro-chat-panel{position:fixed;bottom:24px;right:24px;width:380px;max-width:calc(100vw - 32px);height:580px;max-height:calc(100vh - 48px);background:#faf6f0;border-radius:18px;box-shadow:0 20px 60px rgba(40,24,12,.3);z-index:9999;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(20px) scale(.96);pointer-events:none;transition:opacity .3s ease,transform .3s ease;font-family:'DM Sans',sans-serif}
 .roteiro-chat-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
 .roteiro-chat-header{background:linear-gradient(135deg,#3d2817,#5a3520);color:#faf6f0;padding:16px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0}
@@ -47,4 +47,4 @@
 .roteiro-chat-send:disabled{background:#c4b5a8;cursor:not-allowed;transform:none}
 .roteiro-chat-send svg{width:18px;height:18px}
 .roteiro-chat-footer-note{text-align:center;font-size:10.5px;color:#a89588;padding:4px 0 2px}
-@media (max-width:480px){.roteiro-chat-panel{bottom:0;right:0;width:100vw;height:100vh;max-height:100vh;border-radius:0}.roteiro-chat-fab{bottom:18px;right:18px;width:56px;height:56px}.roteiro-chat-fab img{width:36px;height:36px}}
+@media (max-width:480px){.roteiro-chat-panel{bottom:0;right:0;width:100vw;height:100vh;max-height:100vh;border-radius:0}.roteiro-chat-fab{bottom:18px;right:18px;padding:10px 16px}.roteiro-chat-fab-emoji{font-size:20px}.roteiro-chat-fab-label{font-size:14px}}
