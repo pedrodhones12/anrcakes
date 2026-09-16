@@ -1,2 +1,87 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Portal de notícias do Ane Cakes Fair."><title>Ane Cakes Fair | Notícias</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="/roteiro-chat.css"><style>main{max-width:1180px;margin:auto;padding:120px 24px 80px}.news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}.news-card{display:block;text-decoration:none;color:inherit;padding:0;border:1px solid #ddd6ca;border-radius:18px;background:#fff;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease}.news-card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(61,32,20,.12)}.news-card-img{width:100%;height:200px;object-fit:cover;background:#f5f1eb}.news-card-body{padding:24px}.news-card-cat{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#9d1026;font-weight:700}.news-card h2{font-family:'Cormorant Garamond',serif;font-size:24px;margin:10px 0 10px;line-height:1.2}.news-card p{line-height:1.7;color:#6a574d;font-size:14px}.news-card-date{font-size:12px;color:#8a7165;margin-top:12px}.news-loading{text-align:center;padding:60px;color:#6a574d}.news-loading span{display:inline-block;width:24px;height:24px;border:3px solid #e0d0c0;border-top-color:#9d1026;border-radius:50%;animation:newsSpin 1s linear infinite;vertical-align:middle;margin-right:8px}@keyframes newsSpin{to{transform:rotate(360deg)}}.news-empty{grid-column:1/-1;text-align:center;padding:50px;color:#6a574d}.portal-head{max-width:760px;margin-bottom:50px}</style></head><body><div class="announcement">ANE CAKES FAIR · PORTAL DE NOTÍCIAS</div><header class="nav"><a class="brand" href="/"><img src="assets/image2.png" alt="Ane Cakes Fair"></a><nav class="main-nav"><a href="/">Início</a><a href="/historia/">Nossa história</a><a href="/origem/">Origem</a><a href="/noticias/">Notícias</a><a href="/ingressos/">Ingressos</a></nav><a class="nav-cta" href="/ingressos/">Comprar ingresso</a></header><main><div class="portal-head"><span class="eyebrow">Ane Cakes Fair · Informação</span><h1>Portal de <em>Notícias</em></h1><p>Acompanhe novidades, programação, convidadas, histórias, bastidores, oportunidades e tudo que acontece antes, durante e depois do evento.</p></div><section class="news-grid" id="newsGrid"><div class="news-loading"><span></span>Carregando notícias...</div></section></main><footer><span>ANE CAKES FAIR</span><span>Notícias · Ilhéus, Bahia</span><a href="/admin/">Admin</a><span class="footer-credit">Desenvolvido por Construindo Sonhos Web</span></footer><script>var API_URL="https://ane-story-engine.base44.app/functions/news";function escapeHtml(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}function formatDate(d){if(!d)return"";try{return new Date(d).toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"})}catch(e){return""}}function renderNews(list){var grid=document.getElementById("newsGrid");if(!list.length){grid.innerHTML='<div class="news-empty">Nenhuma notícia publicada ainda. Volte em breve!</div>';return}grid.innerHTML=list.map(function(n){var img=n.image_url?'<img class="news-card-img" src="'+escapeHtml(n.image_url)+'" alt="'+escapeHtml(n.title)+'">':'';var date=formatDate(n.published_at);return '<a class="news-card" href="/noticia-detalhe/?slug='+encodeURIComponent(n.slug)+'">'+img+'<div class="news-card-body"><span class="news-card-cat">'+escapeHtml(n.category)+'</span><h2>'+escapeHtml(n.title)+'</h2>'+(n.excerpt?'<p>'+escapeHtml(n.excerpt)+'</p>':'')+(date?'<div class="news-card-date">'+date+'</div>':'')+'</div></a>'}).join("")}fetch(API_URL).then(function(r){return r.json()}).then(function(data){if(data&&data.success&&Array.isArray(data.news)){renderNews(data.news)}else{document.getElementById("newsGrid").innerHTML='<div class="news-empty">Não foi possível carregar as notícias agora.</div>'}}).catch(function(){document.getElementById("newsGrid").innerHTML='<div class="news-empty">Não foi possível carregar as notícias agora.</div>'})</script><script src="/roteiro-chat.js"></script></body></html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Portal de notícias do Ane Cakes Fair — novidades, programação, convidadas, bastidores e oportunidades."><meta name="robots" content="index, follow"><link rel="canonical" href="https://anecakefair.com.br/noticias/"><meta property="og:title" content="Ane Cakes Fair | Notícias"><meta property="og:description" content="Portal de notícias do Ane Cakes Fair."><meta property="og:type" content="website"><title>Ane Cakes Fair | Notícias</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="/roteiro-chat.css"><style>
+body{overflow-x:hidden}
+.mobile-menu-btn{display:none;background:none;border:0;font-size:24px;cursor:pointer;color:var(--ink);padding:8px 10px;border-radius:8px}
+.mobile-menu-btn:hover{background:rgba(157,16,38,.08)}
+.mobile-menu{display:none;position:fixed;top:82px;left:0;right:0;background:var(--paper);border-bottom:1px solid var(--line);z-index:30;flex-direction:column;padding:12px 24px 24px;box-shadow:0 14px 40px rgba(61,32,20,.13)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{padding:15px 4px;font-size:16px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line)}
+.mobile-menu a:last-child{border-bottom:0}
+.portal-header{max-width:760px;margin:0 auto 50px;padding:0 4px}
+.portal-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,6vw,64px);line-height:1.05;margin:14px 0 18px;font-weight:600;letter-spacing:-.02em}
+.portal-header p{font-size:16px;color:#6a574d;line-height:1.7}
+.featured-wrap{max-width:1180px;margin:0 auto 50px;padding:0 4px}
+.featured-card{display:block;text-decoration:none;color:inherit;border-radius:20px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:0 12px 40px rgba(61,32,20,.10);transition:transform .3s ease,box-shadow .3s ease}
+.featured-card:hover{transform:translateY(-4px);box-shadow:0 20px 55px rgba(61,32,20,.16)}
+.featured-img{width:100%;height:340px;object-fit:cover;display:block;background:#f5f1eb}
+.featured-body{padding:32px}
+.featured-cat{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:700}
+.featured-card h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,38px);line-height:1.15;margin:12px 0 14px;font-weight:600;color:#1c1917}
+.featured-card .featured-excerpt{font-size:16px;color:#6a574d;line-height:1.7;max-width:620px}
+.featured-meta{display:flex;align-items:center;gap:12px;margin-top:18px;font-size:13px;color:#8a7165}
+.featured-meta span{display:flex;align-items:center;gap:6px}
+.featured-btn{display:inline-flex;align-items:center;gap:8px;margin-top:22px;background:var(--red);color:#fff;padding:13px 26px;border-radius:999px;font-weight:700;font-size:14px}
+.latest-section{max-width:1180px;margin:0 auto;padding:0 4px 20px}
+.latest-section h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,38px);font-weight:600;margin:0 0 30px;color:#1c1917}
+.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px}
+.news-card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease}
+.news-card:hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(61,32,20,.12)}
+.news-card-img{width:100%;height:200px;object-fit:cover;display:block;background:#f5f1eb}
+.news-card-body{padding:22px}
+.news-card-cat{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);font-weight:700}
+.news-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.2;margin:10px 0 10px;font-weight:600;color:#1c1917}
+.news-card p{line-height:1.65;color:#6a574d;font-size:14px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.news-card-date{font-size:12px;color:#8a7165;margin-top:14px;display:flex;align-items:center;gap:6px}
+.news-loading{text-align:center;padding:80px 20px;color:#6a574d}
+.news-loading span{display:inline-block;width:28px;height:28px;border:3px solid #e0d0c0;border-top-color:var(--red);border-radius:50%;animation:newsSpin 1s linear infinite;vertical-align:middle;margin-right:10px}
+@keyframes newsSpin{to{transform:rotate(360deg)}}
+.news-empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:#6a574d}
+.news-footer{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:40px;padding-bottom:30px;border-bottom:1px solid rgba(255,255,255,.22)}
+.news-footer-brand strong{font-family:'Cormorant Garamond',serif;font-size:28px;display:block;margin-bottom:10px;color:#fff}
+.news-footer-brand p{font-size:14px;color:#f0d9d3;line-height:1.7;max-width:320px}
+.news-footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.news-footer-col h4{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#e6c47e;margin:0 0 14px;font-weight:700}
+.news-footer-col a{display:block;color:#f0d9d3;font-size:14px;padding:5px 0;transition:color .2s}
+.news-footer-col a:hover{color:#fff}
+.news-footer-bottom{max-width:1180px;margin:20px auto 0;text-align:center;color:#efd8d2;font-size:11px;line-height:1.8}
+@media(max-width:950px){.mobile-menu-btn{display:block}.nav-cta{display:none}.featured-img{height:240px}.featured-body{padding:24px}}
+@media(max-width:750px){.news-footer{grid-template-columns:1fr;gap:30px}.news-footer-cols{grid-template-columns:1fr 1fr}.news-grid{grid-template-columns:1fr;gap:20px}.featured-img{height:200px}}
+@media(max-width:480px){.news-footer-cols{grid-template-columns:1fr}.featured-card h2{font-size:24px}}
+</style></head><body><div class="announcement">ANE CAKES FAIR · PORTAL DE NOTÍCIAS</div><header class="nav"><a class="brand" href="/"><img src="assets/image2.png" alt="Ane Cakes Fair"></a><nav class="main-nav"><a href="/">Início</a><a href="/noticias/">Notícias</a><a href="/ingressos/">Ingressos</a><a href="/caravanas/">Caravanas</a></nav><button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu" aria-expanded="false">☰</button><a class="nav-cta" href="/ingressos/">Ingressos</a></header><div class="mobile-menu" id="mobileMenu"><a href="/">Início</a><a href="/noticias/">Notícias</a><a href="/ingressos/">Ingressos</a><a href="/caravanas/">Caravanas</a></div><main style="padding:100px 24px 80px"><div class="portal-header"><span class="eyebrow">Ane Cakes Fair · Informação</span><h1>Portal de <em>Notícias</em></h1><p>Acompanhe novidades, programação, convidadas, histórias, bastidores, oportunidades e tudo que acontece antes, durante e depois do evento.</p></div><section class="featured-wrap" id="featuredSection"></section><section class="latest-section"><h2>Últimas notícias</h2><div class="news-grid" id="newsGrid"><div class="news-loading"><span></span>Carregando notícias...</div></div></section></main><footer class="site-footer"><div class="news-footer"><div class="news-footer-brand"><strong>ANE CAKES FAIR</strong><p>O encontro que conecta confeitaria, empreendedorismo e oportunidades.</p></div><div class="news-footer-cols"><div class="news-footer-col"><h4>Navegação</h4><a href="/">Início</a><a href="/noticias/">Notícias</a><a href="/ingressos/">Ingressos</a><a href="/caravanas/">Caravanas</a></div><div class="news-footer-col"><h4>Informações</h4><a href="/historia/">Sobre o evento</a><a href="/parceiros/">Parceiros</a><a href="/equipe/">Equipe</a></div><div class="news-footer-col"><h4>Redes Sociais</h4><a href="https://instagram.com/anecakesfair" target="_blank" rel="noopener noreferrer">Instagram</a></div></div></div><div class="news-footer-bottom"><span>© 2026 Ane Cakes Fair · Todos os direitos reservados.</span><br><span>Desenvolvido por Construindo Sonhos Web</span></div></footer><script>
+var API_URL="https://ane-story-engine.base44.app/functions/news";
+function escapeHtml(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function formatDate(d){if(!d)return"";try{return new Date(d).toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"})}catch(e){return""}}
+function renderFeatured(n){
+  var s=document.getElementById("featuredSection");
+  if(!n)return;s.innerHTML="";
+  var img=n.image_url?'<img class="featured-img" src="'+escapeHtml(n.image_url)+'" alt="'+escapeHtml(n.title)+'">':'';
+  var date=formatDate(n.published_at);
+  var metaHtml='';
+  if(n.author_name||date){metaHtml='<div class="featured-meta">';if(n.author_name)metaHtml+='<span>Por '+escapeHtml(n.author_name)+'</span>';if(n.author_name&&date)metaHtml+='<span>·</span>';if(date)metaHtml+='<span>'+date+'</span>';metaHtml+='</div>'}
+  var html='<a class="featured-card" href="/noticia-detalhe/?slug='+encodeURIComponent(n.slug)+'">'+img+'<div class="featured-body"><span class="featured-cat">'+escapeHtml(n.category)+'</span><h2>'+escapeHtml(n.title)+'</h2>'+(n.excerpt?'<p class="featured-excerpt">'+escapeHtml(n.excerpt)+'</p>':'')+metaHtml+'<span class="featured-btn">Ler notícia →</span></div></a>';
+  s.innerHTML=html;
+}
+function renderGrid(list){
+  var grid=document.getElementById("newsGrid");
+  if(!list.length){grid.innerHTML='<div class="news-empty">Nenhuma notícia publicada ainda. Volte em breve!</div>';return}
+  grid.innerHTML=list.map(function(n){
+    var img=n.image_url?'<img class="news-card-img" src="'+escapeHtml(n.image_url)+'" alt="'+escapeHtml(n.title)+'">':'';
+    var date=formatDate(n.published_at);
+    return '<a class="news-card" href="/noticia-detalhe/?slug='+encodeURIComponent(n.slug)+'">'+img+'<div class="news-card-body"><span class="news-card-cat">'+escapeHtml(n.category)+'</span><h3>'+escapeHtml(n.title)+'</h3>'+(n.excerpt?'<p>'+escapeHtml(n.excerpt)+'</p>':'')+(date?'<div class="news-card-date">'+date+'</div>':'')+'</div></a>';
+  }).join("");
+}
+fetch(API_URL).then(function(r){return r.json()}).then(function(data){
+  if(data&&data.success&&Array.isArray(data.news)&&data.news.length){
+    var all=data.news;
+    renderFeatured(all[0]);
+    renderGrid(all.slice(1));
+  }else{
+    document.getElementById("newsGrid").innerHTML='<div class="news-empty">Nenhuma notícia publicada ainda. Volte em breve!</div>';
+  }
+}).catch(function(){
+  document.getElementById("newsGrid").innerHTML='<div class="news-empty">Não foi possível carregar as notícias agora.</div>';
+});
+var btn=document.getElementById("mobileMenuBtn"),menu=document.getElementById("mobileMenu");
+btn.addEventListener("click",function(){var open=menu.classList.toggle("open");btn.setAttribute("aria-expanded",open);btn.innerHTML=open?"✕":"☰"});
+menu.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){menu.classList.remove("open");btn.setAttribute("aria-expanded","false");btn.innerHTML="☰"})});
+</script><script src="/roteiro-chat.js"></script></body></html>
