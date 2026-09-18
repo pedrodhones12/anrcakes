@@ -7,6 +7,9 @@
   <title>Ane Cakes Fair | Ingressos</title>
   <link rel="stylesheet" href="styles.css">
   <style>
+    /* Permite rolagem normal no Chrome, inclusive por gesto de toque no celular. */
+    html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+    body{overscroll-behavior-y:auto}
     .tickets-page{max-width:none;margin:0;padding:0 0 90px;background:var(--paper)}
     .tickets-intro{position:relative;overflow:hidden;text-align:center;max-width:none;margin:0;padding:108px 24px 125px;background:linear-gradient(90deg,rgba(92,10,23,.94) 0%,rgba(157,16,38,.84) 48%,rgba(111,12,27,.76) 100%),url("assets/roteiro%20de%20bolo.jpeg") center/cover no-repeat;color:#fff;isolation:isolate}
     .tickets-intro:before,.tickets-intro:after{content:"";position:absolute;border:1px solid rgba(243,217,159,.24);border-radius:50%;pointer-events:none;z-index:-1}
