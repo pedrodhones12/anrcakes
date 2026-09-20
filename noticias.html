@@ -84,4 +84,5 @@ fetch(API_URL).then(function(r){return r.json()}).then(function(data){
 var btn=document.getElementById("mobileMenuBtn"),menu=document.getElementById("mobileMenu");
 btn.addEventListener("click",function(){var open=menu.classList.toggle("open");btn.setAttribute("aria-expanded",open);btn.innerHTML=open?"✕":"☰"});
 menu.querySelectorAll("a").forEach(function(a){a.addEventListener("click",function(){menu.classList.remove("open");btn.setAttribute("aria-expanded","false");btn.innerHTML="☰"})});
-</script><script src="/roteiro-chat.js"></script></body></html>
+</script><script src="/roteiro-chat.js"></script><script src="/lang-toggle.js" defer></script>
+</body></html>
