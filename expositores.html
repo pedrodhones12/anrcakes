@@ -10,6 +10,60 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="/roteiro-chat.css">
+
+<style>
+/* Identidade visual — Expositores */
+.expo-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fffaf4 0%,#f8eee5 58%,#f2d9d3 100%);padding-top:82px;padding-bottom:78px}
+.expo-hero:before,.expo-hero:after{content:"";position:absolute;border:1px solid rgba(157,16,38,.12);border-radius:50%;pointer-events:none}
+.expo-hero:before{width:520px;height:520px;right:-220px;top:-280px}
+.expo-hero:after{width:360px;height:360px;left:-220px;bottom:-250px}
+.expo-hero-inner{max-width:1180px;margin:auto;position:relative;z-index:1;display:grid;grid-template-columns:1.25fr .75fr;gap:60px;align-items:center}
+.expo-hero h1{font-size:clamp(54px,7vw,88px);line-height:.9;max-width:760px;margin:16px 0 22px}
+.expo-hero p{max-width:650px;font-size:17px;line-height:1.7;color:#634f45}
+.expo-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.expo-orbit{width:310px;height:310px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;background:#9d1026;box-shadow:0 25px 70px rgba(86,25,22,.2);position:relative}
+.expo-orbit:before{content:"";position:absolute;inset:22px;border:1px solid rgba(255,255,255,.35);border-radius:50%}
+.expo-orbit-content{text-align:center;color:#fff;position:relative;z-index:2}
+.expo-orbit-content strong{display:block;font-family:"Cormorant Garamond",serif;font-size:62px;line-height:1}
+.expo-orbit-content span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#f4d99f}
+.expo-strip{background:#2f211c;color:#fff;padding:22px 8vw}
+.expo-strip-inner{max-width:1180px;margin:auto;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.expo-chip{border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:9px 15px;font-size:11px;letter-spacing:.06em;color:#f7e8df}
+.expo-section{padding-top:76px;padding-bottom:76px}
+.expo-section.alt{background:#fbf7f1}
+.expo-heading{max-width:760px;margin-bottom:38px}
+.expo-heading h2{font-family:"Cormorant Garamond",serif;font-size:clamp(42px,5vw,64px);line-height:.98;margin:12px 0}
+.expo-heading p{color:#6b594f;line-height:1.7}
+.expo-categories{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.expo-category{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;min-height:175px;box-shadow:0 12px 30px rgba(61,32,20,.05);transition:.25s}
+.expo-category:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.expo-category .num{font-size:11px;letter-spacing:.14em;color:var(--gold);font-weight:700}
+.expo-category h3{font-family:"Cormorant Garamond",serif;font-size:27px;line-height:1;margin:13px 0 8px}
+.expo-category p{font-size:12px;line-height:1.55;color:#75645c;margin:0}
+.expo-faq{background:#fff}
+.expo-faq-box{max-width:900px;margin:auto;background:#fbf7f1;border:1px solid var(--line);border-radius:24px;padding:30px}
+.expo-question-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.expo-question{border:1px solid var(--line);background:#fff;border-radius:13px;padding:15px;text-align:left;cursor:pointer;font:600 13px "DM Sans",sans-serif;color:#3d2a23;transition:.2s}
+.expo-question:hover,.expo-question.active{background:#9d1026;color:#fff;border-color:#9d1026}
+.expo-answer{margin-top:18px;background:#2f211c;color:#fff;border-radius:16px;padding:22px;min-height:82px;line-height:1.65;font-size:13px}
+.expo-answer strong{display:block;color:#f3d99f;margin-bottom:6px;font-family:"Cormorant Garamond",serif;font-size:23px}
+.expo-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.expo-flow-item{padding:28px;border-right:1px solid var(--line)}
+.expo-flow-item:last-child{border-right:0}
+.expo-flow-item b{display:block;color:#9d1026;font-family:"Cormorant Garamond",serif;font-size:38px}
+.expo-flow-item h3{font-family:"Cormorant Garamond",serif;font-size:26px;margin:8px 0}
+.expo-flow-item p{font-size:12px;color:#6b594f;line-height:1.55;margin:0}
+.expo-cta{background:#9d1026;color:#fff;text-align:center;padding:82px 8vw;position:relative;overflow:hidden}
+.expo-cta h2{font-family:"Cormorant Garamond",serif;font-size:clamp(45px,6vw,72px);line-height:.94;max-width:850px;margin:14px auto 18px}
+.expo-cta p{max-width:620px;margin:0 auto 28px;color:#f4e5df;line-height:1.65}
+.expo-cta .eyebrow{color:#f3d99f}
+@media(max-width:950px){
+ .expo-hero-inner{grid-template-columns:1fr}.expo-orbit{width:240px;height:240px}.expo-categories{grid-template-columns:repeat(2,1fr)}.expo-flow{grid-template-columns:repeat(2,1fr)}.expo-flow-item:nth-child(2){border-right:0}.expo-flow-item:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media(max-width:620px){
+ .expo-hero{padding-top:58px}.expo-hero h1{font-size:52px}.expo-orbit{width:210px;height:210px}.expo-orbit-content strong{font-size:48px}.expo-actions .btn{width:100%}.expo-categories,.expo-question-list,.expo-flow{grid-template-columns:1fr}.expo-flow-item{border-right:0!important;border-bottom:1px solid var(--line)}.expo-flow-item:last-child{border-bottom:0}.expo-faq-box{padding:18px}
+}
+</style>
 </head>
 <body>
 <div class="announcement">5ª EDIÇÃO · ILHÉUS, BAHIA · DA ORIGEM AO DESTINO</div>
@@ -20,86 +74,110 @@
 </header>
 
 <main>
-<section class="section page-hero">
-<span class="eyebrow">04 · Expositores e conexões</span>
-<h1>Mais do que stands.<br><em>Uma cadeia inteira.</em></h1>
-<p>A qualidade da Ane Cakes Fair não será medida pela quantidade de stands, mas pela diversidade e complementaridade das pessoas, marcas, instituições e agentes que fazem parte da jornada.</p>
-<a class="btn btn-primary" href="https://wa.me/5573991802061" target="_blank" rel="noopener">Quero participar →</a>
+<section class="expo-hero">
+  <div class="expo-hero-inner">
+    <div>
+      <span class="eyebrow">04 · Expositores e conexões</span>
+      <h1>Seu negócio pode ser parte da <em>experiência.</em></h1>
+      <p>Na Ane Cakes Fair, o expositor não é apenas um espaço de venda. É uma oportunidade de apresentar produtos, contar histórias, demonstrar soluções e criar conexões.</p>
+      <div class="expo-actions">
+        <a class="btn btn-primary" href="https://wa.me/5573991802061" target="_blank" rel="noopener noreferrer">Quero participar ↗</a>
+        <a class="btn btn-ghost" href="#perguntas">Tirar dúvidas</a>
+      </div>
+    </div>
+    <div class="expo-orbit" aria-label="Experiência do expositor">
+      <div class="expo-orbit-content">
+        <strong>01</strong>
+        <span>espaço para<br>conectar</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="section info-section alt">
-<div class="section-heading">
-<span class="eyebrow">Quem precisa estar na feira</span>
-<h2>Uma feira construída por <em>conexões.</em></h2>
-<p>Da origem dos ingredientes ao destino das experiências, diferentes agentes se encontram para compartilhar conhecimento, criar oportunidades e fortalecer uma rede que conecta gastronomia, território, criatividade e negócios.</p>
-</div>
-<div class="placeholder-grid">
-<div><span>01 · ORIGEM</span><b>Quem faz nascer</b><p>Produtores, associações, cooperativas e ingredientes que conectam a feira ao território.</p></div>
-<div><span>02 · CONHECIMENTO</span><b>Quem compartilha saberes</b><p>Pesquisadores, instituições de ensino, especialistas e detentores de saberes.</p></div>
-<div><span>03 · INDÚSTRIA</span><b>Quem transforma</b><p>Alimentos, chocolate, insumos, equipamentos, embalagens, tecnologia e soluções.</p></div>
-<div><span>04 · PROFISSIONAIS</span><b>Quem cria</b><p>Confeiteiros, chefs, chocolatiers e especialistas que transformam conhecimento em experiência.</p></div>
-<div><span>05 · EMPREENDEDORES</span><b>Quem faz acontecer</b><p>Pequenos negócios, marcas e profissionais independentes.</p></div>
-<div><span>06 · MERCADO</span><b>Quem conecta oportunidades</b><p>Compradores, distribuidores, fornecedores e parceiros comerciais.</p></div>
-<div><span>07 · TURISMO</span><b>Quem revela o território</b><p>Fazendas, hotéis, receptivos, experiências, operadores e destinos.</p></div>
-<div><span>08 · PÚBLICO</span><b>Quem vive a jornada</b><p>Pessoas que vêm descobrir, experimentar, aprender, comprar e se conectar.</p></div>
-</div>
+<section class="expo-strip">
+  <div class="expo-strip-inner">
+    <span class="expo-chip">Ingredientes</span><span class="expo-chip">Confeitaria</span><span class="expo-chip">Tecnologia</span><span class="expo-chip">Embalagens</span><span class="expo-chip">Equipamentos</span><span class="expo-chip">Serviços</span><span class="expo-chip">Turismo</span><span class="expo-chip">Empreendedorismo</span>
+  </div>
 </section>
 
-<section class="impact">
-<div class="section-heading centered light">
-<span class="eyebrow">A experiência do visitante</span>
-<h2>“Que experiência estamos criando para quem <em>entra na feira?</em>”</h2>
-<p>Não queremos que o visitante simplesmente caminhe por corredores de stands. <strong>Queremos uma jornada.</strong></p>
-</div>
-<div class="stats">
-<div><strong>01</strong><span>DESCOBRIR</span><small>A origem, os ingredientes e as histórias.</small></div>
-<div><strong>02</strong><span>CONHECER</span><small>Processos, modos de fazer e pessoas.</small></div>
-<div><strong>03</strong><span>EXPERIMENTAR</span><small>Sabores, criações e novas possibilidades.</small></div>
-<div><strong>04</strong><span>CONECTAR</span><small>Marcas, territórios, negócios e oportunidades.</small></div>
-</div>
+<section class="section expo-section alt">
+  <div class="expo-heading">
+    <span class="eyebrow">Quem pode expor?</span>
+    <h2>Uma feira feita de muitas <em>possibilidades.</em></h2>
+    <p>Em vez de longos textos, veja rapidamente onde sua marca, produto ou serviço pode se encaixar.</p>
+  </div>
+  <div class="expo-categories">
+    <article class="expo-category"><span class="num">01 · ORIGEM</span><h3>Produtores</h3><p>Ingredientes, produtos regionais, associações e cooperativas.</p></article>
+    <article class="expo-category"><span class="num">02 · CRIAÇÃO</span><h3>Confeitaria</h3><p>Confeiteiros, chefs, chocolatiers e marcas autorais.</p></article>
+    <article class="expo-category"><span class="num">03 · SOLUÇÕES</span><h3>Indústria</h3><p>Insumos, equipamentos, embalagens, tecnologia e ferramentas.</p></article>
+    <article class="expo-category"><span class="num">04 · NEGÓCIOS</span><h3>Empresas</h3><p>Serviços, fornecedores, distribuidores e parceiros comerciais.</p></article>
+    <article class="expo-category"><span class="num">05 · CONHECIMENTO</span><h3>Instituições</h3><p>Escolas, pesquisadores e organizações que compartilham saberes.</p></article>
+    <article class="expo-category"><span class="num">06 · TERRITÓRIO</span><h3>Turismo</h3><p>Hotéis, experiências, destinos, fazendas e receptivos.</p></article>
+    <article class="expo-category"><span class="num">07 · CRIATIVIDADE</span><h3>Economia criativa</h3><p>Marcas independentes, designers e soluções criativas.</p></article>
+    <article class="expo-category"><span class="num">08 · PÚBLICO</span><h3>Experiências</h3><p>Produtos e atividades que ajudam o visitante a descobrir algo novo.</p></article>
+  </div>
 </section>
 
-<section class="section">
-<div class="section-heading">
-<span class="eyebrow">A jornada do visitante</span>
-<h2>Entrar, descobrir, aprender e <em>sair diferente.</em></h2>
-<p>Cada espaço deve fazer parte de uma experiência maior. A feira é pensada para conduzir o visitante por encontros, conhecimentos, sabores e oportunidades.</p>
-</div>
-<div class="timeline">
-<div><b>Descobrir a origem</b><span>Conhecer ingredientes, produtores e histórias.</span></div>
-<div><b>Entender a transformação</b><span>Ver processos e modos de fazer.</span></div>
-<div><b>Assistir à criação</b><span>Acompanhar técnicas, talento e criatividade.</span></div>
-<div><b>Experimentar sabores</b><span>Provar, sentir e descobrir.</span></div>
-<div><b>Encontrar conexões</b><span>Pessoas, marcas, territórios e oportunidades.</span></div>
-<div><b>Levar conhecimento</b><span>Sair sabendo mais do que sabia quando entrou.</span></div>
-</div>
+<section class="section expo-section" id="perguntas">
+  <div class="expo-heading">
+    <span class="eyebrow">Perguntas rápidas</span>
+    <h2>Tem uma dúvida? <em>Escolha uma pergunta.</em></h2>
+    <p>Preparamos respostas rápidas para as dúvidas mais comuns de quem está pensando em participar como expositor.</p>
+  </div>
+  <div class="expo-faq-box">
+    <div class="expo-question-list">
+      <button class="expo-question active" type="button" data-answer="A feira reúne marcas, profissionais, produtores, empresas, instituições e iniciativas ligadas à confeitaria, gastronomia, empreendedorismo, economia criativa e ao território.">Quem pode ser expositor?</button>
+      <button class="expo-question" type="button" data-answer="Entre em contato com a organização pelo WhatsApp. A equipe poderá orientar sobre participação, condições e disponibilidade de espaços.">Como faço para participar?</button>
+      <button class="expo-question" type="button" data-answer="A disponibilidade e as condições podem variar conforme a categoria do expositor. Fale com a organização para receber as informações atualizadas.">Quanto custa o espaço?</button>
+      <button class="expo-question" type="button" data-answer="Sim. A proposta é que o espaço ajude a apresentar sua marca, produtos, serviços ou experiências e criar novas conexões durante a feira.">Posso divulgar minha marca?</button>
+      <button class="expo-question" type="button" data-answer="A feira acontece em Ilhéus, Bahia, na 5ª edição da Ane Cakes Fair, marcada para 30 de novembro de 2026.">Onde acontece o evento?</button>
+      <button class="expo-question" type="button" data-answer="Sim. A programação reúne diferentes experiências e públicos. A organização poderá orientar sobre a melhor forma de apresentar sua atividade ou demonstração.">Posso fazer demonstrações?</button>
+    </div>
+    <div class="expo-answer" id="expoAnswer">
+      <strong>Quem pode ser expositor?</strong>
+      A feira reúne marcas, profissionais, produtores, empresas, instituições e iniciativas ligadas à confeitaria, gastronomia, empreendedorismo, economia criativa e ao território.
+    </div>
+  </div>
 </section>
 
-<section class="section partners">
-<div class="section-heading">
-<span class="eyebrow">Para quem é este espaço?</span>
-<h2>Seu trabalho pode fazer parte da <em>jornada.</em></h2>
-<p>A Ane Cakes Fair busca expositores que contribuam para a experiência do público e para a construção de conexões relevantes dentro da cadeia da gastronomia e da economia criativa.</p>
-</div>
-<div class="partner-grid">
-<article><span>ORIGEM</span><h3>Produtores e ingredientes</h3><p>Apresente produtos, histórias e soluções conectadas ao território.</p></article>
-<article><span>CRIAÇÃO</span><h3>Marcas e profissionais</h3><p>Mostre técnicas, produtos, serviços e experiências.</p></article>
-<article><span>CONEXÃO</span><h3>Negócios e mercado</h3><p>Encontre novos públicos, parceiros e oportunidades.</p></article>
-<article class="partner-highlight"><span>DESTINO</span><h3>Faça parte da feira</h3><p>Mais do que ocupar um espaço: participe de uma jornada construída por pessoas e conexões.</p><a class="btn btn-light" href="https://wa.me/5573991802061" target="_blank" rel="noopener">Quero expor →</a></article>
-</div>
+<section class="section expo-section alt">
+  <div class="expo-heading">
+    <span class="eyebrow">A jornada do expositor</span>
+    <h2>Mais do que montar um espaço. <em>Crie uma conexão.</em></h2>
+  </div>
+  <div class="expo-flow">
+    <div class="expo-flow-item"><b>01</b><h3>Apresente</h3><p>Mostre sua marca, produto ou serviço de forma clara e atrativa.</p></div>
+    <div class="expo-flow-item"><b>02</b><h3>Demonstre</h3><p>Compartilhe processos, técnicas, sabores ou soluções.</p></div>
+    <div class="expo-flow-item"><b>03</b><h3>Conecte</h3><p>Conheça público, profissionais, fornecedores e possíveis parceiros.</p></div>
+    <div class="expo-flow-item"><b>04</b><h3>Amplie</h3><p>Transforme encontros em novas oportunidades para o seu negócio.</p></div>
+  </div>
 </section>
 
-<section class="final-cta">
-<span class="eyebrow">Ane Cakes Fair</span>
-<h2>Uma feira para <em>descobrir.</em><br>Uma jornada para viver.</h2>
-<p>Da origem ao destino, cada encontro ajuda a construir uma experiência mais rica para quem participa.</p>
-<a class="btn btn-light" href="parceiros.html">Conhecer os parceiros →</a>
+<section class="expo-cta">
+  <span class="eyebrow">Ane Cakes Fair · Ilhéus, Bahia</span>
+  <h2>Seu negócio também pode fazer parte dessa <em>jornada.</em></h2>
+  <p>Quer saber como participar como expositor? Fale diretamente com a organização.</p>
+  <a class="btn btn-light" href="https://wa.me/5573991802061" target="_blank" rel="noopener noreferrer">Falar com a organização ↗</a>
 </section>
 </main>
 
 <footer><span>ANE CAKES FAIR</span><span>Da origem ao destino · Ilhéus, Bahia</span><a href="/admin/" class="footer-admin">Admin</a><span class="footer-credit">Desenvolvido por Construindo Sonhos Web</span>
 </footer>
 <script src="script.js"></script>
+<script>
+(function(){
+  var buttons=document.querySelectorAll('.expo-question');
+  var answer=document.getElementById('expoAnswer');
+  buttons.forEach(function(button){
+    button.addEventListener('click',function(){
+      buttons.forEach(function(b){b.classList.remove('active');});
+      button.classList.add('active');
+      var title=button.textContent.trim();
+      answer.innerHTML='<strong>'+title+'</strong>'+button.getAttribute('data-answer');
+    });
+  });
+})();
+</script>
 <script src="/roteiro-chat.js"></script>
 </body>
 </html>
