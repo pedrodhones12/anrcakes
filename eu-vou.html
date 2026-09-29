@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Crie sua arte Eu vou para o Ane Cakes Fair e compartilhe sua presença no evento.">
+<title>Eu vou para o Ane Cakes Fair | Ane Cakes Fair</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="eu-vou.css">
+</head>
+<body>
+<div class="announcement">5ª EDIÇÃO · ILHÉUS, BAHIA · ANE CAKES FAIR</div>
+<header class="nav">
+  <a class="brand" href="index.html"><img src="assets/image2.png" alt="Logo Ane Cakes Fair"></a>
+  <nav class="main-nav">
+    <a href="index.html">Início</a>
+    <a href="palestrantes.html">Palestrantes</a>
+    <a href="parceiros.html">Parceiros</a>
+    <a href="caravanas.html">Caravanas</a>
+    <a href="expositores.html">Expositores</a>
+    <a href="roteiro.html">Roteiro</a>
+    <a class="nav-highlight" href="eu-vou.html">Eu vou!</a>
+  </nav>
+  <button class="mobile-menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button>
+</header>
+
+<main>
+<section class="section page-hero eu-vou-hero">
+  <div class="eu-vou-intro">
+    <span class="eyebrow">Compartilhe sua presença</span>
+    <h1>Eu vou para o <em>Ane Cakes Fair!</em></h1>
+    <p>Escolha uma foto sua e crie uma arte personalizada para compartilhar nas redes sociais e mostrar que você vai participar do evento.</p>
+  </div>
+
+  <div class="eu-vou-layout">
+    <div class="eu-vou-form">
+      <div class="upload-box" id="uploadBox">
+        <div class="upload-icon">＋</div>
+        <h2>Escolha sua foto</h2>
+        <p>Use uma foto em que seu rosto apareça bem.</p>
+        <label class="btn btn-primary upload-button" for="photoInput">Selecionar foto</label>
+        <input id="photoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+        <span class="file-name" id="fileName">Nenhuma foto selecionada</span>
+      </div>
+
+      <div class="name-box">
+        <label for="personName">Seu nome <span>(opcional)</span></label>
+        <input id="personName" type="text" maxlength="40" placeholder="Digite seu nome">
+      </div>
+
+      <button class="btn btn-primary generate-button" id="generateButton" type="button" disabled>Criar minha arte</button>
+      <p class="privacy-note">A foto é processada no seu navegador e não é enviada para o site.</p>
+    </div>
+
+    <div class="preview-area">
+      <div class="preview-title"><span>Prévia</span><small>Formato para redes sociais</small></div>
+      <div class="canvas-wrap">
+        <canvas id="shareCanvas" width="1080" height="1350" aria-label="Prévia da arte Eu vou para o Ane Cakes Fair"></canvas>
+        <div class="preview-placeholder" id="previewPlaceholder">
+          <strong>Sua arte aparecerá aqui</strong>
+          <span>Selecione uma foto para começar.</span>
+        </div>
+      </div>
+      <div class="result-actions" id="resultActions" hidden>
+        <button class="btn btn-primary" id="downloadButton" type="button">Baixar minha arte</button>
+        <button class="btn btn-ghost" id="shareButton" type="button">Compartilhar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="eu-vou-info">
+  <div>
+    <span class="eyebrow">Uma arte para compartilhar</span>
+    <h2>Mostre que você também <em>vai!</em></h2>
+    <p>Depois de criar sua arte, você pode salvá-la no celular ou computador e publicar nas redes sociais.</p>
+  </div>
+  <div class="info-mark">ANE<br><small>CAKES FAIR</small></div>
+</section>
+</main>
+
+<footer>
+  <span>ANE CAKES FAIR</span>
+  <span>Da origem ao destino · Ilhéus, Bahia</span>
+  <a href="index.html">Início</a>
+  <span class="footer-credit">Desenvolvido por Construindo Sonhos Web</span>
+</footer>
+<script src="eu-vou.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
