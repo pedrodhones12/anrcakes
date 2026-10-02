@@ -21,11 +21,15 @@
 .expo-hero h1{font-size:clamp(54px,7vw,88px);line-height:.9;max-width:760px;margin:16px 0 22px}
 .expo-hero p{max-width:650px;font-size:17px;line-height:1.7;color:#634f45}
 .expo-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.expo-orbit{width:310px;height:310px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;background:#9d1026;box-shadow:0 25px 70px rgba(86,25,22,.2);position:relative}
-.expo-orbit:before{content:"";position:absolute;inset:22px;border:1px solid rgba(255,255,255,.35);border-radius:50%}
-.expo-orbit-content{text-align:center;color:#fff;position:relative;z-index:2}
-.expo-orbit-content strong{display:block;font-family:"Cormorant Garamond",serif;font-size:62px;line-height:1}
-.expo-orbit-content span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#f4d99f}
+.expo-hero-visual{position:relative;max-width:500px;margin:auto}
+.expo-hero-visual img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:28px;box-shadow:0 25px 70px rgba(86,25,22,.2);border:6px solid rgba(255,255,255,.8)}
+.expo-badge{position:absolute;right:-18px;bottom:-18px;width:118px;height:118px;border-radius:50%;background:#9d1026;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 14px 35px rgba(86,25,22,.25);border:4px solid #fff}
+.expo-badge strong{font-family:"Cormorant Garamond",serif;font-size:42px;line-height:1}
+.expo-badge span{font-size:9px;letter-spacing:.1em;text-transform:uppercase;text-align:center;color:#f4d99f;margin-top:3px}
+.expo-contact{margin-top:26px;padding:22px;border:1px solid rgba(157,16,38,.12);border-radius:18px;background:rgba(255,255,255,.7)}
+.expo-contact-title{font-family:"Cormorant Garamond",serif;font-size:25px;margin:0 0 14px;color:#3d2a23}
+.expo-contact-buttons{display:flex;gap:10px;flex-wrap:wrap}
+.expo-contact-buttons .btn{flex:1;min-width:180px;text-align:center}
 .expo-strip{background:#2f211c;color:#fff;padding:22px 8vw}
 .expo-strip-inner{max-width:1180px;margin:auto;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .expo-chip{border:1px solid rgba(255,255,255,.18);border-radius:99px;padding:9px 15px;font-size:11px;letter-spacing:.06em;color:#f7e8df}
@@ -58,10 +62,10 @@
 .expo-cta p{max-width:620px;margin:0 auto 28px;color:#f4e5df;line-height:1.65}
 .expo-cta .eyebrow{color:#f3d99f}
 @media(max-width:950px){
- .expo-hero-inner{grid-template-columns:1fr}.expo-orbit{width:240px;height:240px}.expo-categories{grid-template-columns:repeat(2,1fr)}.expo-flow{grid-template-columns:repeat(2,1fr)}.expo-flow-item:nth-child(2){border-right:0}.expo-flow-item:nth-child(n+3){border-top:1px solid var(--line)}
+ .expo-hero-inner{grid-template-columns:1fr}.expo-hero-visual{max-width:620px}.expo-categories{grid-template-columns:repeat(2,1fr)}.expo-flow{grid-template-columns:repeat(2,1fr)}.expo-flow-item:nth-child(2){border-right:0}.expo-flow-item:nth-child(n+3){border-top:1px solid var(--line)}
 }
 @media(max-width:620px){
- .expo-hero{padding-top:58px}.expo-hero h1{font-size:52px}.expo-orbit{width:210px;height:210px}.expo-orbit-content strong{font-size:48px}.expo-actions .btn{width:100%}.expo-categories,.expo-question-list,.expo-flow{grid-template-columns:1fr}.expo-flow-item{border-right:0!important;border-bottom:1px solid var(--line)}.expo-flow-item:last-child{border-bottom:0}.expo-faq-box{padding:18px}
+ .expo-hero{padding-top:58px}.expo-hero h1{font-size:52px}.expo-hero-visual{width:100%}.expo-badge{right:8px;bottom:-14px;width:100px;height:100px}.expo-actions .btn{width:100%}.expo-categories,.expo-question-list,.expo-flow{grid-template-columns:1fr}.expo-flow-item{border-right:0!important;border-bottom:1px solid var(--line)}.expo-flow-item:last-child{border-bottom:0}.expo-faq-box{padding:18px}
 }
 </style>
 </head>
@@ -79,17 +83,29 @@
     <div>
       <span class="eyebrow">04 · Expositores e conexões</span>
       <h1>Seu negócio pode ser parte da <em>experiência.</em></h1>
-      <p>Na Ane Cakes Fair, o expositor não é apenas um espaço de venda. É uma oportunidade de apresentar produtos, contar histórias, demonstrar soluções e criar conexões.</p>
+      <p>Na Ane Cakes Fair, seu estande é uma oportunidade para apresentar produtos, conquistar novos clientes, fortalecer sua presença no mercado e criar conexões durante dois dias de evento.</p>
+      <div class="expo-contact">
+        <h2 class="expo-contact-title">45 vagas exclusivas para expositores de estandes 2x2!</h2>
+        <p><strong>Durante dois dias de evento</strong>, sua marca terá espaço para apresentar produtos, conquistar novos clientes, fortalecer sua presença no mercado e fazer parte da <strong>5ª edição da Ane Cakes Fair</strong>, em Ilhéus, Bahia.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px">
+          <span class="expo-chip" style="background:#2f211c;color:#f7e8df">🎪 Estande 2x2</span>
+          <span class="expo-chip" style="background:#2f211c;color:#f7e8df">📅 Dois dias de evento</span>
+          <span class="expo-chip" style="background:#2f211c;color:#f7e8df">📍 Ilhéus – Bahia</span>
+          <span class="expo-chip" style="background:#9d1026;color:#fff">🔥 Apenas 45 expositores</span>
+        </div>
+        <p>Garanta seu espaço e venha viver essa experiência com a Ane Cakes Fair!</p>
+        <div class="expo-contact-buttons">
+          <a class="btn btn-primary" href="https://wa.me/557391802061?text=Ol%C3%A1%2C%20Ane!%20Tenho%20interesse%20em%20negociar%20um%20estande%202x2%20para%20a%205%C2%AA%20edi%C3%A7%C3%A3o%20da%20Ane%20Cakes%20Fair." target="_blank" rel="noopener noreferrer">Falar com Ane ↗</a>
+          <a class="btn btn-ghost" href="https://wa.me/557391098278?text=Ol%C3%A1%2C%20Carlos!%20Tenho%20interesse%20em%20negociar%20um%20estande%202x2%20para%20a%205%C2%AA%20edi%C3%A7%C3%A3o%20da%20Ane%20Cakes%20Fair." target="_blank" rel="noopener noreferrer">Falar com Carlos ↗</a>
+        </div>
+      </div>
       <div class="expo-actions">
-        <a class="btn btn-primary" href="https://wa.me/5573991802061" target="_blank" rel="noopener noreferrer">Quero participar ↗</a>
         <a class="btn btn-ghost" href="#perguntas">Tirar dúvidas</a>
       </div>
     </div>
-    <div class="expo-orbit" aria-label="Experiência do expositor">
-      <div class="expo-orbit-content">
-        <strong>01</strong>
-        <span>espaço para<br>conectar</span>
-      </div>
+    <div class="expo-hero-visual">
+      <img src="assets/expositoresane.jpeg" alt="Expositores da Ane Cakes Fair" loading="eager">
+      <div class="expo-badge"><strong>45</strong><span>vagas exclusivas</span></div>
     </div>
   </div>
 </section>
@@ -156,8 +172,11 @@
 <section class="expo-cta">
   <span class="eyebrow">Ane Cakes Fair · Ilhéus, Bahia</span>
   <h2>Seu negócio também pode fazer parte dessa <em>jornada.</em></h2>
-  <p>Quer saber como participar como expositor? Fale diretamente com a organização.</p>
-  <a class="btn btn-light" href="https://wa.me/5573991802061" target="_blank" rel="noopener noreferrer">Falar com a organização ↗</a>
+  <p>Quer saber como participar como expositor? Fale diretamente com a organização e negocie seu espaço.</p>
+  <div class="expo-contact-buttons" style="max-width:520px;margin:0 auto">
+    <a class="btn btn-light" href="https://wa.me/557391802061?text=Ol%C3%A1%2C%20Ane!%20Tenho%20interesse%20em%20negociar%20um%20estande%202x2%20para%20a%205%C2%AA%20edi%C3%A7%C3%A3o%20da%20Ane%20Cakes%20Fair." target="_blank" rel="noopener noreferrer">Falar com Ane ↗</a>
+    <a class="btn btn-light" href="https://wa.me/557391098278?text=Ol%C3%A1%2C%20Carlos!%20Tenho%20interesse%20em%20negociar%20um%20estande%202x2%20para%20a%205%C2%AA%20edi%C3%A7%C3%A3o%20da%20Ane%20Cakes%20Fair." target="_blank" rel="noopener noreferrer">Falar com Carlos ↗</a>
+  </div>
 </section>
 </main>
 
