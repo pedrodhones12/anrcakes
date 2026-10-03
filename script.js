@@ -12,8 +12,10 @@ if(mainNav){
     }
   });
 }
+const currentPath=window.location.pathname.toLowerCase();
+const isAmbassadorPage=currentPath.endsWith('/embaixadora.html')||currentPath.endsWith('/embaixadora-2.html')||currentPath.includes('/embaixadora/');
 const siteFooter=document.querySelector('footer');
-if(siteFooter&&!siteFooter.querySelector('.footer-navigation')){
+if(isAmbassadorPage&&siteFooter&&!siteFooter.querySelector('.footer-navigation')){
   const navFooter=document.createElement('nav');
   navFooter.className='footer-navigation';
   navFooter.setAttribute('aria-label','Navegação complementar');
