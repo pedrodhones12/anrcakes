@@ -161,3 +161,43 @@
 .upload-panel .form-actions{display:flex!important;position:sticky;bottom:0;z-index:10;background:rgba(255,255,255,.96);padding:14px 0 4px;margin-top:18px;border-top:1px solid var(--tag-line);}
 .upload-panel #nextBtn{display:inline-flex!important;min-height:48px;}
 .upload-panel #nextBtn.hidden{display:none!important;}
+
+
+/* CORREÇÃO DEFINITIVA DOS BOTÕES DO FORMULÁRIO */
+.upload-panel .ambassador-square.creator-card,
+.upload-panel .creator-card{
+  position:relative!important;
+  box-sizing:border-box!important;
+  padding-bottom:92px!important;
+}
+.upload-panel .form-actions{
+  position:absolute!important;
+  left:30px!important;
+  right:30px!important;
+  bottom:0!important;
+  width:auto!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  min-height:64px!important;
+  margin:0!important;
+  padding:12px 0!important;
+  background:#fff!important;
+  border-top:1px solid var(--tag-line)!important;
+  z-index:50!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+.upload-panel .form-actions #nextBtn,
+.upload-panel .form-actions #backBtn,
+.upload-panel .form-actions #generateBtn{
+  position:relative!important;
+  z-index:51!important;
+}
+.upload-panel .form-actions #nextBtn.hidden,
+.upload-panel .form-actions #backBtn.hidden,
+.upload-panel .form-actions #generateBtn.hidden{display:none!important;}
+@media(max-width:850px){
+  .upload-panel .creator-card{padding-bottom:92px!important;}
+  .upload-panel .form-actions{left:20px!important;right:20px!important;}
+}
