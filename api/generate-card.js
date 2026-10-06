@@ -1,20 +1,103 @@
-import crypto from "node:crypto";
+const MAX_PHOTO=8*1024*1024;
+const MAX_TEXT=1800;
+const WINDOW_MS=60*60*1000;
+const MAX_PER_IP=3;
+const hits=new Map();
 
-export const config={api:{bodyParser:false}};
-const MAX=8*1024*1024;
-function multipart(buf,type){const m=type.match(/boundary="?([^";]+)"?/i);if(!m)throw Error("Multipart inválido");const b=Buffer.from("--"+m[1]),out={};let p=0;while((p=buf.indexOf(b,p))>=0){p+=b.length;if(buf.slice(p,p+2).toString()==="--")break;if(buf.slice(p,p+2).toString()==="\r\n")p+=2;const e=buf.indexOf(b,p);if(e<0)break;let part=buf.slice(p,e);if(part.slice(-2).toString()==="\r\n")part=part.slice(0,-2);const s=part.indexOf("\r\n\r\n");if(s<0){p=e;continue}const h=part.slice(0,s).toString(),body=part.slice(s+4),n=h.match(/name="([^"]+)"/i),f=h.match(/filename="([^"]*)"/i);if(n)out[n[1]]=f?{filename:f[1],contentType:(h.match(/Content-Type:\s*([^\r\n]+)/i)||[])[1]||"application/octet-stream",body}:body.toString();p=e}return out}
-async function raw(req){const c=[];let n=0;for await(const x of req){n+=x.length;if(n>MAX+1024*1024)throw Error("Payload muito grande");c.push(x)}return Buffer.concat(c)}
-async function sb(path,opt={}){const key=process.env.SUPABASE_SERVICE_ROLE_KEY;return fetch(process.env.SUPABASE_URL+path,{...opt,headers:{apikey:key,Authorization:"Bearer "+key,...(opt.headers||{})}})}
-async function user(req){const a=req.headers.authorization||"";if(!a.startsWith("Bearer "))return null;const r=await fetch(process.env.SUPABASE_URL+"/auth/v1/user",{headers:{apikey:process.env.SUPABASE_ANON_KEY,Authorization:a}});return r.ok?r.json():null}
-const clean=(x,n)=>String(x||"").trim().slice(0,n);
-function prompt(d){const loc=d.visualLocation==="none"?"sem localização":d.visualLocation==="birth"?d.birthPlace:d.visualLocation==="other"?d.otherLocation:d.city+" - "+d.state;const title=d.gender==="male"?"EMBAIXADOR":d.gender==="neutral"?"REPRESENTANTE":"EMBAIXADORA";return `Crie um card editorial vertical 4:5 para a Ane Cakes Fair. Referência apenas de hierarquia e atmosfera, sem copiar composição, ilustrações ou elementos distintivos de outras artes. Título: CONHEÇA NOSSO(A) ${title}. Nome: ${d.displayName}. Profissão: ${d.profession}. Local: ${loc}. História: ${d.story}. Destaques: ${d.highlights.join(" | ")}. Frase: ${d.quote||"crie uma frase curta baseada somente nos dados"}. Estilo: ${d.style}. Preserve rigorosamente a identidade da pessoa da foto: rosto, traços, cabelo, tom de pele e proporções. Não transforme a pessoa; trabalhe no fundo, iluminação, enquadramento e elementos gráficos. Use referências visuais sutis da localidade informada. Crie espaço limpo para tipografia e aparência premium, profissional e original.`}
-export default async function handler(req,res){if(req.method!=="POST")return res.status(405).json({error:"Método não permitido."});try{if(!process.env.OPENAI_API_KEY||!process.env.SUPABASE_URL||!process.env.SUPABASE_SERVICE_ROLE_KEY)return res.status(503).json({error:"Configure OPENAI_API_KEY, SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY."});const u=await user(req);if(!u)return res.status(401).json({error:"Faça login para gerar sua arte."});
-const profile=await sb("/rest/v1/profiles?select=plan,generation_limit&id=eq."+u.id);const pd=await profile.json();const limit=pd[0]?.generation_limit||3;const used=await sb("/rest/v1/generated_cards?select=id&user_id=eq."+u.id+"&status=eq.completed");const usedRows=await used.json();if(Array.isArray(usedRows)&&usedRows.length>=limit)return res.status(429).json({error:`Seu limite atual é de ${limit} gerações. Entre em contato com o projeto para ampliar seu plano.`});
-const parts=multipart(await raw(req),req.headers["content-type"]||"");const photo=parts.photo;if(!photo?.body||photo.body.length>MAX)return res.status(400).json({error:"Foto inválida ou maior que 8 MB."});if(!["image/jpeg","image/png","image/webp"].includes(photo.contentType))return res.status(400).json({error:"Use JPG, PNG ou WEBP."});
-const d={fullName:clean(parts.fullName,160),displayName:clean(parts.displayName,80),profession:clean(parts.profession,120),city:clean(parts.city,100),state:clean(parts.state,2).toUpperCase(),birthPlace:clean(parts.birthPlace,120),story:clean(parts.story,1600),highlights:JSON.parse(parts.highlights||"[]").slice(0,8).map(x=>clean(x,120)),quote:clean(parts.quote,220),visualLocation:clean(parts.visualLocation,20),otherLocation:clean(parts.otherLocation,120),gender:clean(parts.gender,20),style:clean(parts.style,30)};if(!d.displayName||!d.profession||!d.city||!d.state)return res.status(400).json({error:"Preencha nome, profissão, cidade e estado."});
-const id=crypto.randomUUID(),ext=photo.contentType==="image/png"?"png":photo.contentType==="image/webp"?"webp":"jpg",path=u.id+"/"+id+"."+ext;const up=await sb("/storage/v1/object/original-photos/"+path,{method:"POST",headers:{"Content-Type":photo.contentType,"x-upsert":"false"},body:photo.body});if(!up.ok)throw Error("Falha ao armazenar a foto.");
-const sign=await sb("/storage/v1/object/sign/original-photos/"+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({expiresIn:3600})}),sd=await sign.json();if(!sign.ok)throw Error("Falha ao criar URL temporária.");const imageUrl=process.env.SUPABASE_URL+"/storage/v1"+sd.signedURL;
-const ai=await fetch("https://api.openai.com/v1/responses",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+process.env.OPENAI_API_KEY},body:JSON.stringify({model:process.env.OPENAI_MODEL||"gpt-6-luna",input:[{role:"user",content:[{type:"input_text",text:prompt(d)},{type:"input_image",image_url:imageUrl,detail:"high"}]}],tools:[{type:"image_generation",model:process.env.OPENAI_IMAGE_MODEL||"gpt-image-2"}]})});const ad=await ai.json();if(!ai.ok)throw Error("A IA não conseguiu gerar a arte.");const call=(ad.output||[]).find(x=>x.type==="image_generation_call"&&x.result);if(!call?.result)throw Error("A IA não retornou a imagem.");
-const image=Buffer.from(call.result,"base64"),gp=u.id+"/"+id+".png";const save=await sb("/storage/v1/object/generated-cards/"+gp,{method:"POST",headers:{"Content-Type":"image/png","x-upsert":"true"},body:image});if(!save.ok)throw Error("Não foi possível armazenar a arte.");
-const finalUrl=process.env.SUPABASE_URL+"/storage/v1/object/public/generated-cards/"+gp;const row={id,user_id:u.id,full_name:d.fullName,display_name:d.displayName,profession:d.profession,city:d.city,state:d.state,birth_place:d.birthPlace,story:d.story,highlights:d.highlights,quote:d.quote,visual_location:d.visualLocation,style:d.style,gender:d.gender,original_photo_path:path,generated_image_url:finalUrl,prompt_used:prompt(d),status:"completed"};
-const ins=await sb("/rest/v1/generated_cards",{method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify(row)});if(!ins.ok)throw Error("Não foi possível salvar o histórico.");await sb("/rest/v1/generation_history",{method:"POST",headers:{"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({user_id:u.id,generated_card_id:id,status:"completed",model:process.env.OPENAI_IMAGE_MODEL||"gpt-image-2"})});return res.status(200).json({id,imageUrl:finalUrl})}catch(e){console.error(e);return res.status(500).json({error:e.message||"Erro interno."})}}
+const clean=(value,max=240)=>String(value||"").trim().slice(0,max);
+const json=(res,status,payload)=>res.status(status).setHeader("Content-Type","application/json").json(payload);
+
+function rateLimit(ip){
+  const now=Date.now();
+  const list=(hits.get(ip)||[]).filter(t=>now-t<WINDOW_MS);
+  if(list.length>=MAX_PER_IP)return false;
+  list.push(now);hits.set(ip,list);
+  if(hits.size>2000){for(const [key,times] of hits){if(!times.some(t=>now-t<WINDOW_MS))hits.delete(key)}}
+  return true;
+}
+
+function buildPrompt(d){
+  const loc=d.visualLocation==="none"?"sem referência geográfica":d.visualLocation==="birth"?d.birthPlace:d.visualLocation==="other"?d.otherLocation:`${d.city} - ${d.state}`;
+  const gender=d.gender==="male"?"embaixador":d.gender==="neutral"?"representante":"embaixadora";
+  const highlights=d.highlights.length?d.highlights.join(" • "):"sem destaques adicionais";
+  return `Você é um diretor de arte especializado em cards editoriais profissionais. Crie uma imagem vertical de retrato para um card oficial da Ane Cakes Fair, com aparência premium, contemporânea e original.
+
+A pessoa da imagem enviada é a pessoa principal. Preserve sua identidade visual e semelhança: rosto, formato facial, cabelo, tom de pele, idade aparente e proporções. Não substitua a pessoa, não crie outra pessoa e não aplique caricatura. Faça apenas tratamento editorial de iluminação, enquadramento, profundidade, roupa quando necessário e integração com o cenário.
+
+Direção visual:
+- estilo: ${d.style};
+- localização contextual: ${loc};
+- use elementos arquitetônicos, culturais ou ambientais sutis associados ao local, sem inserir símbolos aleatórios;
+- composição elegante, sofisticada e adequada para divulgação profissional;
+- iluminação de estúdio/editorial;
+- fundo com profundidade e áreas visualmente limpas;
+- paleta coerente com ${d.style};
+- composição vertical, pensando em aproximadamente 4:5;
+- NÃO copie a composição ou elementos exclusivos de nenhuma arte de referência;
+- NÃO invente logotipos, marcas ou textos ilegíveis.
+
+Informações da pessoa:
+Nome: ${d.displayName}
+Profissão: ${d.profession}
+Cidade/UF: ${d.city} - ${d.state}
+Naturalidade: ${d.birthPlace||"não informada"}
+História: ${d.story||"não informada"}
+Destaques: ${highlights}
+Frase: ${d.quote||"Onde a confeitaria vira experiência."}
+
+O texto final do card será aplicado pelo sistema posteriormente. Portanto, concentre-se principalmente em gerar uma imagem visual profissional da pessoa integrada ao cenário. Não coloque textos, letras, números, marcas d'água ou logotipos na imagem.`;
+}
+
+export default async function handler(req,res){
+  if(req.method!=="POST")return json(res,405,{error:"Método não permitido."});
+  const ip=String(req.headers["x-forwarded-for"]||req.socket?.remoteAddress||"anonymous").split(",")[0].trim();
+  if(!rateLimit(ip))return json(res,429,{error:"Limite temporário atingido. Tente novamente em até 1 hora."});
+  if(!process.env.OPENAI_API_KEY)return json(res,503,{error:"A integração com a IA ainda não foi configurada no servidor."});
+  try{
+    const d=req.body||{};
+    const photo=String(d.photoDataUrl||"");
+    if(!/^data:image\/(jpeg|png|webp);base64,/i.test(photo))return json(res,400,{error:"Foto inválida. Use JPG, PNG ou WEBP."});
+    const comma=photo.indexOf(",");
+    const binary=Buffer.from(photo.slice(comma+1),"base64");
+    if(!binary.length||binary.length>MAX_PHOTO)return json(res,400,{error:"A foto deve ter no máximo 8 MB."});
+    const data={
+      fullName:clean(d.fullName,160),
+      displayName:clean(d.displayName,80),
+      profession:clean(d.profession,120),
+      city:clean(d.city,100),
+      state:clean(d.state,2).toUpperCase(),
+      birthPlace:clean(d.birthPlace,120),
+      story:clean(d.story,MAX_TEXT),
+      highlights:Array.isArray(d.highlights)?d.highlights.slice(0,8).map(x=>clean(x,120)).filter(Boolean):[],
+      quote:clean(d.quote,240),
+      visualLocation:clean(d.visualLocation,20),
+      otherLocation:clean(d.otherLocation,120),
+      gender:clean(d.gender,20),
+      style:clean(d.style,30)
+    };
+    if(!data.displayName||!data.profession||!data.city||!data.state)return json(res,400,{error:"Preencha nome, profissão, cidade e estado."});
+    const ai=await fetch("https://api.openai.com/v1/responses",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization:"Bearer "+process.env.OPENAI_API_KEY},
+      body:JSON.stringify({
+        model:process.env.OPENAI_MODEL||"gpt-6-luna",
+        input:[{role:"user",content:[
+          {type:"input_text",text:buildPrompt(data)},
+          {type:"input_image",image_url:photo,detail:"high"}
+        ]}],
+        tools:[{type:"image_generation",model:process.env.OPENAI_IMAGE_MODEL||"gpt-image-2",quality:"medium"}]
+      })
+    });
+    const result=await ai.json();
+    if(!ai.ok){
+      console.error("OpenAI error",result);
+      return json(res,502,{error:"A IA não conseguiu gerar a arte agora. Verifique a configuração da chave da IA."});
+    }
+    const call=(result.output||[]).find(item=>item.type==="image_generation_call"&&item.result);
+    if(!call?.result)return json(res,502,{error:"A IA não retornou uma imagem."});
+    return json(res,200,{imageDataUrl:"data:image/png;base64,"+call.result,model:process.env.OPENAI_IMAGE_MODEL||"gpt-image-2"});
+  }catch(error){
+    console.error(error);
+    return json(res,500,{error:"Não foi possível gerar a arte agora. Tente novamente."});
+  }
+}
