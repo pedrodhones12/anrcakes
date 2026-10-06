@@ -1,6 +1,6 @@
 (()=>{const S={step:1,total:7,style:"elegante",photo:null,mode:"embaixador"},$=id=>document.getElementById(id),steps=[...document.querySelectorAll(".form-step")];
 function boot(){bind();renderStep();updatePreview();updateModeUI();addHighlight();renderLocalGallery();window.addEventListener("beforeunload",()=>localStorage.removeItem("aneCakesCards"));}
-function bind(){document.querySelectorAll(".mode-card").forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;S.step=1;S.total=S.mode==="eu-vou"?2:7;document.querySelectorAll(".mode-card").forEach(x=>x.classList.toggle("selected",x===b));updateModeUI();renderStep();updatePreview()});$("choosePhoto").onclick=()=>$("photo").click();$("euVouChoosePhoto").onclick=()=>$("photo").click();$("euVouUploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="euVouPhotoPreview")$("photo").click()};$("euVouName").oninput=e=>{$("displayName").value=e.target.value;updatePreview()};$("euVouGenerateBtn").onclick=()=>{if(!S.photo)return msg("Envie sua foto para continuar.");if(!$("euVouName").value.trim())return msg("Informe seu nome para continuar.");$("displayName").value=$("euVouName").value.trim();generate(new Event("submit"));};$("uploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="photoPreview")$("photo").click()};$("photo").onchange=e=>{const f=e.target.files[0];if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type))return msg("Use JPG, PNG ou WEBP.");if(f.size>8*1024*1024)return msg("A foto deve ter no máximo 8 MB.");S.photo=f;const url=URL.createObjectURL(f);$("photoPreview").src=url;$("photoPreview").classList.remove("hidden");$("photoPlaceholder").classList.add("hidden");$("euVouPhotoPreview").src=url;$("euVouPhotoPreview").classList.remove("hidden");$("euVouPhotoPlaceholder").classList.add("hidden")};$("story").oninput=e=>$("storyCount").textContent=e.target.value.length;$("addHighlight").onclick=()=>addHighlight();$("visualLocation").onchange=()=>$("otherLocationWrap").classList.toggle("hidden",$("visualLocation").value!=="other");document.querySelectorAll(".style-option").forEach(b=>b.onclick=()=>{document.querySelectorAll(".style-option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");S.style=b.dataset.style});$("nextBtn").onclick=next;$("backBtn").onclick=back;$("tagForm").onsubmit=e=>{e.preventDefault();generate(e)};$("generateBtn").onclick=e=>{e.preventDefault();generate(e)};$("regenerateBtn").onclick=()=>{$("resultSection").classList.add("hidden");window.scrollTo({top:0,behavior:"smooth"})};["displayName","city","state","gender"].forEach(id=>$(id).addEventListener("input",updatePreview));$("refreshGallery").onclick=renderLocalGallery}
+function bind(){document.querySelectorAll(".mode-card").forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;S.step=1;S.total=S.mode==="eu-vou"?2:7;document.querySelectorAll(".mode-card").forEach(x=>x.classList.toggle("selected",x===b));updateModeUI();renderStep();updatePreview()});$("choosePhoto").onclick=()=>$("photo").click();$("euVouChoosePhoto").onclick=()=>$("photo").click();$("euVouUploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="euVouPhotoPreview")$("photo").click()};$("euVouName").oninput=e=>{$("displayName").value=e.target.value;updatePreview()};$("euVouGenerateBtn").onclick=()=>{if(!S.photo)return msg("Envie sua foto para continuar.");if(!$("euVouName").value.trim())return msg("Informe seu nome para continuar.");$("displayName").value=$("euVouName").value.trim();generate(new Event("submit"));};$("uploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="photoPreview")$("photo").click()};$("photo").onchange=e=>{const f=e.target.files[0];if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type))return msg("Use JPG, PNG ou WEBP.");if(f.size>8*1024*1024)return msg("A foto deve ter no máximo 8 MB.");S.photo=f;const url=URL.createObjectURL(f);$("photoPreview").src=url;$("photoPreview").classList.remove("hidden");$("photoPlaceholder").classList.add("hidden");$("euVouPhotoPreview").src=url;$("euVouPhotoPreview").classList.remove("hidden");$("euVouPhotoPlaceholder").classList.add("hidden")};$("story").oninput=e=>$("storyCount").textContent=e.target.value.length;$("addHighlight").onclick=()=>addHighlight();$("visualLocation").onchange=()=>$("otherLocationWrap").classList.toggle("hidden",$("visualLocation").value!=="other");document.querySelectorAll(".style-option").forEach(b=>b.onclick=()=>{document.querySelectorAll(".style-option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");S.style=b.dataset.style});$("nextBtn").onclick=next;$("backBtn").onclick=back;$("tagForm").onsubmit=e=>{e.preventDefault();generate(e)};$("generateBtn").onclick=e=>{e.preventDefault();generate(e)};$("regenerateBtn").onclick=()=>{$("resultSection").classList.add("hidden");window.scrollTo({top:0,behavior:"smooth"})};["displayName","city","state","gender"].forEach(id=>$(id).addEventListener("input",updatePreview))}
 function addHighlight(v=""){const r=document.createElement("div");r.className="highlight-row";r.innerHTML='<input maxlength="120" placeholder="Ex.: Mais de 10 anos de experiência"><button type="button" class="remove-highlight">×</button>';r.querySelector("input").value=v;r.querySelector("button").onclick=()=>r.remove();$("highlights").appendChild(r)}
 function updateModeUI(){const eu=S.mode==="eu-vou";document.querySelector(".creator-section").classList.toggle("eu-vou-active",eu);document.body.classList.toggle("eu-vou-mode",eu);$("modeHint").textContent=eu?"Modo EU VOU: coloque sua foto e mostre que você estará na Ane Cakes Fair.":"Modo Embaixador(a): crie uma arte contando sua história.";document.querySelectorAll(".ambassador-only").forEach(el=>el.classList.toggle("hidden",eu));$("generateBtn").textContent=eu?"🎟️ Criar minha tag EU VOU":"✨ Gerar minha arte"}
 function next(){if(S.step===1&&!S.photo)return msg("Envie sua foto para continuar.");if(S.step<S.total){S.step++;renderStep()}}
@@ -17,7 +17,7 @@ function drawText(ctx,d,W,H){
   const wine="#8f1828", burgundy="#701522", gold="#c79a4b", cream="#f8efe4", ink="#351e18", muted="#654e45";
   ctx.save();
 
-  // Tratamento final para aproximar a composição da referência assets/madija.jpg:
+  // Composição editorial oficial: creme, vinho, dourado, moldura fina, foto dominante à esquerda e informação organizada à direita.
   // creme + moldura dourada + hierarquia editorial + pessoa visualmente dominante à esquerda.
   ctx.fillStyle="rgba(250,242,232,.16)";ctx.fillRect(0,0,W,H);
 
@@ -107,8 +107,93 @@ function drawFloralCorner(ctx,x,y,dir){
 }
 function drawEuVou(ctx,d,W,H){const grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,"rgba(30,12,20,.08)");grad.addColorStop(.55,"rgba(30,12,20,.28)");grad.addColorStop(1,"rgba(30,12,20,.9)");ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.fillStyle="#fff";ctx.textAlign="center";ctx.font="700 30px Arial";ctx.fillText("ANE CAKES FAIR",W/2,82);ctx.fillStyle="#d9bd91";ctx.font="700 96px Georgia";ctx.fillText("EU VOU!",W/2,190);ctx.font="500 22px Arial";ctx.fillStyle="#fff";ctx.fillText("5ª EDIÇÃO · ILHÉUS, BAHIA",W/2,232);ctx.fillStyle="rgba(31,17,12,.72)";ctx.beginPath();ctx.roundRect(55,H-310,W-110,220,28);ctx.fill();ctx.fillStyle="#fff";ctx.font="700 48px Georgia";ctx.fillText(d.displayName||"Eu",W/2,H-230);ctx.font="500 21px Arial";ctx.fillStyle="#f3e5dd";ctx.fillText("30 E 31 DE JANEIRO DE 2027",W/2,H-185);ctx.font="600 18px Arial";ctx.fillText((d.city||"Ilhéus")+" · "+(d.state||"BA"),W/2,H-150);ctx.fillStyle="#d9bd91";ctx.font="700 15px Arial";ctx.fillText("CAPACITAÇÃO QUE VIRA PROFISSÃO",W/2,H-105);ctx.fillStyle="#fff";ctx.font="500 13px Arial";ctx.fillText("🎟️ EU VOU ESTAR NA ANE CAKES FAIR",W/2,H-70);ctx.textAlign="left"}
 async function renderFinal(aiUrl,d){const ai=await loadImage(aiUrl),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;const scale=Math.max(W/ai.width,H/ai.height),w=ai.width*scale,h=ai.height*scale;ctx.drawImage(ai,(W-w)/2,(H-h)/2,w,h);drawText(ctx,d,W,H);return c.toDataURL("image/png")}
-async function localFallback(d){const u=URL.createObjectURL(S.photo),img=await loadImage(u),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;const gr=ctx.createLinearGradient(0,0,W,H);gr.addColorStop(0,"#5a2430");gr.addColorStop(.55,"#a8784f");gr.addColorStop(1,"#241611");ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);const r=Math.max(W/img.width,H/img.height),w=img.width*r,h=img.height*r;ctx.drawImage(img,(W-w)/2,(H-h)/2,w,h);ctx.fillStyle="rgba(8,6,4,.75)";ctx.fillRect(0,700,W,650);drawText(ctx,d,W,H);URL.revokeObjectURL(u);return c.toDataURL("image/png")}
-async function generate(e){if(e?.preventDefault)e.preventDefault();if($("generateBtn").disabled)return;if(!S.photo)return msg("Envie sua foto para continuar.");const d=collect();if(!d.displayName)return msg("Informe o nome que aparecerá no card.");if(S.mode==="embaixador"&&!d.profession)return msg("Preencha sua profissão para continuar.");$("generateBtn").disabled=true;$("generateBtn").textContent="✨ A IA está criando...";msg("Analisando sua foto e criando uma composição personalizada...");try{const photoDataUrl=await compressPhoto(S.photo);const response=await fetch("/api/generate-card",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...d,photoDataUrl})});let aiUrl="";if(response.ok){const payload=await response.json();aiUrl=payload.imageDataUrl;if(!aiUrl)throw new Error("A IA não retornou a imagem.")}else{const payload=await response.json().catch(()=>({}));console.warn("Gerador:",response.status,payload.error||"erro desconhecido");if(response.status!==503&&response.status!==429&&response.status!==502)throw new Error(payload.error||"Não foi possível gerar a arte.");}const finalUrl=aiUrl?await renderFinal(aiUrl,d):await localFallback(d);$("resultImage").src=finalUrl;$("downloadBtn").href=finalUrl;$("downloadBtn").download=(S.mode==="eu-vou"?"ane-cakes-eu-vou-":"ane-cakes-")+(d.displayName||"participante").replace(/[^a-z0-9]+/gi,"-").toLowerCase()+".png";$("resultSection").classList.remove("hidden");$("resultSection").scrollIntoView({behavior:"smooth"});saveLocal();msg(aiUrl?"Arte criada com inteligência artificial!":"Arte criada no modo automático enquanto a IA não está configurada no servidor.","success");renderLocalGallery()}catch(err){console.error(err);msg(err?.message||"Não foi possível criar a arte. Tente novamente.")}finally{$("generateBtn").disabled=false;$("generateBtn").textContent=S.mode==="eu-vou"?"🎟️ Criar minha tag EU VOU":"✨ Gerar minha arte"}}
+async function localFallback(d){
+  const u=URL.createObjectURL(S.photo),img=await loadImage(u),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");
+  c.width=W;c.height=H;
+  ctx.fillStyle="#f8efe4";ctx.fillRect(0,0,W,H);
+
+  // Composição determinística inspirada na referência: pessoa grande à esquerda,
+  // bloco editorial limpo à direita e detalhes vinho/dourados.
+  const bg=ctx.createRadialGradient(820,240,20,820,240,620);
+  bg.addColorStop(0,"rgba(255,255,255,.65)");bg.addColorStop(1,"rgba(199,154,75,.06)");
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+  ctx.save();
+  ctx.strokeStyle="#c79a4b";ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(28,28,W-56,H-56,26);ctx.stroke();
+  ctx.strokeStyle="rgba(199,154,75,.38)";ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(43,43,W-86,H-86,20);ctx.stroke();
+  ctx.restore();
+
+  // Moldura fotográfica vertical/oval, ocupando aproximadamente 48% da largura.
+  const cx=315, cy=845, rx=275, ry=500;
+  ctx.save();
+  ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.clip();
+  const scale=Math.max((rx*2)/img.width,(ry*2)/img.height);
+  const iw=img.width*scale,ih=img.height*scale;
+  ctx.drawImage(img,cx-iw/2,cy-ih/2,iw,ih);
+  const shade=ctx.createLinearGradient(0,cy-ry,0,cy+ry);
+  shade.addColorStop(0,"rgba(255,255,255,.05)");shade.addColorStop(1,"rgba(70,20,20,.16)");
+  ctx.fillStyle=shade;ctx.fillRect(cx-rx,cy-ry,rx*2,ry*2);
+  ctx.restore();
+
+  ctx.strokeStyle="#c79a4b";ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(cx,cy,rx+8,ry+8,0,0,Math.PI*2);ctx.stroke();
+
+  drawText(ctx,d,W,H);
+  URL.revokeObjectURL(u);return c.toDataURL("image/png")
+}
+async function generate(e){
+  if(e?.preventDefault)e.preventDefault();
+  if($("generateBtn").disabled)return;
+  if(!S.photo)return msg("Envie sua foto para continuar.");
+  const d=collect();
+  if(!d.displayName)return msg("Informe o nome que aparecerá no card.");
+  if(S.mode==="embaixador"&&!d.profession)return msg("Preencha sua profissão para continuar.");
+
+  $("generateBtn").disabled=true;
+  $("generateBtn").textContent="✨ Gerando sua arte...";
+  msg("Preparando sua composição no estilo oficial da Ane Cakes Fair...");
+
+  try{
+    const photoDataUrl=await compressPhoto(S.photo);
+    let aiUrl="";
+    let apiUnavailable=false;
+
+    try{
+      const controller=new AbortController();
+      const timer=setTimeout(()=>controller.abort(),75000);
+      const response=await fetch("/api/generate-card",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({...d,photoDataUrl}),
+        signal:controller.signal
+      });
+      clearTimeout(timer);
+
+      const payload=await response.json().catch(()=>({}));
+      if(response.ok&&payload.imageDataUrl) aiUrl=payload.imageDataUrl;
+      else if(response.status===503||response.status===429||response.status===502) apiUnavailable=true;
+      else throw new Error(payload.error||"Não foi possível gerar a arte.");
+    }catch(apiError){
+      console.warn("Gerador de IA indisponível. Ativando composição local:",apiError);
+      apiUnavailable=true;
+    }
+
+    const finalUrl=aiUrl?await renderFinal(aiUrl,d):await localFallback(d);
+    $("resultImage").src=finalUrl;
+    $("downloadBtn").href=finalUrl;
+    $("downloadBtn").download=(S.mode==="eu-vou"?"ane-cakes-eu-vou-":"ane-cakes-")+(d.displayName||"participante").replace(/[^a-z0-9]+/gi,"-").toLowerCase()+".png";
+    $("resultSection").classList.remove("hidden");
+    $("resultSection").scrollIntoView({behavior:"smooth"});
+    saveLocal();
+    msg(apiUnavailable?"Arte criada com a composição oficial, mesmo sem a IA disponível no momento.":"Arte criada com inteligência artificial!","success");
+    renderLocalGallery();
+  }catch(err){
+    console.error(err);
+    msg(err?.message||"Não foi possível criar a arte. Tente novamente.");
+  }finally{
+    $("generateBtn").disabled=false;
+    $("generateBtn").textContent=S.mode==="eu-vou"?"🎟️ Criar minha tag EU VOU":"✨ Gerar minha arte";
+  }
+}
 function saveLocal(){localStorage.removeItem("aneCakesCards")}
 function renderLocalGallery(){const list=JSON.parse(localStorage.getItem("aneCakesCards")||"[]");$("gallery").innerHTML=list.length?list.map(x=>'<article class="gallery-card"><img src="'+x.image+'" alt="Arte de '+esc(x.name)+'"><div class="gallery-card-body"><strong>'+esc(x.name)+'</strong><small>'+esc(x.style||"")+ " · "+new Date(x.date).toLocaleDateString("pt-BR")+"</small></div></article>").join(""):'<p class="empty-state">Suas artes criadas neste dispositivo aparecerão aqui.</p>'}
 function msg(t,c=""){$("formMessage").textContent=t;$("formMessage").className="form-message "+c}
