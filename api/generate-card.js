@@ -17,6 +17,8 @@ function rateLimit(ip){
 }
 
 function buildPrompt(d){
+  if(d.mode==="eu-vou") return "Você é um diretor de arte da Ane Cakes Fair. Crie a BASE VISUAL de uma tag vertical 4:5 para uma pessoa que confirmou presença na 5ª edição do evento.\n\nA pessoa enviada é a protagonista. Preserve rigorosamente sua identidade e semelhança: rosto, formato facial, cabelo, tom de pele, idade aparente e proporções. Faça tratamento editorial, iluminação bonita, integração com o cenário e acabamento profissional.\n\nDireção visual: campanha oficial da Ane Cakes Fair, alegre, sofisticada, calorosa e contemporânea; cenário relacionado a uma feira de confeitaria, criatividade, empreendedorismo e celebração; referências sutis de confeitaria; pessoa em primeiro plano com fundo rico e contextual; aparência de peça promocional para Instagram/WhatsApp; paleta com tons quentes, vinho, dourado e creme; áreas com contraste adequado para receber EU VOU! e o nome; NÃO gere textos, letras, números, logotipos ou marcas d’água.\n\nParticipante: "+d.displayName+"\nCidade: "+d.city+" - "+d.state+"\nData: 30 de novembro de 2026\nLocal: Ilhéus, Bahia\nEvento: Ane Cakes Fair";
+
   const loc=d.visualLocation==="none"?"sem referência geográfica":d.visualLocation==="birth"?d.birthPlace:d.visualLocation==="other"?d.otherLocation:`${d.city} - ${d.state}`;
   const gender=d.gender==="male"?"embaixador":d.gender==="neutral"?"representante":"embaixadora";
   const highlights=d.highlights.length?d.highlights.join(" • "):"sem destaques adicionais";
@@ -83,6 +85,7 @@ export default async function handler(req,res){
     const binary=Buffer.from(photo.slice(comma+1),"base64");
     if(!binary.length||binary.length>MAX_PHOTO)return json(res,400,{error:"A foto deve ter no máximo 8 MB."});
     const data={
+      mode:clean(d.mode,20),
       fullName:clean(d.fullName,160),
       displayName:clean(d.displayName,80),
       profession:clean(d.profession,120),
