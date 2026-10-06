@@ -11,9 +11,44 @@ function fitText(ctx,text,maxWidth,maxSize,minSize){for(let size=maxSize;size>=m
 function wrap(ctx,text,maxWidth){const words=String(text||"").split(/\s+/),lines=[];let line="";for(const w of words){const t=line?line+" "+w:w;if(ctx.measureText(t).width>maxWidth&&line){lines.push(line);line=w}else line=t}if(line)lines.push(line);return lines}
 function loadImage(src){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src})}
 function compressPhoto(file){return new Promise((resolve,reject)=>{const u=URL.createObjectURL(file),i=new Image();i.onload=()=>{const max=1600,r=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=Math.round(i.width*r);c.height=Math.round(i.height*r);c.getContext("2d").drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(b=>{if(!b)return reject(Error("compress"));const fr=new FileReader();fr.onload=()=>resolve(fr.result);fr.onerror=reject;fr.readAsDataURL(b)},"image/jpeg",.88)};i.onerror=reject;i.src=u})}
-function drawText(ctx,d,W,H){const dark=d.style!=="minimalista";ctx.fillStyle=dark?"rgba(8,6,4,.78)":"rgba(255,255,255,.84)";ctx.fillRect(0,H*.58,W,H*.42);ctx.fillStyle=dark?"#d9bd91":"#8d6333";ctx.font="700 18px Arial";ctx.fillText("ANE CAKES FAIR",62,80);const title=d.gender==="male"?"CONHEÇA NOSSO EMBAIXADOR":d.gender==="neutral"?"CONHEÇA NOSSO REPRESENTANTE":"CONHEÇA NOSSA EMBAIXADORA";ctx.fillStyle=dark?"#fff":"#181512";ctx.font="600 23px Arial";ctx.fillText(title,62,115);ctx.fillStyle=dark?"#fff":"#181512";const ns=fitText(ctx,d.displayName,760,74,40);ctx.font="700 "+ns+"px Arial";ctx.fillText(d.displayName,62,690);ctx.fillStyle=dark?"#e2c99e":"#8d6333";ctx.font="600 25px Arial";ctx.fillText(d.profession,62,728);ctx.fillStyle=dark?"#fff":"#181512";ctx.font="500 20px Arial";ctx.fillText(d.city+" · "+d.state,62,758);ctx.font="400 18px Arial";const story=wrap(ctx,d.story,930).slice(0,3);story.forEach((l,i)=>ctx.fillText(l,62,805+i*25));let y=900;ctx.fillStyle=dark?"#d9bd91":"#8d6333";ctx.font="700 16px Arial";d.highlights.slice(0,3).forEach((h,i)=>{ctx.fillText("• "+h,62,y+i*24)});const q=d.quote||"Onde a confeitaria vira experiência.";ctx.fillStyle=dark?"#fff":"#181512";ctx.font="italic 20px Georgia";wrap(ctx,q,900).slice(0,2).forEach((l,i)=>ctx.fillText("“"+l+(i===1?"”":""),62,1010+i*27));ctx.fillStyle=dark?"#d9bd91":"#8d6333";ctx.font="700 13px Arial";ctx.fillText("EMBAIXADOR(A) OFICIAL DA ANE CAKES FAIR",62,1070)}
+function drawText(ctx,d,W,H){
+  const dark=d.style!=="minimalista";
+  const ink=dark?"#fff":"#241b17", muted=dark?"#f3e5dd":"#6a574d", gold=dark?"#d9bd91":"#8d6333";
+  const panel=dark?"rgba(31,17,12,.74)":"rgba(255,248,241,.88)", accent=dark?"#8f2035":"#7f1d2d";
+  ctx.save();
+  const bottom=ctx.createLinearGradient(0,H*.35,0,H);
+  bottom.addColorStop(0,"rgba(18,10,7,0)");
+  bottom.addColorStop(.48,dark?"rgba(18,10,7,.28)":"rgba(255,248,241,.08)");
+  bottom.addColorStop(1,dark?"rgba(18,10,7,.90)":"rgba(255,248,241,.92)");
+  ctx.fillStyle=bottom;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=accent;ctx.beginPath();ctx.roundRect(54,48,250,38,19);ctx.fill();
+  ctx.fillStyle="#fff";ctx.font="700 14px Arial";ctx.fillText(d.gender==="male"?"👑 EMBAIXADOR":"👑 EMBAIXADORA",72,73);
+  ctx.fillStyle=ink;ctx.font="700 18px Arial";ctx.fillText("ANE CAKES FAIR",54,118);
+  const title=d.gender==="male"?"CONHEÇA NOSSO EMBAIXADOR":d.gender==="neutral"?"CONHEÇA NOSSO REPRESENTANTE":"CONHEÇA NOSSA EMBAIXADORA";
+  ctx.font="600 20px Arial";ctx.fillText(title,54,148);
+  const panelY=H*.55;
+  ctx.fillStyle=panel;ctx.beginPath();ctx.roundRect(38,panelY,W-76,H-panelY-42,28);ctx.fill();
+  ctx.strokeStyle=dark?"rgba(217,189,145,.30)":"rgba(127,29,45,.14)";ctx.lineWidth=1;ctx.stroke();
+  ctx.fillStyle=accent;ctx.font="700 16px Arial";ctx.fillText("✨ HISTÓRIA QUE INSPIRA",64,panelY+38);
+  ctx.fillStyle=ink;
+  const ns=fitText(ctx,d.displayName,W-170,70,38);ctx.font="700 "+ns+"px Georgia";ctx.fillText(d.displayName,64,panelY+100);
+  ctx.fillStyle=gold;ctx.font="600 23px Arial";ctx.fillText("🍰 "+d.profession,64,panelY+136);
+  ctx.fillStyle=muted;ctx.font="500 18px Arial";ctx.fillText("📍 "+d.city+" · "+d.state,64,panelY+166);
+  let y=panelY+205;
+  ctx.fillStyle=ink;ctx.font="400 17px Arial";
+  const story=wrap(ctx,d.story||"Uma trajetória feita de talento, coragem e transformação.",W-150).slice(0,4);
+  story.forEach((l,i)=>ctx.fillText(l,64,y+i*24));y+=Math.max(1,story.length)*24+15;
+  ctx.fillStyle=accent;ctx.font="700 15px Arial";
+  d.highlights.slice(0,3).forEach((h,i)=>ctx.fillText(["🏆","💡","❤️"][i]+"  "+h,64,y+i*23));
+  y+=Math.min(3,d.highlights.length)*23+16;
+  const q=d.quote||"Onde a confeitaria vira experiência.";
+  ctx.fillStyle=ink;ctx.font="italic 18px Georgia";
+  wrap(ctx,q,W-160).slice(0,2).forEach((l,i)=>ctx.fillText("“"+l+(i===1?"”":""),64,y+i*25));
+  ctx.fillStyle=gold;ctx.font="700 12px Arial";ctx.fillText("EMBAIXADOR(A) OFICIAL DA ANE CAKES FAIR",64,H-66);
+  ctx.restore();
+}
 async function renderFinal(aiUrl,d){const ai=await loadImage(aiUrl),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;const scale=Math.max(W/ai.width,H/ai.height),w=ai.width*scale,h=ai.height*scale;ctx.drawImage(ai,(W-w)/2,(H-h)/2,w,h);drawText(ctx,d,W,H);return c.toDataURL("image/png")}
-async function localFallback(d){const u=URL.createObjectURL(S.photo),img=await loadImage(u),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;const gr=ctx.createLinearGradient(0,0,W,H);gr.addColorStop(0,"#17130f");gr.addColorStop(1,"#66513c");ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);const r=Math.max(W/img.width,H/img.height),w=img.width*r,h=img.height*r;ctx.drawImage(img,(W-w)/2,(H-h)/2,w,h);ctx.fillStyle="rgba(8,6,4,.75)";ctx.fillRect(0,700,W,650);drawText(ctx,d,W,H);URL.revokeObjectURL(u);return c.toDataURL("image/png")}
+async function localFallback(d){const u=URL.createObjectURL(S.photo),img=await loadImage(u),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;const gr=ctx.createLinearGradient(0,0,W,H);gr.addColorStop(0,"#5a2430");gr.addColorStop(.55,"#a8784f");gr.addColorStop(1,"#241611");ctx.fillStyle=gr;ctx.fillRect(0,0,W,H);const r=Math.max(W/img.width,H/img.height),w=img.width*r,h=img.height*r;ctx.drawImage(img,(W-w)/2,(H-h)/2,w,h);ctx.fillStyle="rgba(8,6,4,.75)";ctx.fillRect(0,700,W,650);drawText(ctx,d,W,H);URL.revokeObjectURL(u);return c.toDataURL("image/png")}
 async function generate(e){e.preventDefault();if(!S.photo)return msg("Envie sua foto.");const d=collect();if(!d.displayName||!d.profession||!d.city||!d.state)return msg("Preencha nome, profissão, cidade e estado.");$("generateBtn").disabled=true;$("generateBtn").textContent="✨ A IA está criando...";msg("Analisando sua foto e criando uma composição personalizada...");try{const photoDataUrl=await compressPhoto(S.photo);const response=await fetch("/api/generate-card",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...d,photoDataUrl})});let aiUrl="";if(response.ok){const payload=await response.json();aiUrl=payload.imageDataUrl}else{const payload=await response.json().catch(()=>({}));if(response.status!==503&&response.status!==429)console.warn(payload.error)}const finalUrl=aiUrl?await renderFinal(aiUrl,d):await localFallback(d);$("resultImage").src=finalUrl;$("downloadBtn").href=finalUrl;$("downloadBtn").download="ane-cakes-"+(d.displayName||"embaixador").replace(/[^a-z0-9]+/gi,"-").toLowerCase()+".png";$("resultSection").classList.remove("hidden");$("resultSection").scrollIntoView({behavior:"smooth"});saveLocal(d,finalUrl);msg(aiUrl?"Arte criada com inteligência artificial!":"Arte criada no modo automático enquanto a IA não está configurada no servidor.","success");renderLocalGallery()}catch(err){console.error(err);msg("Não foi possível criar a arte. Tente novamente.")}finally{$("generateBtn").disabled=false;$("generateBtn").textContent="✨ Gerar minha arte"}}
 function saveLocal(d,url){const list=JSON.parse(localStorage.getItem("aneCakesCards")||"[]");list.unshift({name:d.displayName,image:url,style:d.style,date:new Date().toISOString(),ai:true});localStorage.setItem("aneCakesCards",JSON.stringify(list.slice(0,12)))}
 function renderLocalGallery(){const list=JSON.parse(localStorage.getItem("aneCakesCards")||"[]");$("gallery").innerHTML=list.length?list.map(x=>'<article class="gallery-card"><img src="'+x.image+'" alt="Arte de '+esc(x.name)+'"><div class="gallery-card-body"><strong>'+esc(x.name)+'</strong><small>'+esc(x.style||"")+ " · "+new Date(x.date).toLocaleDateString("pt-BR")+"</small></div></article>").join(""):'<p class="empty-state">Suas artes criadas neste dispositivo aparecerão aqui.</p>'}

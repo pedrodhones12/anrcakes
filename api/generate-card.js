@@ -20,6 +20,28 @@ function buildPrompt(d){
   const loc=d.visualLocation==="none"?"sem referência geográfica":d.visualLocation==="birth"?d.birthPlace:d.visualLocation==="other"?d.otherLocation:`${d.city} - ${d.state}`;
   const gender=d.gender==="male"?"embaixador":d.gender==="neutral"?"representante":"embaixadora";
   const highlights=d.highlights.length?d.highlights.join(" • "):"sem destaques adicionais";
+  return `Você é um diretor de arte especializado em cards editoriais e peças de divulgação da Ane Cakes Fair. Crie a BASE VISUAL de um card vertical 4:5, vibrante, sofisticado e humano, inspirado na linguagem visual das artes de Embaixadoras da Ane Cakes Fair: fotografia em tela cheia, cenário contextual, profundidade, sobreposições elegantes, atmosfera de campanha e espaço real para informação editorial.\n\nA pessoa enviada é a protagonista. Preserve rigorosamente sua identidade e semelhança: rosto, formato facial, cabelo, tom de pele, idade aparente e proporções. Não substitua a pessoa nem transforme seu rosto. Pode melhorar iluminação, enquadramento, integração com o ambiente, profundidade e acabamento editorial.\n\nDireção visual obrigatória:\n- estilo escolhido: ${d.style};\n- linguagem de campanha/editorial premium, calorosa e contemporânea;\n- fotografia de fundo ou cenário contextual relacionado a ${loc}, com profundidade e elementos ambientais reais;\n- referências visuais sutis de confeitaria, criatividade, empreendedorismo, cultura local ou evento quando fizer sentido;\n- composição em camadas: pessoa em primeiro plano + fundo contextual + áreas de respiro para textos;\n- luz cinematográfica/editorial, contraste elegante e textura fotográfica;\n- crie pontos de interesse visuais e uma sensação de história, não uma simples foto de estúdio;\n- deixe preferencialmente a região inferior e/ou lateral com contraste controlado para receber textos posteriormente;\n- composição promocional em 1080 × 1350;\n- NÃO copie literalmente nenhuma arte existente; apenas siga uma direção editorial semelhante;\n- NÃO gere textos, nomes, frases, emojis, números, logotipos ou marcas d’água. O sistema colocará esses elementos depois.\n\nInformações para orientar a narrativa visual:\nNome: ${d.displayName}\nProfissão: ${d.profession}\nCidade/UF: ${d.city} - ${d.state}\nNaturalidade: ${d.birthPlace||"não informada"}\nHistória: ${d.story||"não informada"}\nDestaques: ${highlights}\nFrase: ${d.quote||"Onde a confeitaria vira experiência."}\n\nO resultado deve parecer uma peça oficial de campanha de uma feira de confeitaria: uma imagem viva, contextual e sofisticada, pronta para receber tipografia, emojis e informações do participante.`nst MAX_PHOTO=8*1024*1024;
+const MAX_TEXT=1800;
+const WINDOW_MS=60*60*1000;
+const MAX_PER_IP=3;
+const hits=new Map();
+
+const clean=(value,max=240)=>String(value||"").trim().slice(0,max);
+const json=(res,status,payload)=>res.status(status).setHeader("Content-Type","application/json").json(payload);
+
+function rateLimit(ip){
+  const now=Date.now();
+  const list=(hits.get(ip)||[]).filter(t=>now-t<WINDOW_MS);
+  if(list.length>=MAX_PER_IP)return false;
+  list.push(now);hits.set(ip,list);
+  if(hits.size>2000){for(const [key,times] of hits){if(!times.some(t=>now-t<WINDOW_MS))hits.delete(key)}}
+  return true;
+}
+
+function buildPrompt(d){
+  const loc=d.visualLocation==="none"?"sem referência geográfica":d.visualLocation==="birth"?d.birthPlace:d.visualLocation==="other"?d.otherLocation:`${d.city} - ${d.state}`;
+  const gender=d.gender==="male"?"embaixador":d.gender==="neutral"?"representante":"embaixadora";
+  const highlights=d.highlights.length?d.highlights.join(" • "):"sem destaques adicionais";
   return `Você é um diretor de arte especializado em cards editoriais profissionais. Crie uma imagem vertical de retrato para um card oficial da Ane Cakes Fair, com aparência premium, contemporânea e original.
 
 A pessoa da imagem enviada é a pessoa principal. Preserve sua identidade visual e semelhança: rosto, formato facial, cabelo, tom de pele, idade aparente e proporções. Não substitua a pessoa, não crie outra pessoa e não aplique caricatura. Faça apenas tratamento editorial de iluminação, enquadramento, profundidade, roupa quando necessário e integração com o cenário.
@@ -85,7 +107,7 @@ export default async function handler(req,res){
           {type:"input_text",text:buildPrompt(data)},
           {type:"input_image",image_url:photo,detail:"high"}
         ]}],
-        tools:[{type:"image_generation",model:process.env.OPENAI_IMAGE_MODEL||"gpt-image-2",quality:"medium"}]
+        tools:[{type:"image_generation",model:process.env.OPENAI_IMAGE_MODEL||"gpt-image-2",quality:"high"}]
       })
     });
     const result=await ai.json();
