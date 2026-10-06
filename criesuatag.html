@@ -42,6 +42,37 @@
     <div><span class="eyebrow">03 · Personalize</span><h2>Monte sua arte</h2><p>Preencha os dados e acompanhe a composição em tempo real.</p></div>
     <div class="secure-note"><span>✦</span><div><strong>Criação temporária</strong><small>Sua arte não é armazenada.</small></div></div>
   </div>
+  <div class="eu-vou-creator" aria-label="Criador de tag EU VOU">
+    <div class="eu-vou-square">
+      <span class="eu-vou-square-number">01</span>
+      <div class="eu-vou-upload" id="euVouUploadZone">
+        <input id="euVouPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+        <img id="euVouPhotoPreview" class="eu-vou-photo hidden" alt="Sua foto">
+        <div id="euVouPhotoPlaceholder">
+          <span class="eu-vou-upload-icon">↑</span>
+          <span class="eu-vou-label">ENVIE SUA FOTO</span>
+          <strong>Escolha a foto que vai aparecer na sua tag.</strong>
+          <small>JPG, PNG ou WEBP · até 8 MB</small>
+          <button type="button" class="btn primary" id="euVouChoosePhoto">Escolher foto</button>
+        </div>
+      </div>
+    </div>
+    <div class="eu-vou-square eu-vou-example">
+      <span class="eu-vou-square-number">02</span>
+      <div class="eu-vou-example-visual">
+        <div class="eu-vou-bokeh b1"></div><div class="eu-vou-bokeh b2"></div>
+        <div class="eu-vou-man" aria-hidden="true"><i></i><b></b><em></em></div>
+        <div class="eu-vou-example-copy"><span>EU VOU!</span><strong>SEU NOME</strong><small>ANE CAKES FAIR</small></div>
+      </div>
+      <p>Veja a proposta visual da sua tag antes de gerar.</p>
+    </div>
+    <div class="eu-vou-details">
+      <label>Seu nome
+        <input id="euVouName" type="text" placeholder="Digite seu nome">
+      </label>
+      <button type="button" class="btn primary eu-vou-generate" id="euVouGenerateBtn">🎟️ Criar minha tag EU VOU</button>
+    </div>
+  </div>
   <div class="creator-layout">
     <div class="workspace-panel upload-panel">
       <div class="workspace-panel-head"><div><span class="panel-kicker">ÁREA DE CRIAÇÃO</span><h3>Adicione sua imagem</h3><p>Envie sua foto para começar. Depois, personalize as informações da sua arte.</p></div><span class="panel-step">01</span></div>
