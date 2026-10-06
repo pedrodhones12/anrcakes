@@ -17,50 +17,30 @@ function rateLimit(ip){
 }
 
 function buildPrompt(d){
-  if(d.mode==="eu-vou") return "Você é um diretor de arte da Ane Cakes Fair. Crie a BASE VISUAL de uma tag vertical 4:5 para uma pessoa que confirmou presença na 5ª edição do evento.\n\nA pessoa enviada é a protagonista. Preserve rigorosamente sua identidade e semelhança: rosto, formato facial, cabelo, tom de pele, idade aparente e proporções. Faça tratamento editorial, iluminação bonita, integração com o cenário e acabamento profissional.\n\nDireção visual: campanha oficial da Ane Cakes Fair, alegre, sofisticada, calorosa e contemporânea; cenário relacionado a uma feira de confeitaria, criatividade, empreendedorismo e celebração; referências sutis de confeitaria; pessoa em primeiro plano com fundo rico e contextual; aparência de peça promocional para Instagram/WhatsApp; paleta com tons quentes, vinho, dourado e creme; áreas com contraste adequado para receber EU VOU! e o nome; NÃO gere textos, letras, números, logotipos ou marcas d’água.\n\nParticipante: "+d.displayName+"\nCidade: "+d.city+" - "+d.state+"\nData: 30 e 31 de janeiro de 2027\nLocal: Ilhéus, Bahia\nEvento: Ane Cakes Fair";
+  if(d.mode==="eu-vou") return "Você é um diretor de arte da Ane Cakes Fair. Crie a BASE VISUAL de uma tag vertical 4:5 para uma pessoa que confirmou presença na 5ª edição do evento. Preserve rigorosamente a identidade da pessoa enviada. Direção: campanha oficial, quente, sofisticada, vinho, dourado e creme, confeitaria e celebração, sem textos, letras, números, logotipos ou marcas d’água. Data: 30 e 31 de janeiro de 2027. Local: Ilhéus, Bahia.";
 
   const loc=d.visualLocation==="none"?"sem referência geográfica":d.visualLocation==="birth"?d.birthPlace:d.visualLocation==="other"?d.otherLocation:`${d.city} - ${d.state}`;
   const gender=d.gender==="male"?"embaixador":d.gender==="neutral"?"representante":"embaixadora";
   const highlights=d.highlights.length?d.highlights.join(" • "):"sem destaques adicionais";
-  return `Você é um diretor de arte especializado em cards editoriais e peças de divulgação da Ane Cakes Fair. Crie a BASE VISUAL de um card vertical 4:5, vibrante, sofisticado e humano, inspirado na linguagem visual das artes de Embaixadoras da Ane Cakes Fair: fotografia em tela cheia, cenário contextual, profundidade, sobreposições elegantes, atmosfera de campanha e espaço real para informação editorial.\n\nA pessoa enviada é a protagonista. Preserve rigorosamente sua identidade e semelhança: rosto, formato facial, cabelo, tom de pele, idade aparente e proporções. Não substitua a pessoa nem transforme seu rosto. Pode melhorar iluminação, enquadramento, integração com o ambiente, profundidade e acabamento editorial.\n\nDireção visual obrigatória:\n- estilo escolhido: ${d.style};\n- linguagem de campanha/editorial premium, calorosa e contemporânea;\n- fotografia de fundo ou cenário contextual relacionado a ${loc}, com profundidade e elementos ambientais reais;\n- referências visuais sutis de confeitaria, criatividade, empreendedorismo, cultura local ou evento quando fizer sentido;\n- composição em camadas: pessoa em primeiro plano + fundo contextual + áreas de respiro para textos;\n- luz cinematográfica/editorial, contraste elegante e textura fotográfica;\n- crie pontos de interesse visuais e uma sensação de história, não uma simples foto de estúdio;\n- deixe preferencialmente a região inferior e/ou lateral com contraste controlado para receber textos posteriormente;\n- composição promocional em 1080 × 1350;\n- NÃO copie literalmente nenhuma arte existente; apenas siga uma direção editorial semelhante;\n- NÃO gere textos, nomes, frases, emojis, números, logotipos ou marcas d’água. O sistema colocará esses elementos depois.\n\nInformações para orientar a narrativa visual:\nNome: ${d.displayName}\nProfissão: ${d.profession}\nCidade/UF: ${d.city} - ${d.state}\nNaturalidade: ${d.birthPlace||"não informada"}\nHistória: ${d.story||"não informada"}\nDestaques: ${highlights}\nFrase: ${d.quote||"Onde a confeitaria vira experiência."}\n\nO resultado deve parecer uma peça oficial de campanha de uma feira de confeitaria: uma imagem viva, contextual e sofisticada, pronta para receber tipografia, emojis e informações do participante.`nst MAX_PHOTO=8*1024*1024;
-const MAX_TEXT=1800;
-const WINDOW_MS=60*60*1000;
-const MAX_PER_IP=3;
-const hits=new Map();
+  return `Você é o diretor de arte oficial da Ane Cakes Fair. A imagem anexada chamada REFERÊNCIA DE LAYOUT é o padrão visual obrigatório para esta geração. Não crie um card genérico e não use o estilo de um retrato corporativo.
 
-const clean=(value,max=240)=>String(value||"").trim().slice(0,max);
-const json=(res,status,payload)=>res.status(status).setHeader("Content-Type","application/json").json(payload);
+REPRODUZA A LINGUAGEM VISUAL DA REFERÊNCIA assets/madija.jpg:
+- formato vertical 4:5, aproximadamente 1080 × 1350;
+- fundo predominante creme/off-white, delicado, sofisticado e luminoso;
+- moldura fina dourada arredondada;
+- detalhes botânicos/florais desenhados em linha dourada nos cantos;
+- atmosfera editorial de confeitaria, feminina/elegante quando combinar com a pessoa, com acabamento de convite/campanha premium;
+- ao fundo, uma paisagem/cidade relacionada a ${loc}, suave e integrada, como na referência;
+- a pessoa deve ocupar principalmente a região inferior esquerda, em destaque, com enquadramento de meio corpo ou corpo adequado à foto;
+- preserve rigorosamente rosto, cabelo, tom de pele, idade aparente, proporções e identidade da pessoa enviada;
+- reserve uma grande área limpa no centro/direita para textos;
+- a composição deve parecer uma peça gráfica pronta para receber exatamente a tipografia sobreposta pelo sistema;
+- use vinho/bordô para títulos e dourado para linhas, molduras e pequenos detalhes;
+- mantenha hierarquia visual semelhante à referência: marca no topo, grande título de embaixadora, nome em destaque na área direita, bloco de localização e informações abaixo, frase em caixa delicada e assinatura do evento no rodapé;
+- NÃO gere nenhum texto, letra, número, emoji, logotipo ou marca d’água. O sistema aplicará todo o texto com precisão.
+- NÃO copie a pessoa ou o conteúdo específico de Madija; use a referência somente como modelo visual/layout.
 
-function rateLimit(ip){
-  const now=Date.now();
-  const list=(hits.get(ip)||[]).filter(t=>now-t<WINDOW_MS);
-  if(list.length>=MAX_PER_IP)return false;
-  list.push(now);hits.set(ip,list);
-  if(hits.size>2000){for(const [key,times] of hits){if(!times.some(t=>now-t<WINDOW_MS))hits.delete(key)}}
-  return true;
-}
-
-function buildPrompt(d){
-  const loc=d.visualLocation==="none"?"sem referência geográfica":d.visualLocation==="birth"?d.birthPlace:d.visualLocation==="other"?d.otherLocation:`${d.city} - ${d.state}`;
-  const gender=d.gender==="male"?"embaixador":d.gender==="neutral"?"representante":"embaixadora";
-  const highlights=d.highlights.length?d.highlights.join(" • "):"sem destaques adicionais";
-  return `Você é um diretor de arte especializado em cards editoriais profissionais. Crie uma imagem vertical de retrato para um card oficial da Ane Cakes Fair, com aparência premium, contemporânea e original.
-
-A pessoa da imagem enviada é a pessoa principal. Preserve sua identidade visual e semelhança: rosto, formato facial, cabelo, tom de pele, idade aparente e proporções. Não substitua a pessoa, não crie outra pessoa e não aplique caricatura. Faça apenas tratamento editorial de iluminação, enquadramento, profundidade, roupa quando necessário e integração com o cenário.
-
-Direção visual:
-- estilo: ${d.style};
-- localização contextual: ${loc};
-- use elementos arquitetônicos, culturais ou ambientais sutis associados ao local, sem inserir símbolos aleatórios;
-- composição elegante, sofisticada e adequada para divulgação profissional;
-- iluminação de estúdio/editorial;
-- fundo com profundidade e áreas visualmente limpas;
-- paleta coerente com ${d.style};
-- composição vertical, pensando em aproximadamente 4:5;
-- NÃO copie a composição ou elementos exclusivos de nenhuma arte de referência;
-- NÃO invente logotipos, marcas ou textos ilegíveis.
-
-Informações da pessoa:
+Dados para orientar a cena:
 Nome: ${d.displayName}
 Profissão: ${d.profession}
 Cidade/UF: ${d.city} - ${d.state}
@@ -68,8 +48,10 @@ Naturalidade: ${d.birthPlace||"não informada"}
 História: ${d.story||"não informada"}
 Destaques: ${highlights}
 Frase: ${d.quote||"Onde a confeitaria vira experiência."}
+Evento: Ane Cakes Fair, 30 e 31 de janeiro de 2027
+Papel: ${gender}
 
-O texto final do card será aplicado pelo sistema posteriormente. Portanto, concentre-se principalmente em gerar uma imagem visual profissional da pessoa integrada ao cenário. Não coloque textos, letras, números, marcas d'água ou logotipos na imagem.`;
+O resultado precisa ser visualmente muito próximo da referência em estrutura, composição, paleta, elegância e distribuição de espaço, mas com a pessoa enviada e o contexto do novo participante.`;
 }
 
 export default async function handler(req,res){
@@ -108,7 +90,8 @@ export default async function handler(req,res){
         model:process.env.OPENAI_MODEL||"gpt-6-luna",
         input:[{role:"user",content:[
           {type:"input_text",text:buildPrompt(data)},
-          {type:"input_image",image_url:photo,detail:"high"}
+          {type:"input_image",image_url:photo,detail:"high"},
+          {type:"input_image",image_url:"https://raw.githubusercontent.com/pedrodhones12/anrcakes/main/assets/madija.jpg",detail:"high"}
         ]}],
         tools:[{type:"image_generation",model:process.env.OPENAI_IMAGE_MODEL||"gpt-image-2",quality:"high"}]
       })
