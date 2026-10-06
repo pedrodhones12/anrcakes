@@ -93,3 +93,27 @@
 .eu-vou-details{grid-column:1/-1;display:flex;align-items:end;gap:14px;background:#fff;border:1px solid var(--tag-line);border-radius:20px;padding:18px 20px}
 .eu-vou-details label{flex:1}.eu-vou-details input{margin-top:2px}.eu-vou-generate{min-height:48px;white-space:nowrap}
 @media(max-width:850px){.eu-vou-creator{grid-template-columns:1fr}.eu-vou-square{min-height:0;aspect-ratio:1/1}.eu-vou-details{grid-column:auto;display:grid}.eu-vou-generate{width:100%}}
+
+
+/* EXPERIÊNCIAS SEPARADAS — Embaixadora primeiro, EU VOU abaixo */
+.mode-section{display:none!important}
+.creator-section{margin-top:0}
+.creator-section-head{margin-bottom:20px}
+.creator-layout{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:22px!important}
+.ambassador-square{min-height:620px;height:620px;overflow:hidden}
+.ambassador-square .creator-card{height:100%;overflow:auto}
+.ambassador-square.preview-card{height:620px;display:flex;flex-direction:column}
+.ambassador-square .live-preview{flex:1;min-height:0}
+.eu-vou-creator{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:22px!important;margin-top:18px}
+.eu-vou-section-head{margin-top:72px;margin-bottom:20px}
+.eu-vou-section-head h2{font:600 clamp(32px,4vw,46px)/1.05 "Cormorant Garamond",serif;margin:8px 0 7px;color:var(--tag-ink)}
+.eu-vou-section-head p{margin:0;color:var(--tag-muted);font-size:14px;line-height:1.65;max-width:650px}
+.eu-vou-details{grid-column:1/-1}
+@media(max-width:850px){
+  .ambassador-square{height:auto;min-height:0}
+  .ambassador-square .creator-card{height:auto;overflow:visible}
+  .ambassador-square.preview-card{height:auto}
+  .eu-vou-creator{grid-template-columns:1fr!important}
+  .eu-vou-details{grid-column:auto}
+}
+@media(max-width:560px){.eu-vou-section-head{margin-top:52px}}
