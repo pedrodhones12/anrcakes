@@ -1,5 +1,20 @@
 (()=>{const S={step:1,total:7,style:"elegante",photo:null,mode:"embaixador"},$=id=>document.getElementById(id),steps=[...document.querySelectorAll(".form-step")];
-function boot(){bind();renderStep();updatePreview();updateModeUI();addHighlight();renderLocalGallery();window.addEventListener("beforeunload",()=>localStorage.removeItem("aneCakesCards"));}
+let BRAND_LOGO=null;
+async function loadBrandLogo(){
+  try{BRAND_LOGO=await loadImage("assets/image2.png");}catch(e){console.warn("Logomarca não carregada:",e)}
+}
+function drawBrandLogo(ctx,W,y,maxW=360){
+  if(BRAND_LOGO){
+    const scale=Math.min(maxW/BRAND_LOGO.width,115/BRAND_LOGO.height);
+    const w=BRAND_LOGO.width*scale,h=BRAND_LOGO.height*scale;
+    ctx.drawImage(BRAND_LOGO,(W-w)/2,y,w,h);
+    return y+h;
+  }
+  ctx.fillStyle="#8b1828";ctx.font="700 70px Georgia";ctx.textAlign="center";ctx.fillText("ANE",W/2,y+62);
+  ctx.fillStyle="#351e18";ctx.font="500 20px Arial";ctx.fillText("CAKES FAIR",W/2,y+90);
+  return y+105;
+}
+async function boot(){await loadBrandLogo();bind();renderStep();updatePreview();updateModeUI();addHighlight();renderLocalGallery();window.addEventListener("beforeunload",()=>localStorage.removeItem("aneCakesCards"));}
 function bind(){document.querySelectorAll(".mode-card").forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;S.step=1;S.total=S.mode==="eu-vou"?2:7;document.querySelectorAll(".mode-card").forEach(x=>x.classList.toggle("selected",x===b));updateModeUI();renderStep();updatePreview()});$("choosePhoto").onclick=()=>$("photo").click();$("euVouChoosePhoto").onclick=()=>$("euVouPhotoInput").click();$("euVouUploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="euVouPhotoPreview")$("photo").click()};$("euVouName").oninput=e=>{$("displayName").value=e.target.value;updatePreview()};$("euVouGenerateBtn").onclick=()=>{if(!S.photo)return msg("Envie sua foto para continuar.");if(!$("euVouName").value.trim())return msg("Informe seu nome para continuar.");$("displayName").value=$("euVouName").value.trim();generate(new Event("submit"));};$("uploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="photoPreview")$("photo").click()};function handlePhotoChange(e){const f=e.target.files[0];if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type))return msg("Use JPG, PNG ou WEBP.");if(f.size>8*1024*1024)return msg("A foto deve ter no máximo 8 MB.");S.photo=f;const url=URL.createObjectURL(f);$("photoPreview").src=url;$("photoPreview").classList.remove("hidden");$("photoPlaceholder").classList.add("hidden");$("euVouPhotoPreview").src=url;$("euVouPhotoPreview").classList.remove("hidden");$("euVouPhotoPlaceholder").classList.add("hidden")}$("photo").onchange=handlePhotoChange;$("euVouPhotoInput").onchange=handlePhotoChange;$("story").oninput=e=>$("storyCount").textContent=e.target.value.length;$("addHighlight").onclick=()=>addHighlight();$("visualLocation").onchange=()=>$("otherLocationWrap").classList.toggle("hidden",$("visualLocation").value!=="other");document.querySelectorAll(".style-option").forEach(b=>b.onclick=()=>{document.querySelectorAll(".style-option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");S.style=b.dataset.style});$("nextBtn").onclick=next;$("backBtn").onclick=back;$("tagForm").onsubmit=e=>{e.preventDefault();generate(e)};$("generateBtn").onclick=e=>{e.preventDefault();generate(e)};$("regenerateBtn").onclick=()=>{$("resultSection").classList.add("hidden");window.scrollTo({top:0,behavior:"smooth"})};["displayName","city","state","gender"].forEach(id=>$(id).addEventListener("input",updatePreview))}
 function addHighlight(v=""){const r=document.createElement("div");r.className="highlight-row";r.innerHTML='<input maxlength="120" placeholder="Ex.: Mais de 10 anos de experiência"><button type="button" class="remove-highlight">×</button>';r.querySelector("input").value=v;r.querySelector("button").onclick=()=>r.remove();$("highlights").appendChild(r)}
 function updateModeUI(){const eu=S.mode==="eu-vou";document.querySelector(".creator-section").classList.toggle("eu-vou-active",eu);document.body.classList.toggle("eu-vou-mode",eu);$("modeHint").textContent=eu?"Modo EU VOU: coloque sua foto e mostre que você estará na Ane Cakes Fair.":"Modo Embaixador(a): crie uma arte contando sua história.";document.querySelectorAll(".ambassador-only").forEach(el=>el.classList.toggle("hidden",eu));$("generateBtn").textContent=eu?"🎟️ Criar minha tag EU VOU":"✨ Gerar minha arte"}
@@ -32,12 +47,11 @@ function drawText(ctx,d,W,H){
   topWash.addColorStop(1,"rgba(250,242,232,0)");
   ctx.fillStyle=topWash;ctx.fillRect(50,50,W-100,H*.46);
 
-  // Marca tipográfica no topo, seguindo a referência.
+  // Logomarca oficial, usada diretamente do arquivo da identidade visual.
   ctx.textAlign="center";
-  ctx.fillStyle=wine;ctx.font="700 88px Georgia";ctx.fillText("ANE",W/2,145);
-  ctx.fillStyle=ink;ctx.font="500 24px Arial";ctx.fillText("CAKES FAIR",W/2,177);
-  ctx.strokeStyle=gold;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(W/2-180,194);ctx.lineTo(W/2+180,194);ctx.stroke();
-  ctx.fillStyle=wine;ctx.font="600 16px Arial";ctx.fillText("ONDE A CONFEITARIA VIRA EXPERIÊNCIA.",W/2,222);
+  drawBrandLogo(ctx,W,62,360);
+  ctx.strokeStyle=gold;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(W/2-180,205);ctx.lineTo(W/2+180,205);ctx.stroke();
+  ctx.fillStyle=wine;ctx.font="600 16px Arial";ctx.fillText("ONDE A CONFEITARIA VIRA EXPERIÊNCIA.",W/2,232);
 
   const title=d.gender==="male"?"EMBAIXADOR":d.gender==="neutral"?"REPRESENTANTE":"EMBAIXADORA";
   ctx.fillStyle=ink;ctx.font="600 34px Georgia";ctx.fillText("CONHEÇAM MAIS UM"+(d.gender==="male"||d.gender==="neutral"?"":"A"),W/2,285);
@@ -106,22 +120,29 @@ function drawFloralCorner(ctx,x,y,dir){
   ctx.restore();
 }
 function drawEuVou(ctx,d,W,H){
-  const burgundy="#701522",wine="#8f1828",gold="#d4ad67",cream="#f8efe4";
+  const wine="#8b1828",burgundy="#701522",gold="#c79a4b",cream="#f8efe4",ink="#351e18";
   ctx.save();
-  const wash=ctx.createLinearGradient(0,0,0,H);wash.addColorStop(0,"rgba(248,239,228,.05)");wash.addColorStop(.48,"rgba(60,16,24,.18)");wash.addColorStop(1,"rgba(35,10,18,.88)");ctx.fillStyle=wash;ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle=gold;ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(32,32,W-64,H-64,28);ctx.stroke();
-  ctx.strokeStyle="rgba(255,232,190,.45)";ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(48,48,W-96,H-96,22);ctx.stroke();
-  ctx.textAlign="center";ctx.fillStyle="#fff";ctx.font="700 28px Arial";ctx.fillText("ANE CAKES FAIR",W/2,88);
-  ctx.fillStyle=gold;ctx.font="700 104px Georgia";ctx.fillText("EU VOU!",W/2,205);
-  ctx.fillStyle=cream;ctx.font="600 21px Arial";ctx.fillText("5ª EDIÇÃO · ILHÉUS, BAHIA",W/2,245);
-  ctx.fillStyle="rgba(50,14,22,.88)";ctx.beginPath();ctx.roundRect(65,H-375,W-130,285,28);ctx.fill();
-  ctx.strokeStyle="rgba(212,173,103,.7)";ctx.lineWidth=2;ctx.stroke();
-  ctx.fillStyle="#fff";ctx.font="700 56px Georgia";ctx.fillText(d.displayName||"Seu nome",W/2,H-278);
-  ctx.fillStyle=gold;ctx.font="600 20px Arial";ctx.fillText("EU VOU ESTAR NA ANE CAKES FAIR",W/2,H-232);
-  ctx.fillStyle="#fff";ctx.font="500 20px Arial";ctx.fillText("30 E 31 DE JANEIRO DE 2027",W/2,H-185);
-  ctx.fillStyle=cream;ctx.font="500 18px Arial";ctx.fillText("Ilhéus · Bahia",W/2,H-145);
-  ctx.fillStyle=gold;ctx.font="700 15px Arial";ctx.fillText("CAPACITAÇÃO QUE VIRA PROFISSÃO",W/2,H-98);
-  drawFloralCorner(ctx,70,80,1);drawFloralCorner(ctx,W-70,H-90,-1);
+  ctx.fillStyle=cream;ctx.fillRect(0,0,W,H);
+
+  // Cabeçalho de marca: a própria logomarca é o elemento principal.
+  drawBrandLogo(ctx,W,52,360);
+  ctx.textAlign="center";
+  ctx.fillStyle=ink;ctx.font="600 27px Georgia";ctx.fillText("EU VOU!",W/2,270);
+  ctx.fillStyle=wine;ctx.font="700 55px Georgia";ctx.fillText("À ANE CAKES FAIR",W/2,330);
+
+  // Moldura da fotografia.
+  ctx.strokeStyle=gold;ctx.lineWidth=4;ctx.beginPath();ctx.roundRect(42,350,W-84,655,28);ctx.stroke();
+  ctx.strokeStyle="rgba(199,154,75,.35)";ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(56,364,W-112,627,22);ctx.stroke();
+
+  // Faixa inferior vinho, seguindo a paleta da marca.
+  ctx.fillStyle=burgundy;ctx.beginPath();ctx.roundRect(42,1035,W-84,245,28);ctx.fill();
+  ctx.fillStyle="#fff";ctx.font="700 52px Georgia";ctx.fillText(d.displayName||"Seu nome",W/2,1110);
+  ctx.fillStyle=gold;ctx.font="600 19px Arial";ctx.fillText("EU VOU ESTAR NA ANE CAKES FAIR",W/2,1150);
+  ctx.fillStyle="#fff";ctx.font="500 18px Arial";ctx.fillText("30 E 31 DE JANEIRO DE 2027 · ILHÉUS, BAHIA",W/2,1190);
+  ctx.fillStyle="#f8efe4";ctx.font="600 15px Arial";ctx.fillText("ONDE A CONFEITARIA VIRA EXPERIÊNCIA.",W/2,1235);
+
+  ctx.strokeStyle=gold;ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(30,30,W-60,H-60,26);ctx.stroke();
+  drawFloralCorner(ctx,58,58,1);drawFloralCorner(ctx,W-58,H-90,-1);
   ctx.restore();
 }
 async function renderFinal(aiUrl,d){const ai=await loadImage(aiUrl),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;const scale=Math.max(W/ai.width,H/ai.height),w=ai.width*scale,h=ai.height*scale;ctx.drawImage(ai,(W-w)/2,(H-h)/2,w,h);drawText(ctx,d,W,H);return c.toDataURL("image/png")}
@@ -141,19 +162,29 @@ async function localFallback(d){
   ctx.strokeStyle="rgba(199,154,75,.38)";ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(43,43,W-86,H-86,20);ctx.stroke();
   ctx.restore();
 
-  // Moldura fotográfica vertical/oval, ocupando aproximadamente 48% da largura.
-  const cx=315, cy=845, rx=275, ry=500;
-  ctx.save();
-  ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.clip();
-  const scale=Math.max((rx*2)/img.width,(ry*2)/img.height);
-  const iw=img.width*scale,ih=img.height*scale;
-  ctx.drawImage(img,cx-iw/2,cy-ih/2,iw,ih);
-  const shade=ctx.createLinearGradient(0,cy-ry,0,cy+ry);
-  shade.addColorStop(0,"rgba(255,255,255,.05)");shade.addColorStop(1,"rgba(70,20,20,.16)");
-  ctx.fillStyle=shade;ctx.fillRect(cx-rx,cy-ry,rx*2,ry*2);
-  ctx.restore();
-
-  ctx.strokeStyle="#c79a4b";ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(cx,cy,rx+8,ry+8,0,0,Math.PI*2);ctx.stroke();
+  if(d.mode==="eu-vou"){
+    // EU VOU: foto em destaque, centralizada, com moldura editorial da marca.
+    const px=55,py=365,pw=W-110,ph=615;
+    ctx.save();
+    ctx.beginPath();ctx.roundRect(px,py,pw,ph,22);ctx.clip();
+    const scale=Math.max(pw/img.width,ph/img.height);
+    const iw=img.width*scale,ih=img.height*scale;
+    ctx.drawImage(img,px+(pw-iw)/2,py+(ph-ih)/2,iw,ih);
+    ctx.restore();
+  }else{
+    // Embaixador(a): moldura fotográfica vertical/oval.
+    const cx=315,cy=845,rx=275,ry=500;
+    ctx.save();
+    ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.clip();
+    const scale=Math.max((rx*2)/img.width,(ry*2)/img.height);
+    const iw=img.width*scale,ih=img.height*scale;
+    ctx.drawImage(img,cx-iw/2,cy-ih/2,iw,ih);
+    const shade=ctx.createLinearGradient(0,cy-ry,0,cy+ry);
+    shade.addColorStop(0,"rgba(255,255,255,.05)");shade.addColorStop(1,"rgba(70,20,20,.16)");
+    ctx.fillStyle=shade;ctx.fillRect(cx-rx,cy-ry,rx*2,ry*2);
+    ctx.restore();
+    ctx.strokeStyle="#c79a4b";ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(cx,cy,rx+8,ry+8,0,0,Math.PI*2);ctx.stroke();
+  }
 
   drawText(ctx,d,W,H);
   URL.revokeObjectURL(u);return c.toDataURL("image/png")
