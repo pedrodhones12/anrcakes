@@ -1,6 +1,6 @@
 (()=>{const S={step:1,total:7,style:"elegante",photo:null,mode:"embaixador"},$=id=>document.getElementById(id),steps=[...document.querySelectorAll(".form-step")];
 function boot(){bind();renderStep();updatePreview();updateModeUI();addHighlight();renderLocalGallery();window.addEventListener("beforeunload",()=>localStorage.removeItem("aneCakesCards"));}
-function bind(){document.querySelectorAll(".mode-card").forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;S.step=1;S.total=S.mode==="eu-vou"?2:7;document.querySelectorAll(".mode-card").forEach(x=>x.classList.toggle("selected",x===b));updateModeUI();renderStep();updatePreview()});$("choosePhoto").onclick=()=>$("photo").click();$("euVouChoosePhoto").onclick=()=>$("photo").click();$("euVouUploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="euVouPhotoPreview")$("photo").click()};$("euVouName").oninput=e=>{$("displayName").value=e.target.value;updatePreview()};$("euVouGenerateBtn").onclick=()=>{if(!S.photo)return msg("Envie sua foto para continuar.");if(!$("euVouName").value.trim())return msg("Informe seu nome para continuar.");$("displayName").value=$("euVouName").value.trim();generate(new Event("submit"));};$("uploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="photoPreview")$("photo").click()};$("photo").onchange=e=>{const f=e.target.files[0];if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type))return msg("Use JPG, PNG ou WEBP.");if(f.size>8*1024*1024)return msg("A foto deve ter no máximo 8 MB.");S.photo=f;const url=URL.createObjectURL(f);$("photoPreview").src=url;$("photoPreview").classList.remove("hidden");$("photoPlaceholder").classList.add("hidden");$("euVouPhotoPreview").src=url;$("euVouPhotoPreview").classList.remove("hidden");$("euVouPhotoPlaceholder").classList.add("hidden")};$("story").oninput=e=>$("storyCount").textContent=e.target.value.length;$("addHighlight").onclick=()=>addHighlight();$("visualLocation").onchange=()=>$("otherLocationWrap").classList.toggle("hidden",$("visualLocation").value!=="other");document.querySelectorAll(".style-option").forEach(b=>b.onclick=()=>{document.querySelectorAll(".style-option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");S.style=b.dataset.style});$("nextBtn").onclick=next;$("backBtn").onclick=back;$("tagForm").onsubmit=e=>{e.preventDefault();generate(e)};$("generateBtn").onclick=e=>{e.preventDefault();generate(e)};$("regenerateBtn").onclick=()=>{$("resultSection").classList.add("hidden");window.scrollTo({top:0,behavior:"smooth"})};["displayName","city","state","gender"].forEach(id=>$(id).addEventListener("input",updatePreview))}
+function bind(){document.querySelectorAll(".mode-card").forEach(b=>b.onclick=()=>{S.mode=b.dataset.mode;S.step=1;S.total=S.mode==="eu-vou"?2:7;document.querySelectorAll(".mode-card").forEach(x=>x.classList.toggle("selected",x===b));updateModeUI();renderStep();updatePreview()});$("choosePhoto").onclick=()=>$("photo").click();$("euVouChoosePhoto").onclick=()=>$("euVouPhotoInput").click();$("euVouUploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="euVouPhotoPreview")$("photo").click()};$("euVouName").oninput=e=>{$("displayName").value=e.target.value;updatePreview()};$("euVouGenerateBtn").onclick=()=>{if(!S.photo)return msg("Envie sua foto para continuar.");if(!$("euVouName").value.trim())return msg("Informe seu nome para continuar.");$("displayName").value=$("euVouName").value.trim();generate(new Event("submit"));};$("uploadZone").onclick=e=>{if(e.target.tagName!=="BUTTON"&&e.target.id!=="photoPreview")$("photo").click()};function handlePhotoChange(e){const f=e.target.files[0];if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type))return msg("Use JPG, PNG ou WEBP.");if(f.size>8*1024*1024)return msg("A foto deve ter no máximo 8 MB.");S.photo=f;const url=URL.createObjectURL(f);$("photoPreview").src=url;$("photoPreview").classList.remove("hidden");$("photoPlaceholder").classList.add("hidden");$("euVouPhotoPreview").src=url;$("euVouPhotoPreview").classList.remove("hidden");$("euVouPhotoPlaceholder").classList.add("hidden")}$("photo").onchange=handlePhotoChange;$("euVouPhotoInput").onchange=handlePhotoChange;$("story").oninput=e=>$("storyCount").textContent=e.target.value.length;$("addHighlight").onclick=()=>addHighlight();$("visualLocation").onchange=()=>$("otherLocationWrap").classList.toggle("hidden",$("visualLocation").value!=="other");document.querySelectorAll(".style-option").forEach(b=>b.onclick=()=>{document.querySelectorAll(".style-option").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");S.style=b.dataset.style});$("nextBtn").onclick=next;$("backBtn").onclick=back;$("tagForm").onsubmit=e=>{e.preventDefault();generate(e)};$("generateBtn").onclick=e=>{e.preventDefault();generate(e)};$("regenerateBtn").onclick=()=>{$("resultSection").classList.add("hidden");window.scrollTo({top:0,behavior:"smooth"})};["displayName","city","state","gender"].forEach(id=>$(id).addEventListener("input",updatePreview))}
 function addHighlight(v=""){const r=document.createElement("div");r.className="highlight-row";r.innerHTML='<input maxlength="120" placeholder="Ex.: Mais de 10 anos de experiência"><button type="button" class="remove-highlight">×</button>';r.querySelector("input").value=v;r.querySelector("button").onclick=()=>r.remove();$("highlights").appendChild(r)}
 function updateModeUI(){const eu=S.mode==="eu-vou";document.querySelector(".creator-section").classList.toggle("eu-vou-active",eu);document.body.classList.toggle("eu-vou-mode",eu);$("modeHint").textContent=eu?"Modo EU VOU: coloque sua foto e mostre que você estará na Ane Cakes Fair.":"Modo Embaixador(a): crie uma arte contando sua história.";document.querySelectorAll(".ambassador-only").forEach(el=>el.classList.toggle("hidden",eu));$("generateBtn").textContent=eu?"🎟️ Criar minha tag EU VOU":"✨ Gerar minha arte"}
 function next(){if(S.step===1&&!S.photo)return msg("Envie sua foto para continuar.");if(S.step<S.total){S.step++;renderStep()}}
@@ -105,7 +105,25 @@ function drawFloralCorner(ctx,x,y,dir){
   ctx.beginPath();ctx.arc(x+dir*12,y+10,12,0,Math.PI*2);ctx.stroke();
   ctx.restore();
 }
-function drawEuVou(ctx,d,W,H){const grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,"rgba(30,12,20,.08)");grad.addColorStop(.55,"rgba(30,12,20,.28)");grad.addColorStop(1,"rgba(30,12,20,.9)");ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.fillStyle="#fff";ctx.textAlign="center";ctx.font="700 30px Arial";ctx.fillText("ANE CAKES FAIR",W/2,82);ctx.fillStyle="#d9bd91";ctx.font="700 96px Georgia";ctx.fillText("EU VOU!",W/2,190);ctx.font="500 22px Arial";ctx.fillStyle="#fff";ctx.fillText("5ª EDIÇÃO · ILHÉUS, BAHIA",W/2,232);ctx.fillStyle="rgba(31,17,12,.72)";ctx.beginPath();ctx.roundRect(55,H-310,W-110,220,28);ctx.fill();ctx.fillStyle="#fff";ctx.font="700 48px Georgia";ctx.fillText(d.displayName||"Eu",W/2,H-230);ctx.font="500 21px Arial";ctx.fillStyle="#f3e5dd";ctx.fillText("30 E 31 DE JANEIRO DE 2027",W/2,H-185);ctx.font="600 18px Arial";ctx.fillText((d.city||"Ilhéus")+" · "+(d.state||"BA"),W/2,H-150);ctx.fillStyle="#d9bd91";ctx.font="700 15px Arial";ctx.fillText("CAPACITAÇÃO QUE VIRA PROFISSÃO",W/2,H-105);ctx.fillStyle="#fff";ctx.font="500 13px Arial";ctx.fillText("🎟️ EU VOU ESTAR NA ANE CAKES FAIR",W/2,H-70);ctx.textAlign="left"}
+function drawEuVou(ctx,d,W,H){
+  const burgundy="#701522",wine="#8f1828",gold="#d4ad67",cream="#f8efe4";
+  ctx.save();
+  const wash=ctx.createLinearGradient(0,0,0,H);wash.addColorStop(0,"rgba(248,239,228,.05)");wash.addColorStop(.48,"rgba(60,16,24,.18)");wash.addColorStop(1,"rgba(35,10,18,.88)");ctx.fillStyle=wash;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle=gold;ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(32,32,W-64,H-64,28);ctx.stroke();
+  ctx.strokeStyle="rgba(255,232,190,.45)";ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(48,48,W-96,H-96,22);ctx.stroke();
+  ctx.textAlign="center";ctx.fillStyle="#fff";ctx.font="700 28px Arial";ctx.fillText("ANE CAKES FAIR",W/2,88);
+  ctx.fillStyle=gold;ctx.font="700 104px Georgia";ctx.fillText("EU VOU!",W/2,205);
+  ctx.fillStyle=cream;ctx.font="600 21px Arial";ctx.fillText("5ª EDIÇÃO · ILHÉUS, BAHIA",W/2,245);
+  ctx.fillStyle="rgba(50,14,22,.88)";ctx.beginPath();ctx.roundRect(65,H-375,W-130,285,28);ctx.fill();
+  ctx.strokeStyle="rgba(212,173,103,.7)";ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle="#fff";ctx.font="700 56px Georgia";ctx.fillText(d.displayName||"Seu nome",W/2,H-278);
+  ctx.fillStyle=gold;ctx.font="600 20px Arial";ctx.fillText("EU VOU ESTAR NA ANE CAKES FAIR",W/2,H-232);
+  ctx.fillStyle="#fff";ctx.font="500 20px Arial";ctx.fillText("30 E 31 DE JANEIRO DE 2027",W/2,H-185);
+  ctx.fillStyle=cream;ctx.font="500 18px Arial";ctx.fillText("Ilhéus · Bahia",W/2,H-145);
+  ctx.fillStyle=gold;ctx.font="700 15px Arial";ctx.fillText("CAPACITAÇÃO QUE VIRA PROFISSÃO",W/2,H-98);
+  drawFloralCorner(ctx,70,80,1);drawFloralCorner(ctx,W-70,H-90,-1);
+  ctx.restore();
+}
 async function renderFinal(aiUrl,d){const ai=await loadImage(aiUrl),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;const scale=Math.max(W/ai.width,H/ai.height),w=ai.width*scale,h=ai.height*scale;ctx.drawImage(ai,(W-w)/2,(H-h)/2,w,h);drawText(ctx,d,W,H);return c.toDataURL("image/png")}
 async function localFallback(d){
   const u=URL.createObjectURL(S.photo),img=await loadImage(u),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");
@@ -156,6 +174,21 @@ async function generate(e){
     const photoDataUrl=await compressPhoto(S.photo);
     let aiUrl="";
     let apiUnavailable=false;
+
+    // EU VOU is intentionally generated locally: this makes the simple attendee tag
+    // independent of the AI server and guarantees the button works immediately.
+    if(S.mode==="eu-vou"){
+      const finalUrl=await localFallback(d);
+      $("resultImage").src=finalUrl;
+      $("downloadBtn").href=finalUrl;
+      $("downloadBtn").download="ane-cakes-eu-vou-"+(d.displayName||"participante").replace(/[^a-z0-9]+/gi,"-").toLowerCase()+".png";
+      $("resultSection").classList.remove("hidden");
+      $("resultSection").scrollIntoView({behavior:"smooth"});
+      saveLocal();
+      msg("Sua tag EU VOU foi criada com sucesso!","success");
+      renderLocalGallery();
+      return;
+    }
 
     try{
       const controller=new AbortController();
