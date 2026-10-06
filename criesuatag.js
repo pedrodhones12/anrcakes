@@ -147,63 +147,75 @@ function drawEuVou(ctx,d,W,H){
   ctx.restore();
 }
 async function renderFinal(aiUrl,d){const ai=await loadImage(aiUrl),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;const scale=Math.max(W/ai.width,H/ai.height),w=ai.width*scale,h=ai.height*scale;ctx.drawImage(ai,(W-w)/2,(H-h)/2,w,h);drawText(ctx,d,W,H);return c.toDataURL("image/png")}
-async function localFallback(d){
-  const u=URL.createObjectURL(S.photo),img=await loadImage(u),W=1080,H=1350,c=document.createElement("canvas"),ctx=c.getContext("2d");
+async function localFallback(d,photoSource=null){
+  // Use the already-compressed data URL when available. This avoids relying on
+  // a temporary blob URL during the final canvas composition.
+  const source=photoSource||S.photo;
+  if(!source) throw new Error("A foto não foi encontrada.");
+  const img=await loadImage(source);
+  if(!img.naturalWidth && !img.width) throw new Error("Não foi possível carregar a foto.");
+  const W=1080,H=1350,c=document.createElement("canvas");
   c.width=W;c.height=H;
+  const ctx=c.getContext("2d");
+  if(!ctx) throw new Error("Seu navegador não conseguiu criar a composição da imagem.");
+
   ctx.fillStyle="#f8efe4";ctx.fillRect(0,0,W,H);
 
-  // Composição determinística inspirada na referência: pessoa grande à esquerda,
-  // bloco editorial limpo à direita e detalhes vinho/dourados.
   const bg=ctx.createRadialGradient(820,240,20,820,240,620);
   bg.addColorStop(0,"rgba(255,255,255,.65)");bg.addColorStop(1,"rgba(199,154,75,.06)");
   ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
 
   ctx.save();
-  ctx.strokeStyle="#c79a4b";ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(28,28,W-56,H-56,26);ctx.stroke();
-  ctx.strokeStyle="rgba(199,154,75,.38)";ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(43,43,W-86,H-86,20);ctx.stroke();
+  ctx.strokeStyle="#c79a4b";ctx.lineWidth=3;
+  ctx.beginPath();ctx.roundRect(28,28,W-56,H-56,26);ctx.stroke();
+  ctx.strokeStyle="rgba(199,154,75,.38)";ctx.lineWidth=1;
+  ctx.beginPath();ctx.roundRect(43,43,W-86,H-86,20);ctx.stroke();
   ctx.restore();
 
-  if(d.mode==="eu-vou"){
-    // EU VOU: foto em destaque, centralizada, com moldura editorial da marca.
-    const px=55,py=365,pw=W-110,ph=615;
-    ctx.save();
-    ctx.beginPath();ctx.roundRect(px,py,pw,ph,22);ctx.clip();
-    const scale=Math.max(pw/img.width,ph/img.height);
-    const iw=img.width*scale,ih=img.height*scale;
-    ctx.drawImage(img,px+(pw-iw)/2,py+(ph-ih)/2,iw,ih);
-    ctx.restore();
-  }else{
-    // Embaixador(a): moldura fotográfica vertical/oval.
-    const cx=315,cy=845,rx=275,ry=500;
-    ctx.save();
-    ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.clip();
-    const scale=Math.max((rx*2)/img.width,(ry*2)/img.height);
-    const iw=img.width*scale,ih=img.height*scale;
-    ctx.drawImage(img,cx-iw/2,cy-ih/2,iw,ih);
-    const shade=ctx.createLinearGradient(0,cy-ry,0,cy+ry);
-    shade.addColorStop(0,"rgba(255,255,255,.05)");shade.addColorStop(1,"rgba(70,20,20,.16)");
-    ctx.fillStyle=shade;ctx.fillRect(cx-rx,cy-ry,rx*2,ry*2);
-    ctx.restore();
-    ctx.strokeStyle="#c79a4b";ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(cx,cy,rx+8,ry+8,0,0,Math.PI*2);ctx.stroke();
-  }
+  // First paint the photo. For EU VOU it is deliberately painted again after
+  // the text layer, making the user's image the definitive final photo layer.
+  drawPhotoOnCanvas(ctx,img,d.mode==="eu-vou");
 
   drawText(ctx,d,W,H);
-  // Reforça a foto como camada final no modo EU VOU. Isso evita que qualquer
-  // elemento de acabamento ou estilo cubra a imagem no card final.
+
   if(d.mode==="eu-vou"){
-    const px=55,py=365,pw=W-110,ph=615;
+    // Final photo pass: guarantees that the generated tag can never finish
+    // with an empty photo frame because of a later canvas drawing operation.
+    drawPhotoOnCanvas(ctx,img,true);
     ctx.save();
-    ctx.beginPath();ctx.roundRect(px,py,pw,ph,22);ctx.clip();
-    const scale=Math.max(pw/img.width,ph/img.height);
-    const iw=img.width*scale,ih=img.height*scale;
-    ctx.drawImage(img,px+(pw-iw)/2,py+(ph-ih)/2,iw,ih);
-    ctx.restore();
     ctx.strokeStyle="#c79a4b";ctx.lineWidth=4;
     ctx.beginPath();ctx.roundRect(42,350,W-84,655,28);ctx.stroke();
     ctx.strokeStyle="rgba(199,154,75,.35)";ctx.lineWidth=1;
     ctx.beginPath();ctx.roundRect(56,364,W-112,627,22);ctx.stroke();
+    ctx.restore();
   }
-  URL.revokeObjectURL(u);return c.toDataURL("image/png")
+
+  return c.toDataURL("image/png");
+}
+function drawPhotoOnCanvas(ctx,img,isEuVou){
+  if(isEuVou){
+    const px=55,py=365,pw=1080-110,ph=615;
+    ctx.save();
+    ctx.beginPath();ctx.roundRect(px,py,pw,ph,22);ctx.clip();
+    const scale=Math.max(pw/img.width,ph/img.height);
+    const iw=img.width*scale,ih=img.height*scale;
+    ctx.drawImage(img,px+(pw-iw)/2,py+(ph-ih)/2,iw,ih);
+    ctx.restore();
+    return;
+  }
+  const cx=315,cy=845,rx=275,ry=500;
+  ctx.save();
+  ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.clip();
+  const scale=Math.max((rx*2)/img.width,(ry*2)/img.height);
+  const iw=img.width*scale,ih=img.height*scale;
+  ctx.drawImage(img,cx-iw/2,cy-ih/2,iw,ih);
+  const shade=ctx.createLinearGradient(0,cy-ry,0,cy+ry);
+  shade.addColorStop(0,"rgba(255,255,255,.05)");
+  shade.addColorStop(1,"rgba(70,20,20,.16)");
+  ctx.fillStyle=shade;ctx.fillRect(cx-rx,cy-ry,rx*2,ry*2);
+  ctx.restore();
+  ctx.strokeStyle="#c79a4b";ctx.lineWidth=4;
+  ctx.beginPath();ctx.ellipse(cx,cy,rx+8,ry+8,0,0,Math.PI*2);ctx.stroke();
 }
 async function generate(e){
   if(e?.preventDefault)e.preventDefault();
@@ -225,7 +237,7 @@ async function generate(e){
     // EU VOU is intentionally generated locally: this makes the simple attendee tag
     // independent of the AI server and guarantees the button works immediately.
     if(S.mode==="eu-vou"){
-      const finalUrl=await localFallback(d);
+      const finalUrl=await localFallback(d,photoDataUrl);
       $("resultImage").src=finalUrl;
       $("downloadBtn").href=finalUrl;
       $("downloadBtn").download="ane-cakes-eu-vou-"+(d.displayName||"participante").replace(/[^a-z0-9]+/gi,"-").toLowerCase()+".png";
@@ -257,7 +269,7 @@ async function generate(e){
       apiUnavailable=true;
     }
 
-    const finalUrl=aiUrl?await renderFinal(aiUrl,d):await localFallback(d);
+    const finalUrl=aiUrl?await renderFinal(aiUrl,d):await localFallback(d,photoDataUrl);
     $("resultImage").src=finalUrl;
     $("downloadBtn").href=finalUrl;
     $("downloadBtn").download=(S.mode==="eu-vou"?"ane-cakes-eu-vou-":"ane-cakes-")+(d.displayName||"participante").replace(/[^a-z0-9]+/gi,"-").toLowerCase()+".png";
