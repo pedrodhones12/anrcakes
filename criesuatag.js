@@ -14,39 +14,95 @@ function loadImage(src){return new Promise((res,rej)=>{const i=new Image();i.onl
 function compressPhoto(file){return new Promise((resolve,reject)=>{const u=URL.createObjectURL(file),i=new Image();i.onload=()=>{const max=1600,r=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=Math.round(i.width*r);c.height=Math.round(i.height*r);c.getContext("2d").drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(b=>{if(!b)return reject(Error("compress"));const fr=new FileReader();fr.onload=()=>resolve(fr.result);fr.onerror=reject;fr.readAsDataURL(b)},"image/jpeg",.88)};i.onerror=reject;i.src=u})}
 function drawText(ctx,d,W,H){
   if(d.mode==="eu-vou")return drawEuVou(ctx,d,W,H);
-  const dark=d.style!=="minimalista";
-  const ink=dark?"#fff":"#241b17", muted=dark?"#f3e5dd":"#6a574d", gold=dark?"#d9bd91":"#8d6333";
-  const panel=dark?"rgba(31,17,12,.74)":"rgba(255,248,241,.88)", accent=dark?"#8f2035":"#7f1d2d";
+  const wine="#8f1828", burgundy="#701522", gold="#c79a4b", cream="#f8efe4", ink="#351e18", muted="#654e45";
   ctx.save();
-  const bottom=ctx.createLinearGradient(0,H*.35,0,H);
-  bottom.addColorStop(0,"rgba(18,10,7,0)");
-  bottom.addColorStop(.48,dark?"rgba(18,10,7,.28)":"rgba(255,248,241,.08)");
-  bottom.addColorStop(1,dark?"rgba(18,10,7,.90)":"rgba(255,248,241,.92)");
-  ctx.fillStyle=bottom;ctx.fillRect(0,0,W,H);
-  ctx.fillStyle=accent;ctx.beginPath();ctx.roundRect(54,48,250,38,19);ctx.fill();
-  ctx.fillStyle="#fff";ctx.font="700 14px Arial";ctx.fillText(d.gender==="male"?"👑 EMBAIXADOR":"👑 EMBAIXADORA",72,73);
-  ctx.fillStyle=ink;ctx.font="700 18px Arial";ctx.fillText("ANE CAKES FAIR",54,118);
-  const title=d.gender==="male"?"CONHEÇA NOSSO EMBAIXADOR":d.gender==="neutral"?"CONHEÇA NOSSO REPRESENTANTE":"CONHEÇA NOSSA EMBAIXADORA";
-  ctx.font="600 20px Arial";ctx.fillText(title,54,148);
-  const panelY=H*.55;
-  ctx.fillStyle=panel;ctx.beginPath();ctx.roundRect(38,panelY,W-76,H-panelY-42,28);ctx.fill();
-  ctx.strokeStyle=dark?"rgba(217,189,145,.30)":"rgba(127,29,45,.14)";ctx.lineWidth=1;ctx.stroke();
-  ctx.fillStyle=accent;ctx.font="700 16px Arial";ctx.fillText("✨ HISTÓRIA QUE INSPIRA",64,panelY+38);
-  ctx.fillStyle=ink;
-  const ns=fitText(ctx,d.displayName,W-170,70,38);ctx.font="700 "+ns+"px Georgia";ctx.fillText(d.displayName,64,panelY+100);
-  ctx.fillStyle=gold;ctx.font="600 23px Arial";ctx.fillText("🍰 "+d.profession,64,panelY+136);
-  ctx.fillStyle=muted;ctx.font="500 18px Arial";ctx.fillText("📍 "+d.city+" · "+d.state,64,panelY+166);
-  let y=panelY+205;
-  ctx.fillStyle=ink;ctx.font="400 17px Arial";
-  const story=wrap(ctx,d.story||"Uma trajetória feita de talento, coragem e transformação.",W-150).slice(0,4);
-  story.forEach((l,i)=>ctx.fillText(l,64,y+i*24));y+=Math.max(1,story.length)*24+15;
-  ctx.fillStyle=accent;ctx.font="700 15px Arial";
-  d.highlights.slice(0,3).forEach((h,i)=>ctx.fillText(["🏆","💡","❤️"][i]+"  "+h,64,y+i*23));
-  y+=Math.min(3,d.highlights.length)*23+16;
-  const q=d.quote||"Onde a confeitaria vira experiência.";
-  ctx.fillStyle=ink;ctx.font="italic 18px Georgia";
-  wrap(ctx,q,W-160).slice(0,2).forEach((l,i)=>ctx.fillText("“"+l+(i===1?"”":""),64,y+i*25));
-  ctx.fillStyle=gold;ctx.font="700 12px Arial";ctx.fillText("EMBAIXADOR(A) OFICIAL DA ANE CAKES FAIR",64,H-66);
+
+  // Tratamento final para aproximar a composição da referência assets/madija.jpg:
+  // creme + moldura dourada + hierarquia editorial + pessoa visualmente dominante à esquerda.
+  ctx.fillStyle="rgba(250,242,232,.16)";ctx.fillRect(0,0,W,H);
+
+  // Moldura externa dourada.
+  ctx.strokeStyle="rgba(190,145,68,.95)";ctx.lineWidth=3;ctx.beginPath();ctx.roundRect(34,34,W-68,H-68,28);ctx.stroke();
+  ctx.strokeStyle="rgba(190,145,68,.38)";ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(48,48,W-96,H-96,20);ctx.stroke();
+
+  // Vinheta clara nas áreas destinadas à tipografia, sem esconder a fotografia.
+  const topWash=ctx.createLinearGradient(0,0,0,H*.48);
+  topWash.addColorStop(0,"rgba(250,242,232,.94)");
+  topWash.addColorStop(.72,"rgba(250,242,232,.70)");
+  topWash.addColorStop(1,"rgba(250,242,232,0)");
+  ctx.fillStyle=topWash;ctx.fillRect(50,50,W-100,H*.46);
+
+  // Marca tipográfica no topo, seguindo a referência.
+  ctx.textAlign="center";
+  ctx.fillStyle=wine;ctx.font="700 88px Georgia";ctx.fillText("ANE",W/2,145);
+  ctx.fillStyle=ink;ctx.font="500 24px Arial";ctx.fillText("CAKES FAIR",W/2,177);
+  ctx.strokeStyle=gold;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(W/2-180,194);ctx.lineTo(W/2+180,194);ctx.stroke();
+  ctx.fillStyle=wine;ctx.font="600 16px Arial";ctx.fillText("ONDE A CONFEITARIA VIRA EXPERIÊNCIA.",W/2,222);
+
+  const title=d.gender==="male"?"EMBAIXADOR":d.gender==="neutral"?"REPRESENTANTE":"EMBAIXADORA";
+  ctx.fillStyle=ink;ctx.font="600 34px Georgia";ctx.fillText("CONHEÇAM MAIS UM"+(d.gender==="male"||d.gender==="neutral"?"":"A"),W/2,285);
+  ctx.fillStyle=wine;ctx.font="700 66px Georgia";ctx.fillText(title,W/2,350);
+  ctx.strokeStyle=gold;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(190,376);ctx.lineTo(890,376);ctx.stroke();
+  ctx.fillStyle=ink;ctx.font="500 25px Arial";ctx.fillText("DA ANE CAKES FAIR",W/2,410);
+
+  // Bloco de informações à direita, como na arte de referência.
+  const x=585, max=430;
+  ctx.textAlign="left";
+  ctx.fillStyle=wine;
+  const nameSize=fitText(ctx,d.displayName,max,64,34);ctx.font="700 "+nameSize+"px Georgia";ctx.fillText(d.displayName,x,600);
+  ctx.strokeStyle=gold;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,620);ctx.lineTo(x+max,620);ctx.stroke();
+
+  // Pílula de localização.
+  const loc="📍 "+(d.city||"Ilhéus")+" - "+(d.state||"BA");
+  ctx.fillStyle=burgundy;ctx.beginPath();ctx.roundRect(x,640,max,48,24);ctx.fill();
+  ctx.fillStyle="#fff";ctx.font="600 20px Arial";ctx.fillText(loc,x+22,672);
+
+  // História.
+  let y=720;
+  ctx.fillStyle=wine;ctx.font="700 19px Arial";ctx.fillText("✦ HISTÓRIA QUE INSPIRA",x,y);
+  y+=34;ctx.fillStyle=ink;ctx.font="400 18px Arial";
+  const story=wrap(ctx,d.story||"Uma trajetória marcada por talento, coragem e transformação.",max-8).slice(0,4);
+  story.forEach((l,i)=>ctx.fillText(l,x,y+i*25));y+=Math.max(1,story.length)*25+22;
+
+  // Destaques.
+  d.highlights.slice(0,3).forEach((h,i)=>{
+    ctx.fillStyle=gold;ctx.font="700 21px Arial";ctx.fillText(["♛","✦","♥"][i],x,y);
+    ctx.fillStyle=ink;ctx.font="400 17px Arial";
+    const lines=wrap(ctx,h,max-34).slice(0,2);
+    lines.forEach((l,k)=>ctx.fillText(l,x+30,y+k*22));
+    y+=Math.max(1,lines.length)*22+16;
+  });
+
+  // Frase em caixa delicada.
+  const quote=d.quote||"Onde a confeitaria vira experiência.";
+  const qLines=wrap(ctx,quote,max-42).slice(0,3);
+  const qh=86+qLines.length*18;
+  ctx.fillStyle="rgba(255,248,240,.90)";ctx.beginPath();ctx.roundRect(x,y,max,qh,18);ctx.fill();
+  ctx.strokeStyle=gold;ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle=wine;ctx.font="italic 19px Georgia";
+  qLines.forEach((l,i)=>ctx.fillText("“"+l+(i===qLines.length-1?"”":""),x+22,y+34+i*25));
+  y+=qh+30;
+
+  // Assinatura oficial.
+  ctx.textAlign="center";
+  ctx.fillStyle=ink;ctx.font="600 17px Arial";ctx.fillText("EMBAIXADOR(A) OFICIAL DA",W*.74,y);
+  ctx.fillStyle=burgundy;ctx.beginPath();ctx.roundRect(W*.58,y+16,W*.32,46,23);ctx.fill();
+  ctx.fillStyle="#fff";ctx.font="700 18px Georgia";ctx.fillText("ANE CAKES FAIR",W*.74,y+46);
+
+  // Ornamentação floral linear simplificada nos cantos.
+  drawFloralCorner(ctx,72,78,1);
+  drawFloralCorner(ctx,W-72,H-82,-1);
+  ctx.restore();
+}
+function drawFloralCorner(ctx,x,y,dir){
+  ctx.save();ctx.strokeStyle="rgba(199,154,75,.55)";ctx.lineWidth=2;ctx.lineCap="round";
+  ctx.beginPath();ctx.moveTo(x,y);ctx.bezierCurveTo(x+dir*28,y+20,x+dir*44,y+58,x+dir*66,y+78);ctx.stroke();
+  for(let i=0;i<4;i++){
+    const px=x+dir*(18+i*15),py=y+18+i*18;
+    ctx.beginPath();ctx.ellipse(px,py,10,22,dir*.55,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.ellipse(px+dir*13,py-8,8,17,dir*-.45,0,Math.PI*2);ctx.stroke();
+  }
+  ctx.beginPath();ctx.arc(x+dir*12,y+10,12,0,Math.PI*2);ctx.stroke();
   ctx.restore();
 }
 function drawEuVou(ctx,d,W,H){const grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,"rgba(30,12,20,.08)");grad.addColorStop(.55,"rgba(30,12,20,.28)");grad.addColorStop(1,"rgba(30,12,20,.9)");ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);ctx.fillStyle="#fff";ctx.textAlign="center";ctx.font="700 30px Arial";ctx.fillText("ANE CAKES FAIR",W/2,82);ctx.fillStyle="#d9bd91";ctx.font="700 96px Georgia";ctx.fillText("EU VOU!",W/2,190);ctx.font="500 22px Arial";ctx.fillStyle="#fff";ctx.fillText("5ª EDIÇÃO · ILHÉUS, BAHIA",W/2,232);ctx.fillStyle="rgba(31,17,12,.72)";ctx.beginPath();ctx.roundRect(55,H-310,W-110,220,28);ctx.fill();ctx.fillStyle="#fff";ctx.font="700 48px Georgia";ctx.fillText(d.displayName||"Eu",W/2,H-230);ctx.font="500 21px Arial";ctx.fillStyle="#f3e5dd";ctx.fillText("30 E 31 DE JANEIRO DE 2027",W/2,H-185);ctx.font="600 18px Arial";ctx.fillText((d.city||"Ilhéus")+" · "+(d.state||"BA"),W/2,H-150);ctx.fillStyle="#d9bd91";ctx.font="700 15px Arial";ctx.fillText("CAPACITAÇÃO QUE VIRA PROFISSÃO",W/2,H-105);ctx.fillStyle="#fff";ctx.font="500 13px Arial";ctx.fillText("🎟️ EU VOU ESTAR NA ANE CAKES FAIR",W/2,H-70);ctx.textAlign="left"}
