@@ -32,3 +32,33 @@
 .preview-note{line-height:1.55}
 @media(max-width:850px){.mode-section-head,.creator-section-head{display:block}.mode-section-status{display:inline-flex;margin-top:14px}.secure-note{margin-top:14px;width:max-content}.mode-selector{grid-template-columns:1fr}}
 @media(max-width:560px){.mode-card{min-height:175px;padding:20px}.mode-card-copy strong{font-size:28px}.mode-card-copy small{font-size:12px}.creator-section-head h2,.mode-section-head h2{font-size:38px}}
+
+/* Two-panel creation workspace */
+.creator-layout{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:stretch}
+.creator-card,.preview-card{min-height:680px}
+.creator-card{display:flex;flex-direction:column}
+.creator-card .form-step{flex:1}
+.preview-card{display:flex;flex-direction:column;position:sticky;top:20px}
+.live-preview{flex:1;min-height:560px}
+.upload-zone{min-height:500px;height:100%;display:flex;flex-direction:column;justify-content:center}
+.creator-card:before{content:"01";font-size:10px;font-weight:800;letter-spacing:.16em;color:#9b8f82;margin-bottom:8px}
+.preview-card:before{content:"02";font-size:10px;font-weight:800;letter-spacing:.16em;color:#9b8f82;margin-bottom:8px}
+.creator-card .step-label{margin-bottom:18px}
+@media(max-width:850px){
+ .creator-layout{grid-template-columns:1fr}
+ .creator-card,.preview-card{min-height:auto}
+ .preview-card{position:static}
+ .live-preview{min-height:520px}
+ .upload-zone{min-height:380px}
+}
+
+.workspace-panel{background:rgba(255,255,255,.84);border:1px solid var(--tag-line);border-radius:24px;padding:28px;box-shadow:0 20px 60px rgba(30,20,10,.07);min-height:680px}
+.workspace-panel-head{display:flex;justify-content:space-between;gap:16px;margin-bottom:20px}
+.workspace-panel-head h3{font:600 32px/1.05 "Cormorant Garamond",serif;margin:7px 0}
+.workspace-panel-head p{color:var(--tag-muted);font-size:13px;line-height:1.55;max-width:470px;margin:0}
+.panel-kicker{font-size:9px;letter-spacing:.15em;font-weight:800;color:#9b8f82}
+.panel-step{width:34px;height:34px;border:1px solid var(--tag-line);border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:800;color:#8d6333;flex:none}
+.upload-panel .creator-card{background:transparent;border:0;box-shadow:none;padding:0;min-height:0}
+.upload-panel .creator-card:before{display:none}
+.upload-panel .progress{margin-bottom:20px}
+@media(max-width:850px){.workspace-panel{min-height:auto;padding:20px}}
