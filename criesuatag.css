@@ -62,3 +62,34 @@
 .upload-panel .creator-card:before{display:none}
 .upload-panel .progress{margin-bottom:20px}
 @media(max-width:850px){.workspace-panel{min-height:auto;padding:20px}}
+
+/* EU VOU — criador separado, somente para esta experiência */
+.eu-vou-creator{display:none;grid-template-columns:1fr 1fr;gap:22px;position:relative}
+.eu-vou-active .creator-layout{display:none}
+.eu-vou-active .eu-vou-creator{display:grid}
+.eu-vou-square{min-height:620px;aspect-ratio:1/1;position:relative;background:#fff;border:1px solid var(--tag-line);border-radius:24px;padding:26px;box-shadow:0 20px 60px rgba(30,20,10,.07);overflow:hidden}
+.eu-vou-square-number{position:absolute;top:22px;left:24px;font-size:10px;font-weight:800;letter-spacing:.16em;color:#9b8f82;z-index:3}
+.eu-vou-upload{position:absolute;inset:70px 26px 26px;border:1.5px dashed #c9bba8;border-radius:20px;background:#fbf9f5;display:grid;place-items:center;text-align:center;padding:28px;overflow:hidden}
+.eu-vou-upload>div{display:grid;place-items:center}
+.eu-vou-upload-icon{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:#211b17;color:#fff;font-size:28px;margin-bottom:15px}
+.eu-vou-label{font-size:11px;letter-spacing:.16em;font-weight:800;color:#8d6333}
+.eu-vou-upload strong{display:block;max-width:280px;margin:8px auto;color:var(--tag-ink);font:600 27px/1.08 "Cormorant Garamond",serif}
+.eu-vou-upload small{display:block;color:var(--tag-muted);font-size:11px;margin:7px 0 18px}
+.eu-vou-photo{width:100%;height:100%;object-fit:cover;border-radius:16px}
+.eu-vou-example{background:#2f1b17;padding:0}
+.eu-vou-example-visual{position:absolute;inset:0;overflow:hidden;background:linear-gradient(145deg,#3b211b 0%,#704936 52%,#241411 100%)}
+.eu-vou-example-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,12,8,.05),rgba(18,9,7,.82));z-index:1}
+.eu-vou-bokeh{position:absolute;border-radius:50%;filter:blur(4px);background:rgba(214,177,121,.22)}
+.eu-vou-bokeh.b1{width:210px;height:210px;right:-55px;top:50px}.eu-vou-bokeh.b2{width:150px;height:150px;left:-50px;bottom:170px}
+.eu-vou-man{position:absolute;left:50%;top:30%;width:210px;height:300px;transform:translateX(-50%);z-index:0}
+.eu-vou-man i{position:absolute;width:106px;height:106px;left:52px;top:0;border-radius:50%;background:linear-gradient(145deg,#8f5c40,#4e2d22);box-shadow:inset -12px -12px 25px rgba(0,0,0,.22)}
+.eu-vou-man b{position:absolute;left:23px;top:92px;width:165px;height:208px;border-radius:88px 88px 28px 28px;background:linear-gradient(160deg,#25211f,#100f0f);display:block}
+.eu-vou-man em{position:absolute;left:77px;top:87px;width:55px;height:45px;background:#6f432f;display:block;clip-path:polygon(25% 0,75% 0,100% 100%,0 100%)}
+.eu-vou-example-copy{position:absolute;left:28px;right:28px;bottom:34px;z-index:2;color:#fff}
+.eu-vou-example-copy span{display:block;color:#d9bd91;font-size:12px;font-weight:800;letter-spacing:.18em;margin-bottom:8px}
+.eu-vou-example-copy strong{display:block;font:600 48px/.9 "Cormorant Garamond",serif}
+.eu-vou-example-copy small{display:block;margin-top:12px;font-size:9px;letter-spacing:.16em;color:#eadcc9}
+.eu-vou-example>p{position:absolute;left:26px;right:26px;bottom:12px;z-index:4;color:rgba(255,255,255,.7);font-size:9px;letter-spacing:.04em;margin:0}
+.eu-vou-details{grid-column:1/-1;display:flex;align-items:end;gap:14px;background:#fff;border:1px solid var(--tag-line);border-radius:20px;padding:18px 20px}
+.eu-vou-details label{flex:1}.eu-vou-details input{margin-top:2px}.eu-vou-generate{min-height:48px;white-space:nowrap}
+@media(max-width:850px){.eu-vou-creator{grid-template-columns:1fr}.eu-vou-square{min-height:0;aspect-ratio:1/1}.eu-vou-details{grid-column:auto;display:grid}.eu-vou-generate{width:100%}}
