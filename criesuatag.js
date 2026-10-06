@@ -122,7 +122,8 @@ function drawFloralCorner(ctx,x,y,dir){
 function drawEuVou(ctx,d,W,H){
   const wine="#8b1828",burgundy="#701522",gold="#c79a4b",cream="#f8efe4",ink="#351e18";
   ctx.save();
-  ctx.fillStyle=cream;ctx.fillRect(0,0,W,H);
+  // O fundo já é desenhado em localFallback(). Não preencher o canvas aqui,
+  // pois isso apagaria a fotografia que foi desenhada antes desta função.
 
   // Cabeçalho de marca: a própria logomarca é o elemento principal.
   drawBrandLogo(ctx,W,52,360);
