@@ -13,35 +13,33 @@
 <header class="nav"><a class="brand" href="index.html"><img src="assets/image2.png" alt="Logo Ane Cakes Fair"></a>
 <nav><a href="parceiros.html">Parceiros</a><a href="equipe.html">Equipe</a><a href="caravanas.html">Caravanas</a><a href="expositores.html">Expositores</a><a href="batalha-doce.html">Batalha Doce</a><a href="roteiro.html">Roteiro</a><a href="embaixadora.html">Embaixadora</a><a href="roteiro.html#jornada-interativa">Etapas</a><a class="active" href="/criesuatag/">Crie sua Tag</a></nav><a class="nav-cta" href="index.html">Início</a></header>
 <main class="tag-app">
-<section class="tag-hero"><div><span class="eyebrow">01 · Crie sua Tag</span><h1>Escolha sua <em>experiência</em>.</h1><p>Crie uma arte oficial da Ane Cakes Fair para representar sua história como embaixador(a) ou mostrar que você vai estar presente no evento.</p></div><div class="hero-badge"><strong>IA</strong><span>Composição<br>personalizada</span></div></section><section class="mode-section" aria-labelledby="modeTitle">
-  <div class="mode-section-head">
-    <div>
-      <span class="eyebrow">02 · Escolha sua criação</span>
-      <h2 id="modeTitle">Qual arte você quer criar?</h2>
-      <p>Escolha uma das duas experiências. A partir da sua escolha, o formulário se adapta ao conteúdo necessário.</p>
-    </div>
-    <span class="mode-section-status">2 experiências disponíveis</span>
-  </div>
-  <div class="mode-selector">
-    <button type="button" class="mode-card selected" data-mode="embaixador">
-      <span class="mode-number">01</span><span class="mode-icon">👑</span>
-      <div class="mode-card-copy"><strong>Embaixador(a)</strong><small>Para quem representa a Ane Cakes Fair e quer transformar sua trajetória em uma arte editorial.</small></div>
-      <span class="mode-card-arrow">→</span>
-      <b>CRIAR ARTE DE EMBAIXADOR(A)</b>
-    </button>
-    <button type="button" class="mode-card" data-mode="eu-vou">
-      <span class="mode-number">02</span><span class="mode-icon">🎟️</span>
-      <div class="mode-card-copy"><strong>EU VOU!</strong><small>Para quem vai ao evento e quer criar uma tag personalizada com sua foto.</small></div>
-      <span class="mode-card-arrow">→</span>
-      <b>CRIAR MINHA TAG EU VOU</b>
-    </button>
-  </div>
-</section>
+<section class="tag-hero"><div><span class="eyebrow">01 · Crie sua Tag</span><h1>Escolha sua <em>experiência</em>.</h1><p>Crie uma arte oficial da Ane Cakes Fair para representar sua história como embaixador(a) ou mostrar que você vai estar presente no evento.</p></div><div class="hero-badge"><strong>IA</strong><span>Composição<br>personalizada</span></div></section>
 <section class="creator-section">
   <div class="creator-section-head">
-    <div><span class="eyebrow">03 · Personalize</span><h2>Monte sua arte</h2><p>Preencha os dados e acompanhe a composição em tempo real.</p></div>
+    <div><span class="eyebrow">02 · Embaixadora</span><h2>Crie sua arte de embaixadora</h2><p>Esta área é exclusiva para a criação da arte da Embaixadora.</p></div>
     <div class="secure-note"><span>✦</span><div><strong>Criação temporária</strong><small>Sua arte não é armazenada.</small></div></div>
   </div>
+  <div class="creator-layout">
+    <div class="workspace-panel upload-panel ambassador-square">
+      <div class="workspace-panel-head"><div><span class="panel-kicker">ÁREA DE CRIAÇÃO</span><h3>Adicione sua imagem</h3><p>Envie sua foto para começar. Depois, personalize as informações da sua arte.</p></div><span class="panel-step">01</span></div>
+    <form id="tagForm" class="creator-card" novalidate>
+      <div class="progress"><span id="progressFill"></span></div>
+      <div class="step-label"><span id="stepNumber">1</span><span id="stepTitle">Sua foto</span></div>
+      <div id="modeHint" class="mode-hint">Modo Embaixador(a): crie uma arte contando sua história.</div>
+      <div class="form-step active" data-step="1"><div class="upload-zone" id="uploadZone"><input id="photo" type="file" accept="image/jpeg,image/png,image/webp" hidden><div id="photoPlaceholder"><span class="upload-icon">↑</span><strong>Envie sua foto</strong><small>JPG, PNG ou WEBP · até 8 MB</small><button type="button" class="btn secondary" id="choosePhoto">Escolher foto</button></div><img id="photoPreview" class="photo-preview hidden" alt="Prévia da foto"></div></div>
+      <div class="form-step" data-step="2"><div class="grid-2"><label>Nome completo<input id="fullName" required></label><label>Nome no card<input id="displayName" required></label><label class="ambassador-only">Profissão / área<input id="profession" required></label><label>Cidade<input id="city" placeholder="Ilhéus"></label><label>Estado<input id="state" maxlength="2" placeholder="BA"></label><label class="ambassador-only">Local de nascimento<input id="birthPlace"></label></div></div>
+      <div class="form-step" data-step="3"><label>Conte sua história<textarea id="story" rows="8" maxlength="1600" placeholder="Conte sua trajetória, como começou e o que torna seu trabalho especial..."></textarea></label><div class="counter"><span id="storyCount">0</span>/1600</div></div>
+      <div class="form-step" data-step="4"><div class="section-head"><div><strong>Seus destaques</strong><small>Adicione conquistas, experiências, cursos ou números.</small></div><button type="button" id="addHighlight" class="text-btn">+ Adicionar</button></div><div id="highlights" class="highlight-list"></div></div>
+      <div class="form-step" data-step="5"><label>Frase de destaque<textarea id="quote" rows="4" maxlength="220" placeholder="Escreva uma frase ou deixe a IA criar uma para você."></textarea></label><label class="check-row"><input id="aiQuote" type="checkbox" checked><span>Deixar a IA criar uma frase se necessário</span></label></div>
+      <div class="form-step" data-step="6"><label>Qual local deve aparecer visualmente?<select id="visualLocation"><option value="city">Minha cidade</option><option value="birth">Meu local de nascimento</option><option value="work">Meu local de trabalho</option><option value="other">Outro local</option><option value="none">Não utilizar localização</option></select></label><label id="otherLocationWrap" class="hidden">Outro local<input id="otherLocation" placeholder="Ex.: Pelourinho, Salvador - BA"></label></div>
+      <div class="form-step" data-step="7"><label>Gênero no título<select id="gender"><option value="female">Embaixadora</option><option value="male">Embaixador</option><option value="neutral">Representante</option></select></label><div class="style-grid" id="styles"><button type="button" data-style="elegante" class="style-option selected"><b>Elegante</b><small>Editorial e sofisticado</small></button><button type="button" data-style="premium" class="style-option"><b>Premium</b><small>Luxo e impacto</small></button><button type="button" data-style="institucional" class="style-option"><b>Institucional</b><small>Confiança e clareza</small></button><button type="button" data-style="moderno" class="style-option"><b>Moderno</b><small>Contraste e energia</small></button><button type="button" data-style="artistico" class="style-option"><b>Artístico</b><small>Expressivo e autoral</small></button><button type="button" data-style="minimalista" class="style-option"><b>Minimalista</b><small>Limpo e essencial</small></button><button type="button" data-style="luxuoso" class="style-option"><b>Luxuoso</b><small>Impacto e sofisticação</small></button></div></div>
+      <div class="form-actions"><button type="button" id="backBtn" class="btn secondary hidden">Voltar</button><button type="button" id="nextBtn" class="btn primary">Continuar</button><button type="submit" id="generateBtn" class="btn primary hidden">✨ Gerar minha arte</button></div>
+      <p id="formMessage" class="form-message"></p>
+    </form>
+    </div>
+    <aside class="preview-card ambassador-square"><div class="preview-head"><span>PRÉVIA DA COMPOSIÇÃO</span><small>1080 × 1350</small></div><div id="livePreview" class="live-preview"><div class="preview-photo"><span>SUA FOTO</span></div><span class="preview-kicker" id="pvKicker">CONHEÇA NOSSA EMBAIXADORA</span><h2 id="pvName">Seu nome</h2><p id="pvLocation">Cidade · UF</p><div class="preview-lines"><i></i><i></i><i></i></div><span class="preview-footer">EMBAIXADOR(A) OFICIAL DA ANE CAKES FAIR</span></div><div class="preview-note">A IA cria o cenário e a atmosfera. Depois, o sistema aplica nome, história, emojis e demais textos com precisão.</div></aside>
+  </div>
+  <div class="eu-vou-section-head"><span class="eyebrow">03 · EU VOU</span><h2>Crie sua tag EU VOU</h2><p>Uma área separada para quem quer criar a tag do evento com sua própria foto.</p></div>
   <div class="eu-vou-creator" aria-label="Criador de tag EU VOU">
     <div class="eu-vou-square">
       <span class="eu-vou-square-number">01</span>
@@ -73,30 +71,11 @@
       <button type="button" class="btn primary eu-vou-generate" id="euVouGenerateBtn">🎟️ Criar minha tag EU VOU</button>
     </div>
   </div>
-  <div class="creator-layout">
-    <div class="workspace-panel upload-panel">
-      <div class="workspace-panel-head"><div><span class="panel-kicker">ÁREA DE CRIAÇÃO</span><h3>Adicione sua imagem</h3><p>Envie sua foto para começar. Depois, personalize as informações da sua arte.</p></div><span class="panel-step">01</span></div>
-    <form id="tagForm" class="creator-card" novalidate>
-      <div class="progress"><span id="progressFill"></span></div>
-      <div class="step-label"><span id="stepNumber">1</span><span id="stepTitle">Sua foto</span></div>
-      <div id="modeHint" class="mode-hint">Modo Embaixador(a): crie uma arte contando sua história.</div>
-      <div class="form-step active" data-step="1"><div class="upload-zone" id="uploadZone"><input id="photo" type="file" accept="image/jpeg,image/png,image/webp" hidden><div id="photoPlaceholder"><span class="upload-icon">↑</span><strong>Envie sua foto</strong><small>JPG, PNG ou WEBP · até 8 MB</small><button type="button" class="btn secondary" id="choosePhoto">Escolher foto</button></div><img id="photoPreview" class="photo-preview hidden" alt="Prévia da foto"></div></div>
-      <div class="form-step" data-step="2"><div class="grid-2"><label>Nome completo<input id="fullName" required></label><label>Nome no card<input id="displayName" required></label><label class="ambassador-only">Profissão / área<input id="profession" required></label><label>Cidade<input id="city" placeholder="Ilhéus"></label><label>Estado<input id="state" maxlength="2" placeholder="BA"></label><label class="ambassador-only">Local de nascimento<input id="birthPlace"></label></div></div>
-      <div class="form-step" data-step="3"><label>Conte sua história<textarea id="story" rows="8" maxlength="1600" placeholder="Conte sua trajetória, como começou e o que torna seu trabalho especial..."></textarea></label><div class="counter"><span id="storyCount">0</span>/1600</div></div>
-      <div class="form-step" data-step="4"><div class="section-head"><div><strong>Seus destaques</strong><small>Adicione conquistas, experiências, cursos ou números.</small></div><button type="button" id="addHighlight" class="text-btn">+ Adicionar</button></div><div id="highlights" class="highlight-list"></div></div>
-      <div class="form-step" data-step="5"><label>Frase de destaque<textarea id="quote" rows="4" maxlength="220" placeholder="Escreva uma frase ou deixe a IA criar uma para você."></textarea></label><label class="check-row"><input id="aiQuote" type="checkbox" checked><span>Deixar a IA criar uma frase se necessário</span></label></div>
-      <div class="form-step" data-step="6"><label>Qual local deve aparecer visualmente?<select id="visualLocation"><option value="city">Minha cidade</option><option value="birth">Meu local de nascimento</option><option value="work">Meu local de trabalho</option><option value="other">Outro local</option><option value="none">Não utilizar localização</option></select></label><label id="otherLocationWrap" class="hidden">Outro local<input id="otherLocation" placeholder="Ex.: Pelourinho, Salvador - BA"></label></div>
-      <div class="form-step" data-step="7"><label>Gênero no título<select id="gender"><option value="female">Embaixadora</option><option value="male">Embaixador</option><option value="neutral">Representante</option></select></label><div class="style-grid" id="styles"><button type="button" data-style="elegante" class="style-option selected"><b>Elegante</b><small>Editorial e sofisticado</small></button><button type="button" data-style="premium" class="style-option"><b>Premium</b><small>Luxo e impacto</small></button><button type="button" data-style="institucional" class="style-option"><b>Institucional</b><small>Confiança e clareza</small></button><button type="button" data-style="moderno" class="style-option"><b>Moderno</b><small>Contraste e energia</small></button><button type="button" data-style="artistico" class="style-option"><b>Artístico</b><small>Expressivo e autoral</small></button><button type="button" data-style="minimalista" class="style-option"><b>Minimalista</b><small>Limpo e essencial</small></button><button type="button" data-style="luxuoso" class="style-option"><b>Luxuoso</b><small>Impacto e sofisticação</small></button></div></div>
-      <div class="form-actions"><button type="button" id="backBtn" class="btn secondary hidden">Voltar</button><button type="button" id="nextBtn" class="btn primary">Continuar</button><button type="submit" id="generateBtn" class="btn primary hidden">✨ Gerar minha arte</button></div>
-      <p id="formMessage" class="form-message"></p>
-    </form>
-    </div>
-    <aside class="preview-card"><div class="preview-head"><span>PRÉVIA DA COMPOSIÇÃO</span><small>1080 × 1350</small></div><div id="livePreview" class="live-preview"><div class="preview-photo"><span>SUA FOTO</span></div><span class="preview-kicker" id="pvKicker">CONHEÇA NOSSA EMBAIXADORA</span><h2 id="pvName">Seu nome</h2><p id="pvLocation">Cidade · UF</p><div class="preview-lines"><i></i><i></i><i></i></div><span class="preview-footer">EMBAIXADOR(A) OFICIAL DA ANE CAKES FAIR</span></div><div class="preview-note">A IA cria o cenário e a atmosfera. Depois, o sistema aplica nome, história, emojis e demais textos com precisão.</div></aside>
-  </div>
+
 </section>
 <section id="resultSection" class="result-section hidden"><div class="result-head"><div><span class="eyebrow">Sua arte está pronta</span><h2>Uma nova versão da sua história.</h2></div><div class="result-actions"><a id="downloadBtn" class="btn primary" download>⬇️ Baixar minha imagem</a><button id="regenerateBtn" class="btn secondary">Gerar nova versão</button></div></div><div class="download-alert">⚠️ <strong>Baixe sua imagem antes de sair.</strong><span>Não salvamos sua arte. Ao sair desta página, ela será excluída e você precisará gerar uma nova.</span></div><div class="result-image-wrap"><img id="resultImage" alt="Card de embaixador gerado por IA"></div></section>
 <section class="my-art-section"><div class="section-head"><div><span class="eyebrow">Uso temporário</span><h2>Minha arte atual</h2></div></div><div id="gallery" class="gallery"><p class="empty-state">Sua arte fica disponível somente enquanto esta página estiver aberta.</p></div></section>
 </main>
 <footer><span>ANE CAKES FAIR</span><span>Capacitação que vira profissão. · Talento que vira negócio.</span><a href="/admin/" class="footer-admin">Admin</a><span class="footer-credit">Desenvolvido por Construindo Sonhos Web</span></footer>
-<script src="criesuatag.js?v=20261006-3"></script>
+<script src="criesuatag.js?v=20261006-4"></script>
 </body></html>
