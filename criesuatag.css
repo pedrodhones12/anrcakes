@@ -155,3 +155,9 @@
 .upload-panel .form-step[data-step="1"].active .upload-zone{min-height:300px;height:300px;box-sizing:border-box;}
 .upload-panel #sendPhotoBtn{display:inline-flex;width:100%;min-height:50px;margin-top:14px;position:relative;z-index:5;}
 .upload-panel #sendPhotoBtn.hidden{display:none!important;}
+
+
+/* Ações sempre acessíveis durante o preenchimento */
+.upload-panel .form-actions{display:flex!important;position:sticky;bottom:0;z-index:10;background:rgba(255,255,255,.96);padding:14px 0 4px;margin-top:18px;border-top:1px solid var(--tag-line);}
+.upload-panel #nextBtn{display:inline-flex!important;min-height:48px;}
+.upload-panel #nextBtn.hidden{display:none!important;}
