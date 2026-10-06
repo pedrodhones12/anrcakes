@@ -33,7 +33,7 @@ REPRODUZA A LINGUAGEM VISUAL DA REFERÊNCIA assets/madija.jpg:
 - ao fundo, uma paisagem/cidade relacionada a ${loc}, suave e integrada, como na referência;
 - a pessoa deve ocupar principalmente a região inferior esquerda, em destaque, com enquadramento de meio corpo ou corpo adequado à foto;
 - preserve rigorosamente rosto, cabelo, tom de pele, idade aparente, proporções e identidade da pessoa enviada;
-- reserve uma grande área limpa no centro/direita para textos;
+- reserve uma grande área limpa no centro/direita para textos;\n- a pessoa deve aparecer menor que um pôster de corpo inteiro, mas suficientemente grande para dominar o lado esquerdo, aproximadamente dos 420 aos 1180 px de altura;
 - a composição deve parecer uma peça gráfica pronta para receber exatamente a tipografia sobreposta pelo sistema;
 - use vinho/bordô para títulos e dourado para linhas, molduras e pequenos detalhes;
 - mantenha hierarquia visual semelhante à referência: marca no topo, grande título de embaixadora, nome em destaque na área direita, bloco de localização e informações abaixo, frase em caixa delicada e assinatura do evento no rodapé;
@@ -101,9 +101,13 @@ export default async function handler(req,res){
       console.error("OpenAI error",result);
       return json(res,502,{error:"A IA não conseguiu gerar a arte agora. Verifique a configuração da chave da IA."});
     }
-    const call=(result.output||[]).find(item=>item.type==="image_generation_call"&&item.result);
-    if(!call?.result)return json(res,502,{error:"A IA não retornou uma imagem."});
-    return json(res,200,{imageDataUrl:"data:image/png;base64,"+call.result,model:process.env.OPENAI_IMAGE_MODEL||"gpt-image-2"});
+    const call=(result.output||[]).find(item=>item.type==="image_generation_call"&&(item.result||item.output||item.image));
+    const imageResult=call?.result||call?.output||call?.image;
+    if(!imageResult)return json(res,502,{error:"A IA não retornou uma imagem."});
+    const imageDataUrl=String(imageResult).startsWith("data:image/")
+      ?String(imageResult)
+      :"data:image/png;base64,"+imageResult;
+    return json(res,200,{imageDataUrl,model:process.env.OPENAI_IMAGE_MODEL||"gpt-image-2"});
   }catch(error){
     console.error(error);
     return json(res,500,{error:"Não foi possível gerar a arte agora. Tente novamente."});
