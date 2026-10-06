@@ -163,41 +163,37 @@
 .upload-panel #nextBtn.hidden{display:none!important;}
 
 
-/* CORREÇÃO DEFINITIVA DOS BOTÕES DO FORMULÁRIO */
-.upload-panel .ambassador-square.creator-card,
+/* ORGANIZAÇÃO FINAL — botão Enviar separado da área da imagem, como no EU VOU */
 .upload-panel .creator-card{
   position:relative!important;
   box-sizing:border-box!important;
-  padding-bottom:92px!important;
+  padding-bottom:0!important;
 }
 .upload-panel .form-actions{
-  position:absolute!important;
-  left:30px!important;
-  right:30px!important;
-  bottom:0!important;
-  width:auto!important;
+  position:relative!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:100%!important;
   display:flex!important;
   align-items:center!important;
   justify-content:flex-end!important;
   min-height:64px!important;
-  margin:0!important;
-  padding:12px 0!important;
+  margin:18px 0 0!important;
+  padding:14px 0 0!important;
   background:#fff!important;
   border-top:1px solid var(--tag-line)!important;
-  z-index:50!important;
+  z-index:5!important;
   visibility:visible!important;
   opacity:1!important;
 }
-.upload-panel .form-actions #nextBtn,
-.upload-panel .form-actions #backBtn,
-.upload-panel .form-actions #generateBtn{
+.upload-panel .form-actions #nextBtn{
   position:relative!important;
-  z-index:51!important;
+  z-index:6!important;
+  min-width:120px!important;
 }
-.upload-panel .form-actions #nextBtn.hidden,
-.upload-panel .form-actions #backBtn.hidden,
-.upload-panel .form-actions #generateBtn.hidden{display:none!important;}
 @media(max-width:850px){
-  .upload-panel .creator-card{padding-bottom:92px!important;}
-  .upload-panel .form-actions{left:20px!important;right:20px!important;}
+  .upload-panel .creator-card{padding-bottom:0!important;}
+  .upload-panel .form-actions{position:relative!important;left:auto!important;right:auto!important;}
+  .upload-panel .form-actions #nextBtn{width:100%!important;}
 }
